@@ -1,0 +1,44 @@
+\section{Entwurf}
+
+\subsection{Anforderungen}\newpage.\newpage
+
+Potentielle Use-Cases:
+
+A) Personalisierte Suche:
+  Wenn man nach allgemeinen Begriffen wie "Geschenk" "Wein" oder "Kleid" sucht, bekommt man bereits durch andere Nutzer gelernte passende Empfehlungen in der Suche höher angezeigt.
+  (Nutzer schaut sich Rotweine an und bekommt bei Suche nach Wein passende Rotweine angezeigt. Im Vergleich dazu ein Nutzer der sich Weißweine angeschaut hat)
+
+B) Personalisiertes-Recommendation Widget:
+ - In der rechten Spalte werden (passend zu den letzten besuchten Items oder durchgeführten Suchen) persönliche Empfehlungen gegeben
+
+
+C) Context-Recommendation Widget:
+1) Alla "Nutzer die x gekauft haben haben auch y gekauft" oder simple "Find most simelar items to an item"
+Hier macht die Kombination von Suchindex und Recommendation auch Sinn weil:
+- Der Suchindex alle zur Ausgabe relevanten Daten eines Dokumentes hat
+- (Vorberechnung?)
+- Es einfach möglich ist die Items über die die Recommendation gemacht werden sollen über inhaltliche (regelbasierte) Suchqueries weiter einzuschränken oder zu boosten (e.g. Items die höheren Preis haben und in gleicher Kategorie sind höher boosten)
+
+2) Crosselling Widget im Warenkorb (Empfehlungen zu den Items im Warenkorb)
+
+
+
+\subsection{Systemarchitektur}\newpage.\newpage
+
+
+
+-Wenn man von großen Mengen (großer Raum) von Items ausgeht stellt sich das Problem, das die Teilmenge der Items die der Recommender und die Suche zu einer "Anfrage" zurück geben können disjunkt sein oder nur eine unerhebliche Schnittmenge haben. Teilprobleme wären
+   - "Boosting in der Suchmenge": Recommender bekommt Solr-Menge und macht nur darüber Recommendations (wenn überhaupt möglich - vielleicht kommt man ja in die erste Schleife der user-based algorithmen "i that u has no preference for yet")
+   - "Boosting in der Recommender Menge": Recommender bestimmt Menge (OR query + Optionales query) und Solr boosted nur noch darin. (Use-Case widget)
+   -  "Selective Recommendation": Recommender wählt eine zum Query passendes Datenmodell / Datengrundlage aus, die möglichst viele potentielle Schnittmengen mit dem Query hat
+       - Hier könnte man Jobs haben die regelmäßig die User-Item Datensätze nur für Items lernen die von der Suche zu einem bestimmtem Query zurückkommen (e.g. die Top-Querys)
+   - "Anreicherungsansatz" Der Recommender könnte zu Ergebnissen in der Suchmenge weitere Ergebnisse einstreuen (flgl "More like these" handler).
+   - "Precomputation and Delegation to Solr"
+- Da find ich auch Interessant. Man kann sicherlich durch vorclustern ähnlicher Items oder ähnliche Items pro Usercluster alles direkt in einer Abfrage abwickelt  (Durch anreichern der Daten im Index )
+
+- Recommender empfehlen nur neue Items, man will aber ggf auch das bereits geklickte Items in der Suche höher gewichtet werden (so macht es Google ja auch)
+- Recommendation Algorithmen und Datengrundlage sind sehr verschieden. Wie kann man verschiedene Implementierungen nutzen/ansprechen/auswählen.
+
+
+\subsection{Datenerhebung}\newpage
+

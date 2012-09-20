@@ -1,0 +1,63 @@
+\section{Grundlagen}
+	Auf welchen Themen und Techniken baut die Arbeit auf.
+
+\input{Grundlagen_Konzepte}
+\input{Grundlagen_Filtermodelle}
+
+\subsection{Schwierigkeiten von Recommendern}
+
+- Allgemeine Recommendation Challenges und Ansätze (Sparse, Grey Sheep, "rich-gets-richer"...)
+- Latenzzeit für das lernen (Nutzer hat grad was angeschaut)
+- Lösung wie dus gemacht hast (Real time learning)
+- Item based ohne Nutzerid
+- Zeitliche Aspekte (Weihnachtsgeschäft etc) - (hattest du ja ausgeführt)
+
+
+\subsection{Suchindexe}
+\subsubsection{Dokumentenrepräsentation}
+\subsubsection{Relevanzberechnung}\newpage
+
+% http://lucene.apache.org/core/3_6_1/api/all/org/apache/lucene/search/Similarity.html#formula_termBoost
+
+\subsection{Skalierungsstrategien}
+
+
+\citep{linden03} Amazon.com recommendations: item-to-item collaborative filtering
+
+ - Recommendation Datenmodelle die "schnell" sind
+- die meisten arbeiten mit "In-Memory" Datenmodellen (mit Optimierte Speicherung für die Ausführung)
+        - Wo sind die Grenzen (user,item anzahl ?)
+        - Lösungen: Precomputing similarities? 
+  - Lösungen: Cluster-based recommendation
+- Wann macht distributed recommendation sinn
+  - Wann stoßen memory based ans limit, welche algorithmen gibt es
+  - Ist Offline recommendation dafür ein Use-Case (Calculation recommendations and send via mail)?
+  - Hadoop vs Sharding
+  - Das lernen der Datenmodelle muss auch skalieren
+- Hadopp etc...
+
+\subsubsection{Online- / Offline-Recommendation}
+\subsubsection{MapReduce basierte Algorithmen}
+
+% RS Seite  48
+% Sharding (der Solr indexe)
+
+\subsection{Qualitätsmaße}\label{sec:measures}
+
+	\begin{itemize}
+	\item Successful session \citep{hb_18,Smyth05alive-user}
+	\item Precision /Recall /F1, \citep{rs}[Kap. 7]
+	\item User- und Itemcoverage \citep{rs}[S. 183]
+	\item Conversion / Click-through rates
+	\end{itemize}
+
+\subsubsection{Mittlere Abweichung}\newpage
+% MAE, RMS
+\subsubsection{Trefferquote und Genauigkeit}\newpage
+% Precision, Recall, F1, Fall-Out
+\subsubsection{Empirische Messung}\newpage
+% Successful session
+
+%\subsubsection{Normalisierter DCG}
+%\subsubsection{A/B Testing}
+\newpage
