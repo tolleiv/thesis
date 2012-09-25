@@ -1,9 +1,11 @@
 \subsection{Filtermodelle}
 \label{sec:filtermethods}
 
-Will man die in Abschnitt \ref{sec:cf_overview} beschriebenen kollaborativen Filtermethoden nutzen, stellt sich das Problem wie man die Ähnlichkeit von Nutzern oder Elementen bestimmen kann und wie man damit Empfehlungen für einen Nutzer erzeugt. Die dafür nötigen Modelle sollen in den folgenden Abschnitten näher erläutert werden.
+Will man die in Abschnitt \ref{sec:cf_overview} beschriebenen kollaborativen Filtermethoden nutzen, stellt sich das Problem wie man die Ähnlichkeit von Nutzern oder Elementen bestimmen kann und wie man dann Empfehlungen für einen Nutzer erzeugt. Die dafür nötigen Modelle sollen in den folgenden Abschnitten näher erläutert werden.
 
 Grundlage der im Folgenden beschriebenen Methoden ist eine \textit{User-Item} Matrix $R$ welche die Bewertung aller Nutzer $U$ für die Elemente (Produkte) $P$ enthält. Die Wahl des Wertebereichs hängt dabei von der Applikation ab. Ein Beispiel für eine solche Matrix wird in Tabelle \ref{tab:user-item-ratings} gezeigt.
+
+% evt. Probleme dieser Darstellung im letzten Teil
 
 \begin{table}
   \centering
@@ -23,12 +25,41 @@ User5 & 4.0	&3.0 &	2.0 &	4.0 &  3.5 & 4.0	& \\
 
 \input{Grundlagen_Aehnlichkeit}
 
-\subsubsection{Neighborhood Modelle}\newpage
+\subsubsection{Nachbarschaftsmodelle}\newpage
 
-% Vorteile / Nachteile Neighborhood Modelle HB Kap 4.1
+Die Information über die Ähnlichkeit zweier Nutzer kann mit Hilfe von Nachbarschaftsmodellen (\textit{Neighborhood Models}) zur Generierung von Empfehlungen genutzt werden. Um Empfehlungen für einen Nutzer aus den in Tabelle \ref{tab:user-item-ratings} gezeigten Ausgangsdaten abzuleiten, wird mit Hilfe der schon vorliegenden Ratings zunächst die Ähnlichkeit von dieses Nutzers zu anderen berechnet (siehe Tabelle \ref{tab:user-user-sim}). Um den möglichen Wert eines Elements für einen Nutzer aus diesen abzuleiten ($pred(u,p)$), werden die Ratings anderer Nutzer für dieses Element entsprechend der Ähnlichkeit zwischen den Nutzern (siehe Formel  \ref{form:calcpred})) aufsummiert und normiert. Hierbei muss zudem ein weiterer Unterschied zwischen einzelnen Nutzern in Betracht gezogen werden. Auch wenn Nutzer generell ähnliche Interessen oder Meinungen haben, so kann es durchaus sein, dass der Mittelwert der Ratings dieser Nutzer sehr verschieden ist. \todo{Quelle dazu - Töscher 2008 }. Diese Gewichtung am Rating-Mittelwert $\overline{r_u}$ der Nutzer wird aus diesem Grund in der erweiterten Formel (\ref{form:calcmeanpred}) beachtet. \citep{rs}
+\begin{table}
+  \centering
+  \begin{tabular}{ | l || c | c | c | c | c | c | c | }
+    \hline
+           & User2 & User3 & User4 & User5 \\ \hline
+User1 &    0.203 &	0.286 &	0.667 &	0.472 \\	
+    \hline
+  \end{tabular}
+  \caption{Aus Tabelle \ref{tab:user-item-ratings} mit der euklidischen Distanz abgeleiteter Ähnlichkeitsvektor für User1}
+  \label{tab:user-user-sim}
+\end{table}
+\begin{align}
+pred(u,p) & = & \frac{ \sum_{b \in U} sim(u, b)*r_{b,p}}{ \sum_{b \in U} sim(u,b) } \label{form:calcpred} \\
+pred(u, p) & = & \overline{r_u} + \frac{ \sum_{b \in U} sim(u, b)*(r_{b,p}-\overline{r_b}) } { \sum_{b \in U} sim(u,b) } \label{form:calcmeanpred}
+\end{align}
 
-\subsubsection{Matrixfaktorisierung}\newpage
+%Nachbarschaftsformen
+\citep{hb_04}
+%User vs. Item
+
+%Vorteil 
+
+%Nachteile
+
+
+\subsubsection{SlopeOne}
+
+\citep[S 41]{rs}
+
+\subsubsection{Matrixfaktorisierung}
 
 % SVD - Abbildung HB S. 46
+\citep{Koren:2009:MFT:1608565.1608614}
 
 \subsubsection{Graphen Modelle}\newpage
