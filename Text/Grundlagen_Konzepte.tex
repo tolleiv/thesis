@@ -1,13 +1,13 @@
-\subsection{Recommendation Konzepte}
+\subsection{Recommendation Konzepte}\label{sec:concept}
 Die Auswahl von möglichst relevanten Empfehlungen für einen Nutzer kann auf sehr verschiedenen Wegen getroffen werden. Für die zahlreichen bekannten Techniken wird in der Literatur vorwiegend die folgende Gliederung genutzt \citep[Kap. 1]{hb} \citep{Burke:2002:HRS:586321.586352} \citep{rs}:
 
 \begin{itemize}
-\item \textit{Kollaboratives Filtern}, auch \textit{\acf{CF}}, gewinnt relevante Elemente aus dem Vergleich des Nutzerprofils mit anderen Profilen.
-\item \textit{Community-basierte Empfehlungen}, bzw. \textit{Community-based filtering}, nutzen die Ähnlichkeit innerhalb von Gruppen, etwa in sozialen Netzwerken, um relevante Elemente zu finden.
+\item \textit{Kollaboratives Filtern}, auch \textit{\acf{CF}}, gewinnt relevante Elemente aus dem Vergleich des Nutzerprofils mit anderen  (ähnlichen) Profilen.
+\item \textit{Gruppen-basierte Empfehlungen}, bzw. \textit{Community-based Filtering}, nutzen die Ähnlichkeit innerhalb von Gruppen, etwa in sozialen Netzwerken, um relevante Elemente zu finden.
 \item \textit{Demographisch gestützte Empfehlungen} leiten sich von den Stereotypen, denen ein Nutzer zugeordnet wird, ab.
-\item \textit{Inhaltsbasierte Empfehlungen} oder \textit{Content-based recommendations}, werden auf der Basis von, am Nutzerprofil gewichteten, Element-Eigenschaften getroffen.
-\item \textit{Wissensbasierte Empfehlungen} bzw. \textit{Knowledge-based recommendations} werden durch zusätzliches domänenspezifisches Wissen generiert.
-\item \textit{Utility-basierte Empfehlungen} bestimmen sich durch die Berechnung der Nützlichkeit der Elemente für den Nutzer mit Hilfe der sog. \textit{Utility Function}.
+\item \textit{Inhaltsbasierte Empfehlungen} oder \textit{Content-based Recommendations}, werden auf der Basis von, am Nutzerprofil gewichteten, Element-Eigenschaften getroffen.
+\item \textit{Wissensbasierte Empfehlungen} bzw. \textit{Knowledge-based Recommendations} werden durch zusätzliches domänenspezifisches Wissen generiert.
+\item \textit{Utility-basierte Empfehlungen} bestimmen sich durch die Berechnung der ``Nützlichkeit'' der Elemente für den Nutzer mit Hilfe der sog. \textit{Utility Function}.
 \item \textit{Hybride Systeme} kombinieren verschiedene Techniken um die Schwächen der einzelnen auszugleichen.
 \end{itemize}
 
@@ -24,9 +24,9 @@ Die Erhebung der Ratings kann sowohl auf explizite Weise, etwa mit einer 5-Punkt
 
 Ein wichtiger Vorteil des kollaborativen Filterns liegt darin, dass Empfehlungen unabhängig von Elementeigenschaften gebildet werden können. Dadurch können auch Elemente deren Inhalt nur schwer oder gar nicht gewonnen werden kann in die Empfehlung einbezogen werden. Die zahlreichen Forschungsarbeiten und die große Zahl der daraus hervorgegangenen Filterstrategien ist ebenfalls ein Vorteil.
 
-Problematisch ist die Verwendung bei Systemen in denen der Nutzer (noch) kein oder nur ein sehr begrenztes Profil hat (\textit{cold start}). Zudem ist es nicht in jedem Fall sinnvoll alle Eigenschaften der Elemente ausser Acht zu lassen, da so ggf. problemspezifische Entscheidungskriterien unbeachtet bleiben.  \citep{hb,Burke:2002:HRS:586321.586352} %zum Beispiel der gewünschte Einsatzzweck beim Kauf einer Digitalkamera.%
+Problematisch ist die Verwendung bei Systemen in denen der Nutzer (noch) kein oder nur ein sehr begrenztes Profil hat (\textit{Cold Start}). Zudem ist es nicht in jedem Fall sinnvoll alle Eigenschaften der Elemente ausser Acht zu lassen, da so ggf. problemspezifische Entscheidungskriterien unbeachtet bleiben.  \citep{hb,Burke:2002:HRS:586321.586352} %zum Beispiel der gewünschte Einsatzzweck beim Kauf einer Digitalkamera.%
 
-\subsubsection{Community-basierte Empfehlungen}
+\subsubsection{Gruppen-basierte Empfehlungen}
 Gemäß \citep{SinhaS01} haben Nutzer ein größeres Vertrauen in Empfehlungen wenn sie von Freunden ausgesprochen werden. Diesem Ansatz folgend werden in community-basierten Systemen Empfehlungen entsprechend der Präferenzen der Freunde eines Nutzers ausgesprochen. Das Nutzerprofil bildet sich daher aus einer Liste von Elementbewertungen und einer Liste von sozialen Verbindungen zu anderen Nutzern.
 
 Da in Vergleichen mit reinen kollaborativen Systemen keine eindeutige Verbesserung der Empfehlungen nachgewiesen werden konnte, stellt das größere Vertrauen in die gebotenen Empfehlungen den wesentlichen Vorteil dieser Methode dar. Die gute Verbreitung und Verfügbarkeit der Daten über öffentliche Schnittstellen von  bestehenden sozialen Netzwerken, wie etwa Facebook oder LinkedIn, sind ebenfalls positiv. Die Abwägung zwischen der Aufrechterhaltung der Privatsphäre und dem dadurch resultierenden Verlust an Genauigkeit ist ein wichtiges Problem (vgl. \citep{machanavajjhala:accurate}). Auch das fehlende theoretische Fundament in anderen Bereichen, etwa beim Aufbau von Vertrauen und Misstrauen zwischen Nutzern, birgt mögliche Probleme bei der Umsetzung. \citep{hb_20}
@@ -40,7 +40,7 @@ Arbeiten zu reinen demographischen Systemen gibt es kaum. In vielen Fällen, wie
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Inhaltsbasierte Empfehlungen}
-Bei der inhaltsbasierten Generierung von Empfehlungen werden die Element-Ratings eines Nutzers zur Erzeugung eines ``Interessenprofils'' genutzt. In diesem Profil drücken sich die Präferenzen des Nutzers für die inhaltlichen Eigenschaften der Elemente aus und so kann es direkt genutzt werden um ihm Elemente mit ähnlichen Eigenschaften zu empfehlen. Hat ein Nutzer also zum Beispiel ein `Harry Potter'' Buch positiv bewertet, so kann man leicht schlussfolgern dass auch andere Fantasy-Bücher empfohlen werden könnten.
+Bei der inhaltsbasierten Generierung von Empfehlungen werden die Element-Ratings eines Nutzers zur Erzeugung eines ``Interessenprofils'' genutzt. In diesem Profil drücken sich die Präferenzen des Nutzers für die inhaltlichen Eigenschaften der Elemente aus und so kann es direkt genutzt werden um ihm Elemente mit ähnlichen Eigenschaften zu empfehlen. Hat ein Nutzer also zum Beispiel ein ``Harry Potter'' Buch positiv bewertet, so kann man leicht schlussfolgern dass auch andere Fantasy-Bücher empfohlen werden könnten.
 
 Neben der automatischen Erstellung des Profils ist es auch möglich dieses explizit vom Nutzer zu erfragen. Abhängig vom Problemfeld kann dies schneller zu guten Empfehlungen führen und zur Steigerung des Vertrauens in die erzeugten Empfehlungen beitragen, vgl. \citep{hb_20}.
 

@@ -1,0 +1,67 @@
+\subsection{Suchindexe}
+\label{sec:search}
+
+Die Extraktion von Informationen aus einer Menge unstrukturierter Daten wird umgangssprachlich als \textit{Suche} bezeichnet und beschreibt zugleich den Aufgabenbereich des \ac{IR}. Innerhalb eines digitalen \acs{IR} Systems liegen die Daten in Form von \textit{Dokumenten} (Texte, Bilder, Videos) vor. Im weitere Sinne umfasst \acs{IR} zudem das Filtern, Klassifizieren und Verarbeiten der gefundenen Dokumente. 
+
+Bei der Benutzung des \acs{IR} Systems formuliert der Nutzer seinen \textit{Informationsbedarf} mit Hilfe von \textit{Anfragen}. Dokumente werden als \textit{relevant} bezeichnet wenn die darin enthaltene Information dem Bedarf des Nutzers genügt. Die durch den Nutzer formulierten Anfragen sind dabei, im Gegensatz zu Anfragen an strukturierte Datenbanken, nicht zwingend eindeutig. Sucht der Nutzer etwa nach ``Fantasy Buch'', kann ``Harry Potter'' in den Augen des Nutzers ein relevantes Dokument sein, ohne dass das Wort ``Fantasy'' explizit darin vorkommt. \citep{Manning2008} %http://nlp.stanford.edu/IR-book/pdf/04const.pdf
+
+\subsubsection{Indexbildung}
+
+Da es bei einer großen Anzahl von vorhandenen Dokumenten sehr ineffizient wäre, wenn bei jeder Anfrage jedes Dokument geprüft werden müsste, verwendet man einen \textit{invertierten Index} um Informationen zu Dokumenten abzubilden. Die Indexierung erfolgt dabei in vier Schritten:
+
+\begin{enumerate}
+\item Sammeln aller Dokumente, und Zuordnung von eindeutigen Bezeichnern (\textit{docID}) \\ { \scriptsize ..., 20:\fbox{Friends, Romans, countrymen}, 21:\fbox{So let it be with Caesar.},... }
+\item Extraktion der Dokumenten-Merkmale (z.B. Wörter) \\ { \scriptsize \fbox{Friends} \fbox{Romans} \fbox{countrymen} \fbox{Caesar} }
+\item Normalisierung der Merkmale (z.B. Reduzierung auf Wortstämme) \\ { \scriptsize \fbox{friend} \fbox{roman} \fbox{countryman} \fbox{caesar} }
+\item Indexbildung, Zuordnung der \textit{docID} zu den Einträgen der sortierten Merkmalsliste
+{ \scriptsize \begin{tabular}[b]{lcl}
+ \fbox{caesar} & $\longmapsto$ & \fbox{ 21 } \\
+ \fbox{countryman} & $\longmapsto$ & \fbox{ 11 }\fbox{ 20 } \\
+ \fbox{friend} & $\longmapsto$& \fbox{ 15 }\fbox{ 20 }\fbox{ 73 }\\
+ \fbox{roman}& $\longmapsto$ & \fbox{ 20 }\fbox{ 32 }\\ 
+ ... & &
+\end{tabular} }
+\end{enumerate}
+
+Die in den Schritten 1. bis 3. durchgeführten Verarbeitungsschritte sind immer abhängig von gegebenen Kontext. Entspricht z.B. im herkömmlichen Verständnis jede Datei einem Dokument, so muss bei der Verarbeitung des MBox-Formates jede Zeile einer Datei als einzelnes Dokument gesehen werden. Auch die Wahl einer geeigneten Methode zur Wortstammbildung (engl. Stemming) und das Filtern mit Hilfe sog. \textit{Stopwort}-Listen hängt vom gegebenen Kontext ab. (vgl. \citep[Kap. 2]{Manning2008}). 
+
+Formuliert der Nutzer nun seine Anfrage, durchläuft diese ebenfalls die Schritte 2. und 3. bevor Dokumente mit Hilfe des Index gefunden werden können. Besteht die Anfrage aus mehreren Bestandteilen, wird die Liste der relevanten Dokumente aus der Schnittmenge der für die einzelnen Teile gefundenen Dokumentenmengen gebildet. Ergänzend existieren verschiedene Erweiterungen des invertierten Index um noch effizienter in sehr großen Dokumentenbeständen suchen zu können, um die Position der Merkmale innerhalb des Dokumentes nutzbar zu machen oder um den Umfang des Index einzuschränken. Diese werden in \citep[Kap. 3,4,5]{Manning2008} beschrieben und hier zur Wahrung des Umfangs ausgelassen.
+
+\subsubsection{Relevanzberechnung}
+Die reine Generierung einer Dokumentenliste als Ergebnis der Anfrage genügt vor allem bei großen Dokumentenbeständen nicht. Mögliche Methoden um die Listen  entsprechend der Relevanz eines Dokumentes zu sortieren sind zum einen das \textit{Tf-idf Maß} und bei untereinander verknüpften Dokumenten der \textit{PageRank}.
+
+\paragraph{Tf-idf Maß} Zur Bildung dieses Maßes wird die Relevanz des Terms $i$ innerhalb des Dokumentes $d$ und die Relevanz des Terms innerhalb des gesamten Dokumentenbestands ins Verhältnis gesetzt.
+\begin{align}
+\text{tf}(i, d) & = \frac{freq(i, d)}{max_{z \in Z}(freq(z, d))} \\
+\text{idf}(i) & = \log{\frac{N}{n(i)}} \\
+\text{tf-idf}(i, d) & = \text{tf}(i ,d) \ast \text{idf}(i) \label{form:tfidf}
+\end{align}
+
+Um die Relevanz eines Terms bezüglich eines Dokumentes abzubilden, wird die relative Häufigkeit mit der der Term innerhalb des Dokumentes vorkommt genutzt. Die sog. \textit{Termfrequenz} bildet sich entsprechend aus dem Verhältnis der Anzahl der Vorkommen des Terms innerhalb des Dokumentes ($freq(i,j)$) zur maximalen Anzahl aller anderen Terme $Z$ im Dokument. Um Wörtern die nur in wenigen Dokumenten vorkommen zusätzliches Gewicht zu geben, bzw. um solche die in nahezu jedem Dokument vorkommen abzuwerten wird die \textit{Termfrequenz} zudem mit Hilfe der \textit{inverse Dokumentenfrequenz} gewichtet. Diese wird aus dem Verhältnis der Gesamtdokumentenzahl $N$ zur Anzahl der Dokumente die den Term $i$ enthalten ($n(i)$) gebildet.
+
+Das \textit{tf-idf Maß} bildet sich entsprechend Formel (\ref{form:tfidf}) aus dem Produkt der beiden Teilmaße und ist:
+\begin{itemize}
+\item hoch: wenn der Term $i$ oft in einer kleinen Anzahl von Dokumenten vorkommt und sich gut zur Unterscheidung von Dokumenten eignet
+\item niedrig: wenn der Term selten im Dokument vorkommt oder in vielen verschiedenen Dokumenten genutzt wird
+\item minimal: wenn der Term in nahezu jedem Dokument vorkommt
+\end{itemize}
+
+Die Summe der Relevanz eines Dokuments bezüglich aller Teilterme der Anfrage $q$ bildet dann die Grundlage um die erzeugte Dokumentenliste zu sortieren.\citep{Manning2008} 
+\begin{align}
+\text{score}(q,d) & = \sum_{t \in q}{\text{tf-idf}(t,d)}
+\end{align}
+
+\paragraph{PageRank} Sind die Dokumente untereinander verknüpft, kann man auch die Popularität eines Dokumentes zur Grundlage der Anordnung in der Ergebnisliste machen. Diese Popularität wird i.d.R. in Form des PageRank ausgedrückt. Dieser korreliert mit der Wahrscheinlich dass ein zufällig über den Verknüpfungsgraphen laufender Nutzer ein bestimmtes Dokument erreicht. Dokumente auf die häufig verwiesen wird, besitzen demnach einen hohe PageRank und Verweise von populären Dokumenten üben einen größeren Effekt auf den PageRank der verknüpften Dokumente aus.
+\begin{align}
+R(u) & = c \sum_{v \in B_u}{\frac{R(v)}{N_v}} + cE(u) \label{form:pagerank}
+\end{align}
+
+Berechnet wird der PageRank $R$ einer Seite $u$ mit Hilfe der Formel (\ref{form:pagerank}). Der Faktor $c < 1$ dient dabei zur Abstraktion des Verlustes durch Seiten ohne ausgehende Verweise. Der Wert $E$ bildet die Wahrscheinlichkeit ab dass der Nutzer seinen Pfad unterbricht und zufällig bei Dokument $u$ fortsetzt.\citep{pagerank,Manning2008}
+
+
+
+
+\subsubsection{Personalisierung}
+
+Radlinski11 - für Qualitätsmaße d. Suchen \\
+Durao11 - Personalisierung v. Suchen

@@ -1,0 +1,6 @@
+
+./elastic-mapreduce --create --name "hbase-test4" --hadoop-version 1.0.3 --hbase  --instance-type m1.large --log-uri "s3n://hbase-test4-log/" --disable-incremental-backups --disable-full-backups
+./elastic-mapreduce --list --active
+./elastic-mapreduce --ssh -j <>
+./elastic-mapreduce --set-termination-protection false  -j <>
+./elastic-mapreduce --terminate -j <>

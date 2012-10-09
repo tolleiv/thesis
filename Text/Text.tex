@@ -6,15 +6,18 @@
 \usepackage[pdftex]{graphicx} % Einbindung von Grafiken (pdf, png, jpg)
 \usepackage{float}            % bietet Option [H] für bombenfestes Verankern
 \usepackage{wrapfig}
+\usepackage{rotating}
+\newcommand{\sturz}[1]{\rotatebox{90}{\parbox{20mm}{\raggedright #1}}} 
 \usepackage[ngerman]{babel}   % Silbentrennung nach der neuen deutschen Rechtschreibung, z.B.: Sys-tem
 %\usepackage{amstext}         % für Klartext via \text{} in Formeln
 \usepackage{color}						% http://en.wikibooks.org/wiki/LaTeX/Colors
 \usepackage[hang,small,bf]{caption} % http://radio.wihome.net/wiki/?article=LaTeX:captions
 \usepackage{amsmath}
+\usepackage{amsfonts}					% wird with \mathbb gebraucht
 \usepackage[safe]{tipa}
 \usepackage{subfig}
 
-\usepackage[pdftex]{hyperref}	% für "klickbare" Verlinkung im Dokument
+\usepackage[pdftex,pagebackref=true]{hyperref}	% für "klickbare" Verlinkung im Dokument
 \hypersetup{
     %bookmarks=true,        % show bookmarks bar?
     unicode=false,          % non-Latin characters in Acrobat’s bookmarks
@@ -22,7 +25,7 @@
     pdfmenubar=true,        % show Acrobat’s menu?
     pdffitwindow=false,     % window fit to page when opened
     pdfstartview={FitH},    % fits the width of the page to the window
-    pdftitle={Diplomarbeit},    % title
+    pdftitle={Diplomarbeit - Skalierbare Item Recommendation in Big-Data und Suchindexen},    % title
     pdfauthor={Tolleiv Nietsch},     % author
     pdfsubject={},   % subject of the document
     pdfcreator={Tolleiv Nietsch},   % creator of the document
@@ -37,8 +40,11 @@
 }
 
 \usepackage[square]{natbib}
-%\bibpunct{(}{)}{;}{a}{,}{,}
 \bibliographystyle{natdin}
+%\usepackage[natbib=true,citecounter=true]{biblatex}
+%\addbibresource{Literatur.bib}
+%\bibpunct{(}{)}{;}{a}{,}{,}
+
 \usepackage{multicol}
 
 \usepackage[printonlyused]{acronym}
@@ -46,9 +52,8 @@
 
 \usepackage{parskip}          % zw. Absätzen: eine knappe Leerzeile statt hängender Einzüge
 \usepackage{makeidx}          % Package zur Indexerstellung
-\usepackage{todonotes}				% bringt den todo befehl mit
-\let\oldtodo = \todo
-\renewcommand{\todo}[1]{{\oldtodo[size=\scriptsize]{#1}}}
+\usepackage[colorinlistoftodos,textsize=tiny]{todonotes}	% bringt den todo befehl mit
+
 \def\argmax{\operatorname*{arg\,max}}
 \def\argmin{\operatorname*{arg\,min}}
 
@@ -89,6 +94,7 @@
 \hyphenation{Grund-elemente}	% definierte Silbentrennung
 
 \begin{document}
+
 \pagenumbering{roman}
 \pagestyle{empty}
 \include{Titelblatt}					% und eidesstattliche Erklärung
@@ -98,12 +104,15 @@
 \tableofcontents					% Inhaltsverz.
 \newpage
 
+\listoftodos \newpage
+
 \pagenumbering{arabic}
 \pagestyle{plain} 
 \renewcommand{\baselinestretch}{1.50}\normalsize
 \setcounter{page}{1}					% Seitenzahl zurück	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \input{Einleitung}\newpage
 \input{Grundlagen}
 \input{Entwurf}
@@ -130,15 +139,15 @@
 %\renewcommand\refname{I Literatur}
 
 {
-\renewcommand{\baselinestretch}{1.2}\footnotesize
+\renewcommand{\baselinestretch}{0.8}\footnotesize
 \bibliography{Literatur}}
 
 \interlinepenalty=100
-\appendix
+%\appendix
 %\input{App_Anhang}
 
-\clearpage
-\addcontentsline{toc}{chapter}{Index}
-\printindex
+%\clearpage
+%\addcontentsline{toc}{chapter}{Index}
+%\printindex
 
 \end{document}

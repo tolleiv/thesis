@@ -1,23 +1,18 @@
 \section{Grundlagen}
-	Auf welchen Themen und Techniken baut die Arbeit auf.
+
+Im folgenden Abschnitt werden die Grundlagen der verschiedenen Bestandteile einer personalisierten Suche beschrieben. Der erste Abschnitt fasst zunächst mögliche Konzepte zur Bildung von Empfehlungen zusammen. Abschnitt \ref{sec:filtermethods} greift die Methode des kollaborativen Filterns nochmals auf und beschreibt die zugrunde liegenden Rechenmodelle. Der darauf folgende Abschied \ref{sec:filterissues} beschreibt Herausforderungen die sich im praktischen Umgang mit kollaborativen Filtermodellen ergeben. 
+
+Die Grundlagen zum Aufbau von Suchindexen werden in Abschnitt \ref{sec:search} beschrieben.
+
+
+%	Auf welchen Themen und Techniken baut die Arbeit auf.
+\todo{Formulierung kontrollieren}
 
 \input{Grundlagen_Konzepte}
 \input{Grundlagen_Filtermodelle}
+\input{Grundlagen_Schwierigkeiten}
+\input{Grundlagen_Suchindexe}
 
-\subsection{Schwierigkeiten von Recommendern}
-
-- Allgemeine Recommendation Challenges und Ansätze (Sparse, Grey Sheep, "rich-gets-richer"...)
-- Latenzzeit für das lernen (Nutzer hat grad was angeschaut)
-- Lösung wie dus gemacht hast (Real time learning)
-- Item based ohne Nutzerid
-- Zeitliche Aspekte (Weihnachtsgeschäft etc) - (hattest du ja ausgeführt)
-
-
-\subsection{Suchindexe}
-\subsubsection{Dokumentenrepräsentation}
-\subsubsection{Relevanzberechnung}\newpage
-
-% http://lucene.apache.org/core/3_6_1/api/all/org/apache/lucene/search/Similarity.html#formula_termBoost
 
 \subsection{Skalierungsstrategien}
 
@@ -36,15 +31,23 @@
   - Das lernen der Datenmodelle muss auch skalieren
 - Hadopp etc...
 
-\citep{Vidal:2005:PDR:2137725.2137737}
+%\citep{Vidal:2005:PDR:2137725.2137737}
 \citep{Toscher:2008:INA:1722149.1722153}
-\citep{linden03}
+
+``What is BigData'': http://www.zdnet.com/blog/virtualization/what-is-big-data/1708 \\
+``Slow Learners are Fast'' Langford09 - "Offline Lernen möglich" \\
+Google BigTable \\
+http://techblog.netflix.com/2012/06/scalable-logging-and-tracking.html
 
 \subsubsection{Online- / Offline-Recommendation}
 \subsubsection{MapReduce basierte Algorithmen}
 \citep{mapred008}
+\citep{jiang11}
 % RS Seite  48
 % Sharding (der Solr indexe)
+
+
+BigTable http://labs.google.com/papers/bigtable-osdi06.pdf 
 
 \subsection{Qualitätsmaße}\label{sec:measures}
 
@@ -55,11 +58,13 @@
 	\item Conversion / Click-through rates
 	\end{itemize}
 
-\subsubsection{Mittlere Abweichung}\newpage
+Zusammenfassung aus Cacheda11, Cremonesi10, und Herlocker04
+
+\subsubsection*{Mittlere Abweichung}\newpage
 % MAE, RMS
-\subsubsection{Trefferquote und Genauigkeit}\newpage
+\subsubsection*{Trefferquote und Genauigkeit}\newpage
 % Precision, Recall, F1, Fall-Out
-\subsubsection{Empirische Messung}\newpage
+\subsubsection*{Empirische Messung}\newpage
 % Successful session
 
 %\subsubsection{Normalisierter DCG}

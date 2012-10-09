@@ -1,0 +1,24 @@
+HBase: The Definitive Guide
+ftp://61.135.158.199/pub/books/HBase%20The%20Definitive%20Guide.pdf
+
+Hadoop: The Definitive Guide
+ftp://61.135.158.199/pub/books/Oreilly%20Hadoop%20Thefinitive%20Guide%203Rd%20Edition%20Jan%202012.pdf
+http://net.pku.edu.cn/~course/cs402/2011/book/2009-Book-Hadoop%20the%20Definitive%20Guide.pdf
+
+Apache Solr Cookbook
+ftp://61.135.158.199/pub/books/Packtpub.Apache.Solr.3.1.Cookbook.Jul.2011.pdf
+
+Mahout in Action
+http://net.pku.edu.cn/~course/cs402/2012/book/%5BMahout.in.Action(2011)%5D.Sean.Owen.pdf
+
+Lucene in Action
+http://www.sudancs.com/my/Java_Best/Lucene%20in%20Action.pdf
+
+Spring in Action
+http://tech.sxinfo.net/UserFiles/mxk/File/eBook/java/spring/Spring_in_Action.pdf
+
+Managing Gigabytes: Compressing and Indexing Documents and Images
+http://www.milkdom.com/uni/Sem05/a4md/docs/Managing%20Gigabytes%3B%20Witten,%20Noffat,%20Bell.pdf
+
+Introduction to Information Retrieval
+http://www-nlp.stanford.edu/IR-book/
