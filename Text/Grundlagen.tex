@@ -1,20 +1,27 @@
 \section{Grundlagen}
 
-Im folgenden Abschnitt werden die Grundlagen der verschiedenen Bestandteile einer personalisierten Suche beschrieben. Der erste Abschnitt fasst zunächst mögliche Konzepte zur Bildung von Empfehlungen zusammen. Abschnitt \ref{sec:filtermethods} greift die Methode des kollaborativen Filterns nochmals auf und beschreibt die zugrunde liegenden Rechenmodelle. Der darauf folgende Abschied \ref{sec:filterissues} beschreibt Herausforderungen die sich im praktischen Umgang mit kollaborativen Filtermodellen ergeben. 
-
-Die Grundlagen zum Aufbau von Suchindexen werden in Abschnitt \ref{sec:search} beschrieben.
-
+Im folgenden Abschnitt werden die notwendigen Grundlagen der verschiedenen Bestandteile einer personalisierten Suche beschrieben. Der erste Abschnitt beschreibt den Aufbau von Suchindexen und die Möglichkeiten zur Personalisierung der Ergebnisse. Der darauf folgende Abschnitt fasst Konzepte zur Bildung von Empfehlungen zusammen. Abschnitt \ref{sec:filtermethods} greift die Methode des kollaborativen Filterns nochmals auf und beschreibt die zugrunde liegenden Rechenmodelle. Der darauf folgende Abschied \ref{sec:filterissues} beschreibt Herausforderungen die sich im praktischen Umgang mit kollaborativen Filtermodellen ergeben. 
 
 %	Auf welchen Themen und Techniken baut die Arbeit auf.
 \todo{Formulierung kontrollieren}
 
+\input{Grundlagen_Suchindexe}
 \input{Grundlagen_Konzepte}
 \input{Grundlagen_Filtermodelle}
 \input{Grundlagen_Schwierigkeiten}
-\input{Grundlagen_Suchindexe}
 
 
 \subsection{Skalierungsstrategien}
+
+
+\subsubsection{Parallelisierung}
+
+\citep{Langford09}
+
+\paragraph{Shared Memory Architekturen}
+\paragraph{Cluster Architekturen}
+\paragraph{Grid Architekturen} -> MapReduce
+
 
 
 \citep{linden03} Amazon.com recommendations: item-to-item collaborative filtering
@@ -55,10 +62,11 @@ BigTable http://labs.google.com/papers/bigtable-osdi06.pdf
 	\item Successful session \citep{hb_18,Smyth05alive-user}
 	\item Precision /Recall /F1, \citep{rs}[Kap. 7]
 	\item User- und Itemcoverage \citep{rs}[S. 183]
-	\item Conversion / Click-through rates
+	\item Conversion / Click-through rates -> Joachim05 \\
+	Clickthrough ist als absolutes Maß eher problematisch da der Nutzer zum einen beeinflusst wird durch das Vertrauen in die Suchmaschine und durch die Qualität der sonst angebotenen Suchergebnisse. Bei einem Klick in einer Suchergebnisliste ist es deshalb sinnvoller die Relevanz abhängig von den nicht geklickten Elementen zu messen. (Joachim05)
 	\end{itemize}
 
-Zusammenfassung aus Cacheda11, Cremonesi10, und Herlocker04
+Zusammenfassung aus Cacheda11, Cremonesi10, Joachim05 und Herlocker04
 
 \subsubsection*{Mittlere Abweichung}\newpage
 % MAE, RMS

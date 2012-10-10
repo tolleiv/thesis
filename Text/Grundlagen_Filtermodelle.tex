@@ -51,7 +51,7 @@ Die Menge $\mathcal{K}$ entspricht dabei allen vorliegenden Bewertungen $r_{ui}$
 
 \paragraph{Trainingsmethoden} Zur Durchführung des Trainings können zwei Methoden verwendet werden.
 
-Beim \textit{stochastischen Gradientenverfahren} \citep{funk2006} wird das Minimierungsproblem durch einen Gradientenabstieg gelöst. Die Richtung des Abstieges  ergibt sich mit Hilfe der vorliegenden Trainingsdaten aus der Abweichung $e_{ui}$ zwischen den tatsächlichen und vorausberechneten Werten (siehe Formal (\ref{form:graddec-1}) - (\ref{form:graddec-3})). Der Faktor $\gamma$ entspricht dabei der Lernrate bzw. Schrittweite. Das Training wird entsprechend der Anzahl der zu ermittelnden Merkmale  $f$-mal, jeweils bis zur Konvergenz, durchgeführt. \citep{funk2006, hb_05}
+Beim \textit{stochastischen Gradientenverfahren} \citep{funk2006} wird das Minimierungsproblem durch einen Gradientenabstieg gelöst. Die Richtung des Abstieges  ergibt sich mit Hilfe der vorliegenden Trainingsdaten aus der Abweichung $e_{ui}$ zwischen den tatsächlichen und vorausberechneten Werten (siehe Formal (\ref{form:graddec-1}) - (\ref{form:graddec-3})). Der Faktor $\gamma$ entspricht dabei der Lernrate bzw. Schrittweite. Das Training wird entsprechend der Anzahl der zu ermittelnden Merkmale  $f$-mal, jeweils bis zur Konvergenz, durchgeführt. \citep{funk2006,Langford09,hb_05}
 \begin{align}
 e_{ui} & =  r_{ui} - pred(u,i) \label{form:graddec-1} \\
 q'_i & \gets q_i + \gamma (e_{ui} p_u - \lambda q_i ) \label{form:graddec-2} \\
