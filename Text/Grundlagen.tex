@@ -1,80 +1,10 @@
-\section{Grundlagen}
+\section{Grundlagen} %	Auf welchen Themen und Techniken baut die Arbeit auf.
 
-Im folgenden Abschnitt werden die notwendigen Grundlagen der verschiedenen Bestandteile einer personalisierten Suche beschrieben. Der erste Abschnitt beschreibt den Aufbau von Suchindexen und die Möglichkeiten zur Personalisierung der Ergebnisse. Der darauf folgende Abschnitt fasst Konzepte zur Bildung von Empfehlungen zusammen. Abschnitt \ref{sec:filtermethods} greift die Methode des kollaborativen Filterns nochmals auf und beschreibt die zugrunde liegenden Rechenmodelle. Der darauf folgende Abschied \ref{sec:filterissues} beschreibt Herausforderungen die sich im praktischen Umgang mit kollaborativen Filtermodellen ergeben. 
-
-%	Auf welchen Themen und Techniken baut die Arbeit auf.
-\todo{Formulierung kontrollieren}
+Im folgenden Abschnitt werden die notwendigen Grundlagen der verschiedenen Bestandteile einer personalisierten Suche beschrieben. Der erste Abschnitt beschreibt den Aufbau von Suchindexen und die Möglichkeiten zur Personalisierung der Ergebnisse. Der darauf folgende Abschnitt fasst Konzepte zur Bildung von Empfehlungen zusammen. Abschnitt \ref{sec:filtermethods} greift die Methode des kollaborativen Filterns nochmals auf und beschreibt die zugrunde liegenden Rechenmodelle. Der darauf folgende Abschied \ref{sec:filterissues} beschreibt Herausforderungen die sich im praktischen Umgang mit kollaborativen Filtermodellen ergeben. Maßnahmen, um die vorgestellten Rechenmodelle auch auf über die Kapazitäten eines einzelnen Rechners hinausreichende Datenmenge anzuwenden, werden im Abschnitt \ref{sec:scale} beschrieben. Methoden zum Vergleich bzw. zur Bewertung der Modelle werden im abschließenden Abschnitt \ref{sec:measures}  beschrieben.
 
 \input{Grundlagen_Suchindexe}
 \input{Grundlagen_Konzepte}
 \input{Grundlagen_Filtermodelle}
 \input{Grundlagen_Schwierigkeiten}
-
-
-\subsection{Skalierungsstrategien}
-
-
-\subsubsection{Parallelisierung}
-
-\citep{Langford09}
-
-\paragraph{Shared Memory Architekturen}
-\paragraph{Cluster Architekturen}
-\paragraph{Grid Architekturen} -> MapReduce
-
-
-
-\citep{linden03} Amazon.com recommendations: item-to-item collaborative filtering
-
- - Recommendation Datenmodelle die "schnell" sind
-- die meisten arbeiten mit "In-Memory" Datenmodellen (mit Optimierte Speicherung für die Ausführung)
-        - Wo sind die Grenzen (user,item anzahl ?)
-        - Lösungen: Precomputing similarities? 
-  - Lösungen: Cluster-based recommendation
-- Wann macht distributed recommendation sinn
-  - Wann stoßen memory based ans limit, welche algorithmen gibt es
-  - Ist Offline recommendation dafür ein Use-Case (Calculation recommendations and send via mail)?
-  - Hadoop vs Sharding
-  - Das lernen der Datenmodelle muss auch skalieren
-- Hadopp etc...
-
-%\citep{Vidal:2005:PDR:2137725.2137737}
-\citep{Toscher:2008:INA:1722149.1722153}
-
-``What is BigData'': http://www.zdnet.com/blog/virtualization/what-is-big-data/1708 \\
-``Slow Learners are Fast'' Langford09 - "Offline Lernen möglich" \\
-Google BigTable \\
-http://techblog.netflix.com/2012/06/scalable-logging-and-tracking.html
-
-\subsubsection{Online- / Offline-Recommendation}
-\subsubsection{MapReduce basierte Algorithmen}
-\citep{mapred008}
-\citep{jiang11}
-% RS Seite  48
-% Sharding (der Solr indexe)
-
-
-BigTable http://labs.google.com/papers/bigtable-osdi06.pdf 
-
-\subsection{Qualitätsmaße}\label{sec:measures}
-
-	\begin{itemize}
-	\item Successful session \citep{hb_18,Smyth05alive-user}
-	\item Precision /Recall /F1, \citep{rs}[Kap. 7]
-	\item User- und Itemcoverage \citep{rs}[S. 183]
-	\item Conversion / Click-through rates -> Joachim05 \\
-	Clickthrough ist als absolutes Maß eher problematisch da der Nutzer zum einen beeinflusst wird durch das Vertrauen in die Suchmaschine und durch die Qualität der sonst angebotenen Suchergebnisse. Bei einem Klick in einer Suchergebnisliste ist es deshalb sinnvoller die Relevanz abhängig von den nicht geklickten Elementen zu messen. (Joachim05)
-	\end{itemize}
-
-Zusammenfassung aus Cacheda11, Cremonesi10, Joachim05 und Herlocker04
-
-\subsubsection*{Mittlere Abweichung}\newpage
-% MAE, RMS
-\subsubsection*{Trefferquote und Genauigkeit}\newpage
-% Precision, Recall, F1, Fall-Out
-\subsubsection*{Empirische Messung}\newpage
-% Successful session
-
-%\subsubsection{Normalisierter DCG}
-%\subsubsection{A/B Testing}
-\newpage
+\input{Grundlagen_Skalierung}
+\input{Grundlagen_Qualitaet}
