@@ -12,7 +12,7 @@ lambda=0.02
 # primary learning rate - in addition learning has to converge to gamma^2
 gamma=0.005
 # amount of features - 2 works fine / 5 seems to be the maximum
-features = 3
+features = 4
 # initialize features - value is not really important
 init = Array.new(features, 0.1)
 u = Array.new(5).fill { init.clone }
