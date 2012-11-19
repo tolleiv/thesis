@@ -47,7 +47,7 @@ Die dafür benötigten Parameter $q$, $p$ und $b$ werden in einer Trainingsphase
 \min_{q*,p*,b*}{ \sum_{(u,i) \in \mathcal{K})} (r_{ui} -\mu-b_i - b_u - p_i^T q_u)^2  + \lambda ( \|q_u\|^2 + \|p_i\|^2 + b_u^2 + b_i^2) \label{form:trainsvd}   }
 \end{align}
 
-Die Menge $\mathcal{K}$ entspricht dabei allen vorliegenden Bewertungen $r_{ui}$. Die Konstante $\lambda$ wird genutzt um das sog. \textit{overfitting} zu verhindern, sie stellt also sicher dass das abgeleitete Modell generisch bleibt.  \citep{Koren:2009:MFT:1608565.1608614, hb_05}
+Die Menge $\mathcal{K}$ entspricht dabei allen vorliegenden Bewertungen $r_{ui}$. Die Konstante $\lambda$ wird genutzt um das sog. \textit{overfitting} zu verhindern, sie stellt also sicher, dass das abgeleitete Modell generisch bleibt.  \citep{Koren:2009:MFT:1608565.1608614, hb_05}
 
 \paragraph{Trainingsmethoden} Zur Durchführung des Trainings können zwei Methoden verwendet werden.
 

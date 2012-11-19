@@ -1,7 +1,7 @@
 \subsubsection{Ähnlichkeitsmaße}
 \label{sec:similarities}
 
-\paragraph{\addtoindex{Euklidische Distanz}} Die naheliegendste Form zur Bestimmung der Ähnlichkeit zwischen zwei Spalten oder zwei Zeilen der User-Item Matrix ist es deren Abstand im $n$-dimensionalen euklidischen Raum, gem. Formel (\ref{form:eukildsim}) zu nutzen.
+\paragraph{\addtoindex{Euklidische Distanz}} Die naheliegendste Form zur Bestimmung der Ähnlichkeit zwischen zwei Spalten oder zwei Zeilen der User-Item Matrix ist es, deren Abstand im $n$-dimensionalen euklidischen Raum, gem. Formel (\ref{form:eukildsim}) zu nutzen.
 \begin{align}
 \label{form:eukildsim}
 dist(a,b) & = \sqrt{\sum_{i=1}^{n} (a_i - b_i)^2} \\
@@ -16,10 +16,9 @@ Aus der Verallgemeinerung dieser Berechnung, der sog. \textit{Lr-Norm} bzw. dem 
 dist(a,b) & = \sum_{i=1}^{n} (\left| a_i - b_i \right|^r)^\frac{1}{r}
 \end{align}
 % http://www.fernuni-hagen.de/imperia/md/content/ls_statistik/kurse/00883_lp2.pdf
+% Anwendung finden die verschiedenen Abstandsmaße zum Beispiel in XXXXXX \todo{Anwendungsbeispiele raussuchen}
 
-Anwendung finden die verschiedenen Abstandsmaße zum Beispiel in XXXXXX \todo{Anwendungsbeispiele raussuchen}
-
-\paragraph{\addtoindex{Pearson-Korrelation}} Ein Problem bei der Berechnung mit der euklidischen Distanz ist, dass die Mittelwerte und Varianzen der Bewertungen einzelner Nutzer voneinander abweichen können obwohl sich diese vergleichbare ``Interessen'' haben (vgl. \citep[Kap. 2]{pci}). Dieser Mangel wird mit Hilfe der \textit{Pearson-Korrelation} (\ref{form:pearsonsim}) beseitigt.  Ihr Wertebereich reicht von $1$ (starke Korrelation) bis $-1$ (starke negative Korrelation). Vor Allem bei der Bestimmung von nutzerbasierten Ähnlichkeiten konnten mit ihr in vielen Fällen sehr gute Ergebnisse erzielt werden. Zudem existieren zahlreiche Erweiterungen, um zum Beispiel die Gewichtung von Übereinstimmungen bei der Bewertung von kontroversen Elementen stärker hervorzuheben. \citep[Kap. 2.1]{rs} \citep{hb_02}
+\paragraph{\addtoindex{Pearson-Korrelation}} Ein Problem bei der Berechnung mit der euklidischen Distanz ist, dass die Mittelwerte und Varianzen der Bewertungen einzelner Nutzer voneinander abweichen können obwohl diese vergleichbare ``Interessen'' haben (vgl. \citep[Kap. 2]{pci}). Dieser Mangel wird mit Hilfe der \textit{Pearson-Korrelation} (\ref{form:pearsonsim}) beseitigt.  Ihr Wertebereich reicht von $1$ (starke Korrelation) bis $-1$ (starke negative Korrelation). Vor Allem bei der Bestimmung von nutzerbasierten Ähnlichkeiten konnten mit ihr in vielen Fällen sehr gute Ergebnisse erzielt werden. Zudem existieren zahlreiche Erweiterungen, um zum Beispiel die Gewichtung von Übereinstimmungen bei der Bewertung von kontroversen Elementen stärker hervorzuheben. \citep[Kap. 2.1]{rs} \citep{hb_02}
 
 \begin{align}
 \label{form:pearsonsim}

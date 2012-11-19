@@ -17,6 +17,8 @@
 \usepackage{amsfonts}					% wird with \mathbb gebraucht
 \usepackage[safe]{tipa}
 \usepackage{subfig}
+	% ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
+\usepackage{listings}
 
 \usepackage[pdftex,pagebackref=true]{hyperref}	% für "klickbare" Verlinkung im Dokument
 \hypersetup{
@@ -93,8 +95,10 @@
 \makeindex 
 
 \hyphenation{Grund-elemente}	% definierte Silbentrennung
+\hyphenation{Daten-menge}
 
 \begin{document}
+\lstset{basicstyle=\linespread{1}\scriptsize\ttfamily, basewidth=0.51em}
 
 \pagenumbering{roman}
 \pagestyle{empty}

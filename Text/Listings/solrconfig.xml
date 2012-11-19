@@ -1,0 +1,11 @@
+<config>
+	<lib dir="Search/target/dependency" regex=".*\.jar" />
+	<lib path="Search/target/Search.jar" /> 
+	<query>
+		<searchComponent
+			name="personalize"
+			class="de.tolleiv.cf.search.SpringAwareSearchComponent">
+			<str name="searchDelegate">booleanBoostRecommenderComponent</str>
+		</searchComponent>
+	</query>
+</config>
