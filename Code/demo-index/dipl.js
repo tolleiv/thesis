@@ -1,11 +1,14 @@
 
 /**
-    Demo quieries:
+    Demo queries:
 
     /solr/select/?q=*%3A*&indent=on&fl=*,score,dist(2,vector(0.57,-1.01,0.66,0.11),features)&debugQuery=on
     /solr/select/?qq=*:*&b=div(1,dist(2,vector(0.57,-1.01,0.66,0.10),features))&q=%7B!boost%20b=$b%20v=$qq%7D&fl=*,score&debugQuery=on
-    /solr/select/?qq=*:*&v=vector(0.57,-1.01,0.66,0.11)&b=div(1,dist(2,$v,features))&q=%7B!boost%20b=$b%20v=$qq%7D&fl=*,score&debugQuery=on
 
+    /solr/select/?qq=*:*&v=vector(0.57,-1.01,0.66,0.11)&b=div(1,dist(2,$v,features))&q=%7B!boost%20b=$b%20v=$qq%7D&fl=*,score&debugQuery=on
+    /solr/select/?qq=content:Josef&v=vector(0.57,-1.01,0.66,0.11)&b=div(1,dist(2,$v,features))&q=%7B!boost%20b=$b%20v=$qq%7D&fl=*,score&debugQuery=on
+
+    
     qq = *:*
     b = div(1, dist(2,$v, features))
     v = vector(0.57,-1.01,0.66,0.11)
