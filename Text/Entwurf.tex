@@ -1,61 +1,68 @@
 \section{Entwurf}
 
-Aufbauend auf den im vorangegangen Abschnitt beschriebenen Grundlagen wurde im Rahmen der Diplomarbeit eine Beispielapplikation implementiert. Die an diese Applikation gestellten Anforderungen, der konzeptionelle Aufbau und die Maßnahmen zur Datenerhebung werden im Folgenden beschrieben.
+Aufbauend auf den im vorangegangen Abschnitt beschriebenen Grundlagen wurde im Rahmen der Diplomarbeit eine Beispielapplikation implementiert. Die an diese Applikation gestellten Anforderungen, die möglichen Schwierigkeiten bei der Integration, der konzeptionelle Aufbau und die Maßnahmen zur Datenerhebung werden im Folgenden beschrieben.
 
 \subsection{Anforderungen}
 
-
+Da die Skalierbarkeit der Anwendung einen hohen Stellenwert hat, werden im vorliegenden Abschnitt neben funktionellen Anforderungen auch Anforderungen an die Leistungsfähigkeit beschrieben. %... Hierzu sollen in der Arbeit die Möglichkeiten der Integration von Recommendation- Engines und Suchindexen untersucht werden. Neben der Vorstellung der existieren- den Recommendation-Ansätze und Algorithmen, soll dafür vor allem das Suchergebnis- Boosting und die Kombination verschiedener Algorithmen zu diesem Zweck ausgearbeitet werden.
 
 \subsubsection{Anwendungsfälle}
 
+Aus der angestrebten Kombination von Empfehlungsdienst und Suchindexen ergeben sich zahlreiche Anwendungsfälle. Für jeden der vorab definierten Fälle wird im Folgenden beschrieben, welcher Mehrwert sich ergibt, wie dieser geprüft werden kann und welche Aufgaben die beiden Bestandteile haben. Die Anwendungsfälle werden zudem durch Beispiele ergänzt, welche an den Verkauf von Konzertkarten angelehnt sind. \todo[color=orange]{Ggf. Beispielbasis in der gesamten Arbeit so definieren}
 
+\paragraph{Personalisierte Suche} Wie in Abschnitt \ref{sec:personalresultstheorie} beschrieben, kann die Relevanzberechnung beim Sortieren einer Dokumentenliste auch entsprechend eines Nutzerprofils angepasst werden. In der zu einer Anfrage gefundenen Dokumentenliste sollen dadurch die für den Nutzer relevanten Dokumente bevorzugt werden. Ob die erzielten Ergebnisse tatsächlich höheren Nutzen bieten, kann zum Beispiel durch eine Steigerung des ``Successful Session'' Maßes (vgl. Abschnitt \ref{sec:successfulsession}) gemessen werden.
 
+Die Aufgabe der ``Profilbildung'' soll durch die Mittel der Empfehlungsdienste (vgl. Abschnitt \ref{sec:filtermethods}) integriert werden. Der Suchindex verarbeitet die Anfrage des Nutzers, findet alle relevanten Elemente und sortiert diese entsprechend der Relevanz (vgl. Abschnitt \ref{sec:searchrelevance}).
 
+Sucht ein Nutzer zum Beispiel nach ``Musicals Hamburg'' so wäre es die Aufgabe des Suchindexes ``Disneys König der Löwen'' und ``Caveman'' als relevante Ergebnisse zu finden. Da der eigentliche Suchausdruck hier keinen Schluss auf die Präferenz des Nutzers zulässt, sollte die Sortierung der Ergebnisse durch den Empfehlungsdienst entsprechend angepasst sein.
 
+%A) Personalisierte Suche: Wenn man nach allgemeinen Begriffen wie "Geschenk" "Wein" oder "Kleid" sucht, bekommt man bereits durch andere Nutzer gelernte passende Empfehlungen in der Suche höher angezeigt. (Nutzer schaut sich Rotweine an und bekommt bei Suche nach Wein passende Rotweine angezeigt. Im Vergleich dazu ein Nutzer der sich Weißweine angeschaut hat)
 
+\paragraph{Kontextbasierte Empfehlungen} Ohne eine konkrete (Such-)Anfrage des Nutzers kann man auf Basis des vorliegenden Nutzerprofils Empfehlungen generieren.  Die Kombination mit einem Suchindex ermöglicht es zudem inhaltliche Aspekte einfließen zu lassen. Bei der Empfehlung von Veranstaltungen wäre es dadurch zum Beispiel möglich, nur Veranstaltungen zu empfehlen die noch nicht ausgebucht sind oder die in einem bestimmten Zeitraum liegen.
 
+Der Empfehlungsdienst ist in diesem Szenario für die Zusammenstellung der möglichen Kanidaten-Elemente zuständig, dem Suchindex fällt die Aufgabe der Anreicherung und Filterung dieser Elemente zu. Die Kontrolle der Ergebnisse kann zum Beispiel durch den Vergleich von Klickraten oder Conversion-Raten erfolgen.
 
+\paragraph{Komplementär-Suche} Als Ergänzung zu einer bestehenden Liste von Elementen, zum Beispiel in einer Merkliste oder einem Warenkorb, ist es möglich für den Nutzer relevante komplementäre Elemente zu finden. Wie bei den kontextbasierten Empfehlungen werden mögliche Komplementäre Elemente vom Empfehlungsdienst gefunden und durch die Informationen des Suchindex ergänzt oder gefiltert.
 
+Im Gegensatz zum vorangegangenen Anwendungsfall ist der Bezug zu der bereits von Nutzer getroffenen Auswahl maßgeblich. Hat sich der Nutzer zum Beispiel für ein Musical in Hamburg entschieden, scheint es sinnvoll ihm noch eine passende Hotelreservierung oder passende Restaurants zu empfehlen. Das Zusammenspiel von Suchindex und Empfehlungsdienst ist in diesem Zusammenhang vielversprechend. Der Suchindex kann den ``inhaltlichen'' Bezug sicherstellen und so zum Beispiel nur Restaurants in der richtigen Stadt und zum richtigen Zeitpunkt zu finden, der Empfehlungsdienst kann auf dieser Basis dann entsprechend der Präferenzen des Nutzers die richtige Vorauswahl treffen. Die Messung der Conversion-Raten kann auch hier zur Kontrolle genutzt werden.
 
-Potentielle Use-Cases:
+%B) Personalisiertes-Recommendation Widget:
+% - In der rechten Spalte werden (passend zu den letzten besuchten Items oder durchgeführten Suchen) persönliche Empfehlungen gegeben
+%2) Crosselling Widget im Warenkorb (Empfehlungen zu den Items im Warenkorb)
 
-A) Personalisierte Suche:
-  Wenn man nach allgemeinen Begriffen wie "Geschenk" "Wein" oder "Kleid" sucht, bekommt man bereits durch andere Nutzer gelernte passende Empfehlungen in der Suche höher angezeigt.
-  (Nutzer schaut sich Rotweine an und bekommt bei Suche nach Wein passende Rotweine angezeigt. Im Vergleich dazu ein Nutzer der sich Weißweine angeschaut hat)
+\paragraph{Cross-Selling} Nutzt man die in Abschnitt \ref{sec:neighborhoods} beschriebenen elementbasierten Nachbarschaftsmodelle innerhalb des Empfehlungsdienstes so ist es möglich, für jedes Element weitere ähnliche Elemente zu finden. Die Ähnlichkeit der Elemente bezieht sich dann je nach Maß (vgl. Abschnitt \ref{sec:similarities}) vor allem darauf wie oft diese gemeinsam ähnlich bewertet wurden. Die daraus getroffenen Empfehlungen können für das sog. \textit{Cross-Selling} genutzt werden.
 
-B) Personalisiertes-Recommendation Widget:
- - In der rechten Spalte werden (passend zu den letzten besuchten Items oder durchgeführten Suchen) persönliche Empfehlungen gegeben
+Sucht ein Nutzer nach ``Musicals Köln'' kann dadurch zum Beispiel die Empfehlung ausgesprochen werden dass der Besuch des Kölner Doms oder eine Altstadtführung von vielen anderen Nutzern hinzu gebucht wurde. Im Gegensatz zu den komplementären Suchen, bei denen die Art der Komplementbildung durch entsprechende Vorkonfiguration eingeschränkt ist, bestimmen hier einzig die Resultate der Nachbarschaftsmodelle.
 
+Der Empfehlungsdienst nimmt hierbei zwei Aufgaben ein, er findet über die Nachbarschaftsmodelle relevante Kanidatenelemente und kann die daraus resultierende Liste in einem zweiten Schritt entsprechend des Nutzerprofils personalisiert sortieren bzw. filtern. Der Suchindex kann wie bei den kontextbasierten Empfehlungen zur Filterung und inhaltlichen Anreicherung genutzt werden.
 
-C) Context-Recommendation Widget:
-1) Alla "Nutzer die x gekauft haben haben auch y gekauft" oder simple "Find most simelar items to an item"
-Hier macht die Kombination von Suchindex und Recommendation auch Sinn weil:
-- Der Suchindex alle zur Ausgabe relevanten Daten eines Dokumentes hat
-- (Vorberechnung?)
-- Es einfach möglich ist die Items über die die Recommendation gemacht werden sollen über inhaltliche (regelbasierte) Suchqueries weiter einzuschränken oder zu boosten (e.g. Items die höheren Preis haben und in gleicher Kategorie sind höher boosten)
-
-2) Crosselling Widget im Warenkorb (Empfehlungen zu den Items im Warenkorb)
+%1) Alla "Nutzer die x gekauft haben haben auch y gekauft" oder simple "Find most simelar items to an item" Hier macht die Kombination von Suchindex und Recommendation auch Sinn weil:
+%- Der Suchindex alle zur Ausgabe relevanten Daten eines Dokumentes hat
+%- (Vorberechnung?)
+%- Es einfach möglich ist die Items über die die Recommendation gemacht werden sollen über inhaltliche (regelbasierte) Suchqueries weiter einzuschränken oder zu boosten (e.g. Items die höheren Preis haben und in gleicher Kategorie sind höher boosten)
 
 \subsubsection{Leistungsanforderungen}
 
 Traffic / Nutzerzahlen - hochgerechnete Bandbreiten / Memorybedarf / Speicherbedarf
 
+\subsection{Problemstellungen}
+
 \subsection{Systemarchitektur}
 
 
 
--Wenn man von großen Mengen (großer Raum) von Items ausgeht stellt sich das Problem, das die Teilmenge der Items die der Recommender und die Suche zu einer "Anfrage" zurück geben können disjunkt sein oder nur eine unerhebliche Schnittmenge haben. Teilprobleme wären
-   - "Boosting in der Suchmenge": Recommender bekommt Solr-Menge und macht nur darüber Recommendations (wenn überhaupt möglich - vielleicht kommt man ja in die erste Schleife der user-based algorithmen "i that u has no preference for yet")
-   - "Boosting in der Recommender Menge": Recommender bestimmt Menge (OR query + Optionales query) und Solr boosted nur noch darin. (Use-Case widget)
-   -  "Selective Recommendation": Recommender wählt eine zum Query passendes Datenmodell / Datengrundlage aus, die möglichst viele potentielle Schnittmengen mit dem Query hat
-       - Hier könnte man Jobs haben die regelmäßig die User-Item Datensätze nur für Items lernen die von der Suche zu einem bestimmtem Query zurückkommen (e.g. die Top-Querys)
-   - "Anreicherungsansatz" Der Recommender könnte zu Ergebnissen in der Suchmenge weitere Ergebnisse einstreuen (flgl "More like these" handler).
-   - "Precomputation and Delegation to Solr"
-- Da find ich auch Interessant. Man kann sicherlich durch vorclustern ähnlicher Items oder ähnliche Items pro Usercluster alles direkt in einer Abfrage abwickelt  (Durch anreichern der Daten im Index )
+%-Wenn man von großen Mengen (großer Raum) von Items ausgeht stellt sich das Problem, das die Teilmenge der Items die der Recommender und die Suche zu einer "Anfrage" zurück geben können disjunkt sein oder nur eine unerhebliche Schnittmenge haben. Teilprobleme wären
+%   - "Boosting in der Suchmenge": Recommender bekommt Solr-Menge und macht nur darüber Recommendations (wenn überhaupt möglich - vielleicht kommt man ja in die erste Schleife der user-based algorithmen "i that u has no preference for yet")
+%   - "Boosting in der Recommender Menge": Recommender bestimmt Menge (OR query + Optionales query) und Solr boosted nur noch darin. (Use-Case widget)
+%   -  "Selective Recommendation": Recommender wählt eine zum Query passendes Datenmodell / Datengrundlage aus, die möglichst viele potentielle Schnittmengen mit dem Query hat
+%       - Hier könnte man Jobs haben die regelmäßig die User-Item Datensätze nur für Items lernen die von der Suche zu einem bestimmtem Query zurückkommen (e.g. die Top-Querys)
+%   - "Anreicherungsansatz" Der Recommender könnte zu Ergebnissen in der Suchmenge weitere Ergebnisse einstreuen (flgl "More like these" handler).
+%   - "Precomputation and Delegation to Solr"
+% - Da find ich auch Interessant. Man kann sicherlich durch vorclustern ähnlicher Items oder ähnliche Items pro Usercluster alles direkt in einer Abfrage abwickelt  (Durch anreichern der Daten im Index )
+% - Recommender empfehlen nur neue Items, man will aber ggf auch das bereits geklickte Items in der Suche höher gewichtet werden (so macht es Google ja auch)
+% - Recommendation Algorithmen und Datengrundlage sind sehr verschieden. Wie kann man verschiedene Implementierungen nutzen/ansprechen/auswählen.
 
-- Recommender empfehlen nur neue Items, man will aber ggf auch das bereits geklickte Items in der Suche höher gewichtet werden (so macht es Google ja auch)
-- Recommendation Algorithmen und Datengrundlage sind sehr verschieden. Wie kann man verschiedene Implementierungen nutzen/ansprechen/auswählen.
-
+\subsection{Bildung von Empfehlungen}
 
 \subsection{Datenerhebung}
 
