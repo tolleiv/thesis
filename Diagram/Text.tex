@@ -1,0 +1,91 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[a4paper, german, 12pt, onecolumn, oneside,bibliography=totoc,listof=totoc]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[pdftex]{graphicx} % Einbindung von Grafiken (pdf, png, jpg)
+\usepackage{float}            % bietet Option [H] für bombenfestes Verankern
+\usepackage{wrapfig}
+\usepackage[ngerman]{babel}   % Silbentrennung nach der neuen deutschen Rechtschreibung, z.B.: Sys-tem
+%\usepackage{amstext}         % für Klartext via \text{} in Formeln
+\usepackage{color}						% http://en.wikibooks.org/wiki/LaTeX/Colors
+\usepackage[hang,small,bf]{caption} % http://radio.wihome.net/wiki/?article=LaTeX:captions
+\usepackage{amsmath}
+\usepackage[safe]{tipa}
+\usepackage{subfig}
+
+\usepackage[printonlyused]{acronym}
+\renewcommand{\bflabel}[1]{\normalfont{\normalsize{#1}}\hfill}
+
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning}
+\usepackage{amsmath,bm,times}
+
+\usepackage{parskip}          % zw. Absätzen: eine knappe Leerzeile statt hängender Einzüge
+\usepackage{makeidx}          % Package zur Indexerstellung
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Größenanpassungen
+%
+\setlength{\unitlength}{1cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\textwidth}{16.1cm}
+\setlength{\topmargin}{-1.2cm}
+\setlength{\textheight}{23cm}
+\columnsep 0.5cm
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\nosubsubsection}[1] {{\textit{#1}}\newline}
+\newcommand{\footnoteremember}[2]{
+  \footnote{#2}
+  \newcounter{#1}
+  \setcounter{#1}{\value{footnote}}
+} \newcommand{\footnoterecall}[1]{
+  \footnotemark[\value{#1}]
+} 
+
+\sloppy                       % großzügiger Zeilenumbruch 
+\makeindex 
+
+\begin{document}
+\pagestyle{empty}
+\renewcommand{\baselinestretch}{1.5}\normalsize
+
+\tikzset{
+    %Define standard arrow tip
+    >=stealth'
+}
+
+
+\tikzstyle{user}=[draw, fill=gray!20, text width=6em, 
+    text centered, minimum height=2.5em, rounded corners]
+\tikzstyle{servlet}=[draw, fill=yellow!10, text width=6em, 
+    text centered, minimum height=2.5em, rounded corners]
+\tikzstyle{pig}=[draw, fill=pink!50, text width=6em, 
+    text centered, minimum height=2.5em, rounded corners]
+\tikzstyle{java}=[draw, fill=red!60, text width=6em, 
+    text centered, minimum height=2.5em, rounded corners]
+\tikzstyle{hdfs}=[draw, fill=cyan!10, text width=12em, 
+    text centered, minimum height=2.5em, rounded corners]
+\def\blockdist{3}
+
+\begin{tikzpicture}[node distance=1cm, auto,]
+
+ \node (user) [user] {User};
+ \node (search) [servlet, right=of user] {Search};
+ \node (recommender) [servlet,right=of search] {Recommender};
+ \node (tracker) [servlet, below=of user] {Tracker};
+ \node (profiler) [pig,below=of search] {Profile Builder};
+ \node (modeler) [java,below=of recommender] {Model Builder};
+ \node (rawstore) [hdfs,below=of tracker] {Raw Log Store};
+ \node (profilestore) [hdfs,below=of profiler] {Profile Store};
+ 
+
+\end{tikzpicture}
+
+
+
+\end{document}

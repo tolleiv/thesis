@@ -1,13 +1,35 @@
-\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ MAE dazu?}}{15}{section*.12}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Quelle dass ``Normalisierung'' auch bei item-item relevant ist}}{17}{section*.17}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ergebnisse der Rechnung einf\IeC {\"u}gen}}{17}{section*.18}
-\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ Weiterf\IeC {\"u}hrend: Regression vs. Classification aus HB04 evt. erg\IeC {\"a}nzen}}{19}{section*.21}
-\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ ggf. SlopeOne erg\IeC {\"a}nzen}}{19}{section*.22}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ PureSVD erl\IeC {\"a}utern?}}{19}{section*.24}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Pseudocode aus Louppe10 ?}}{20}{section*.27}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Temporale Effekte dazu ?}}{20}{section*.28}
-\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ Weitere Ans\IeC {\"a}tze erg\IeC {\"a}nzen? zB. Graphen-Modelle? Bolzmann-Dings?}}{21}{section*.30}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Formen von Attacken oder Ma\IeC {\ss }nahmen k\IeC {\"o}nnten erg\IeC {\"a}nzt werden}}{23}{section*.37}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ ggf. Langford09 Parallelisierungsstrategien dazu}}{23}{section*.38}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Ggf. MapRed. Beispiel einf\IeC {\"u}gen.}}{27}{section*.41}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ BSP}}{27}{section*.42}
+\contentsline {todo}{{\color@box {}{red}{\leavevmode {\color {red}o}}\ Hindernis}}{1}{section*.3}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Wichtige Aufgabe}}{1}{section*.4}
+\contentsline {todo}{{\color@box {}{yellow}{\leavevmode {\color {yellow}o}}\ Aufgabe abh\IeC {\"a}ngig von anderen}}{1}{section*.5}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ M\IeC {\"o}gliche Erg\IeC {\"a}nzung / weitere Anregung}}{1}{section*.6}
+\contentsline {todo}{{\color@box {}{white}{\leavevmode {\color {white}o}}\ }}{1}{section*.7}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ ggf. um Beispiel erg\IeC {\"a}nzen}}{7}{section*.12}
+\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ MAE dazu?}}{15}{section*.19}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Quelle das ``Normalisierung'' auch bei item-item relevant ist}}{17}{section*.24}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ergebnisse der Rechnung einf\IeC {\"u}gen}}{17}{section*.25}
+\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ Weiterf\IeC {\"u}hrend: Regression vs. Classification aus HB04 evt. erg\IeC {\"a}nzen}}{19}{section*.28}
+\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ ggf. SlopeOne erg\IeC {\"a}nzen}}{19}{section*.29}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ PureSVD erl\IeC {\"a}utern?}}{19}{section*.31}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ G\IeC {\"o}hler S. 89 unten}}{20}{section*.34}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Pseudocode aus Louppe10 ?}}{20}{section*.35}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Temporale Effekte dazu ?}}{20}{section*.36}
+\contentsline {todo}{{\color@box {}{green!20}{\leavevmode {\color {green!20}o}}\ Iterative Methoden ggf. erg\IeC {\"a}nzen bzw. Informationen zu iterativen Updates der Modelle hinzuf\IeC {\"u}gen - siehe Entwurf->Problemstellung}}{21}{section*.38}
+\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ Weitere Ans\IeC {\"a}tze erg\IeC {\"a}nzen? zB. Graphen-Modelle? Bolzmann-Dings?}}{21}{section*.39}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Formen von Attacken oder Ma\IeC {\ss }nahmen k\IeC {\"o}nnten erg\IeC {\"a}nzt werden}}{23}{section*.46}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ ggf. Langford09 Parallelisierungsstrategien dazu}}{23}{section*.47}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Ggf. MapRed. Beispiel einf\IeC {\"u}gen.}}{27}{section*.50}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ BSP}}{27}{section*.51}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ HB Kap. 10.4.2 dazu?}}{31}{section*.58}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ggf. Beispielbasis in der gesamten Arbeit so definieren}}{32}{section*.59}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ GA Screen erg\IeC {\"a}nzen}}{34}{section*.64}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Zahl ermitteln}}{34}{section*.65}
+\contentsline {todo}{{\color@box {}{red}{\leavevmode {\color {red}o}}\ Zahl hinterfragen}}{35}{section*.66}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Zeitraum ermitteln}}{35}{section*.67}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Zahlen ermitteln}}{35}{section*.68}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Zahlen ermitteln}}{35}{section*.69}
+\contentsline {todo}{{\color@box {}{yellow}{\leavevmode {\color {yellow}o}}\ Zahlen berechnen}}{35}{section*.71}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Zahl ermitteln}}{35}{section*.73}
+\contentsline {todo}{{\color@box {}{yellow}{\leavevmode {\color {yellow}o}}\ Zahl berechnen}}{35}{section*.74}
+\contentsline {todo}{{\color@box {}{yellow}{\leavevmode {\color {yellow}o}}\ Zahlen berechnen}}{35}{section*.75}
+\contentsline {todo}{{\color@box {}{red}{\leavevmode {\color {red}o}}\ SVD Absatz erg\IeC {\"a}nzen}}{37}{section*.76}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Iterative Updates bei User/Item based Recommendation erg\IeC {\"a}nzen}}{37}{section*.77}

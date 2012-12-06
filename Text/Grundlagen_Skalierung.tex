@@ -1,11 +1,11 @@
 \subsection{Skalierungsstrategien}
 \label{sec:scale}
 
-Die in den vorangegangenen Abschnitten beschriebenen Techniken zum Aufbau von Recommender-Systemen entfalten vor allem bei einer möglichst großen Datenbasis ihren Nutzen. Der Umfang der zu diesem Zweck erhobenen Daten steigt schnell in Größen die nichtmehr sinnvoll von einzelnen Systemen verarbeitet werden können.  Um  diesem Problem zu begegnen, beschreibt dieser Abschnitt mögliche Lösungsstrategien zur Speicherung, Verteilung und Verarbeitung von Daten auf einer großen Zahl von Rechnern. \todo[color=green]{ggf. Langford09 Parallelisierungsstrategien dazu}
+Die in den vorangegangenen Abschnitten beschriebenen Techniken zum Aufbau von Recommender-Systemen entfalten vor allem bei einer möglichst großen Datenbasis ihren Nutzen. Der Umfang der zu diesem Zweck erhobenen Daten steigt schnell in Bereiche die nicht mehr sinnvoll von einzelnen Systemen verarbeitet werden können.  Um  diesem Problem zu begegnen, beschreibt dieser Abschnitt mögliche Lösungsstrategien zur Speicherung, Verteilung und Verarbeitung von Daten auf einer großen Zahl von Rechnern. \todo[color=green]{ggf. Langford09 Parallelisierungsstrategien dazu}
 
 \subsubsection{Skalierung der Datenhaltung}
 
-Die Architektur eines Dateisystems dass den Ansprüchen großer verteilter Systeme genügt wird in \citep{ghemawat03} beschrieben. Das darin entworfene \acf{GFS} orientiert sich dabei an den Erfahrungen aus dem praktischen Anwendungen und stellt folgende Kernannahmen:
+Die Architektur eines Dateisystems, dass den Ansprüchen großer verteilter Systeme genügt, wird in \citep{ghemawat03} beschrieben. Das darin entworfene \acf{GFS} orientiert sich dabei an den Erfahrungen aus dem praktischen Anwendungen und stellt folgende Kernannahmen:
 
 \begin{itemize}
 \item Das Gesamtsystem wird aus vielen handelsüblichen und damit günstigen Komponenten aufgebaut. Da Ausfälle einzelner Komponenten keine Ausnahme darstellen, müssen diese automatisch erkannt und behoben bzw. tolerant ausgeglichen werden.

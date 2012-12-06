@@ -10,7 +10,7 @@
 %
 %Zusammenfassung aus Cacheda11, Cremonesi10, Joachim05 und Herlocker04
 
-Im Folgenden Abschnitt werden verschiedene Wege zur Bewertungen von Empfehlungsdiensten beschrieben. Sie dienen zum qualitativen Vergleich von Filtermodellen und als Kontrollwerkzeug vor und während der Inbetriebnahme des Dienstes.
+Im folgenden Abschnitt werden verschiedene Wege zur Bewertungen von Empfehlungsdiensten beschrieben. Sie dienen zum qualitativen Vergleich von Filtermodellen und als Kontrollwerkzeug vor und während der Inbetriebnahme des Dienstes.
 
 \subsubsection{Mittlere Abweichung}
 
@@ -61,14 +61,13 @@ Die ebenfalls mögliche Bestimmung der Ausfallquote (engl. Fallout), also der An
 
 Ergänzend zur Messung der Approximationsgüte des erzeugten Modells muss bei einem praktischen Einsatz auch der tatsächliche Erfolg der eingesetzten Methode gemessen werden. Dafür bieten sich die aus dem Marketing stammenden \textit{Klickraten} und \textit{Conversion-Raten} Messung an, des weiteren kann in Verbindung mit Suchindexen auch die Bestimmung der \textit{Successful Session} Quote genutzt werden.
 
-\paragraph{Klickrate} Beschreibt die Anzahl der Klicks auf ein Element, zum Beispiel eine Werbebanner, im Verhältnis zur Häufigkeit mit der es angezeigt wurde. 
+\paragraph{Klickrate} Beschreibt die Anzahl der Klicks auf ein Element, zum Beispiel einen Werbebanner, im Verhältnis zur Häufigkeit mit der es angezeigt wurde. 
 
-\paragraph{Conversion-Rate} Mit der Conversion-Rate wird bestimmt welcher Anteil der Besucher ein bestimmtes Ziel, die sog. \textit{Conversion}, erreicht haben. Mögliche Ziele sind zum Beispiel erfolgreiche Kaufabschlüsse oder Kontaktaufnahmen der Kunden. Die Ziele werden abhängig vom Kontext so gewählt, dass diese aktiv zur Wertschöpfung beitragen. Die Berechnung der Conversion-Rate entspricht gem. Formel (\ref{form:cr}) dem Verhältnis der gemessenen Conversions $conv$ und der Anzahl der Besucher $visitors$ die im gegebenen Zeitraum eine oder mehrere Seiten aufgerufen haben. Maschinelle Seitenzugriffe, zum Beispiel such Suchmaschinen-Spider, fließen nicht in Messung der Nutzerzahlen ein. Ebenso werden wiederholte Conversions des gleichen Besuchers nicht mehrfach gezählt. \citep{krueger2011conversion}
+\paragraph{Conversion-Rate} Mit der Conversion-Rate wird bestimmt welcher Anteil der Besucher ein bestimmtes Ziel, die sog. \textit{Conversion}, erreicht haben. Mögliche Ziele sind zum Beispiel erfolgreiche Kaufabschlüsse oder Kontaktaufnahmen der Kunden. Die Ziele werden abhängig vom Kontext so gewählt, dass diese aktiv zur Wertschöpfung beitragen. Die Berechnung der Conversion-Rate entspricht gem. Formel (\ref{form:cr}) dem Verhältnis der gemessenen Conversions $conv$ und der Anzahl der Besucher $visitors$ die im gegebenen Zeitraum eine oder mehrere Seiten aufgerufen haben. Maschinelle Seitenzugriffe, zum Beispiel durch Suchmaschinen-Spider, fließen nicht in Messung der Nutzerzahlen ein. Ebenso werden wiederholte Conversions des gleichen Besuchers nicht mehrfach gezählt. \citep{krueger2011conversion}
 \begin{align}
 CR & = \frac{|conv|}{|visitors| } * 100 \label{form:cr}
 \end{align}
 
-\paragraph{Successful Session} Da die Nutzeroberfläche von Suchmaschinen in der Regel kein explizites Feedback vom Nutzer zur Qualität der gefundenen Ergebnisse  zulässt, muss die Relevanz einer Ergebnisliste über implizite Verfahren gemessen werden. In \citep{smyth05a} wird die Methode der \textit{Successful Session} für diesen Zweck beschrieben. Die Ergebnisliste einer Suche wird demnach immer dann als relevant bewertet wenn der Nutzer mindestens eines der Ergebnisse ausgewählt hat. Wird keines gewählt, wird die Liste entsprechend als irrelevant bewertet. Eine weitere Abstufung bzw. Steigerung der Relevanz, zum Beispiel bei wiederholter Ergebniswahl, wird nicht getroffen. \citep{smyth05a}
-
+\paragraph{Successful Session}\label{sec:successfulsession} Da die Nutzeroberfläche von Suchmaschinen in der Regel kein explizites Feedback vom Nutzer zur Qualität der gefundenen Ergebnisse  zulässt, muss die Relevanz einer Ergebnisliste über implizite Verfahren gemessen werden. In \citep{smyth05a} wird die Methode der \textit{Successful Session} für diesen Zweck beschrieben. Die Ergebnisliste einer Suche wird demnach immer dann als relevant bewertet wenn der Nutzer mindestens eines der Ergebnisse ausgewählt hat. Wird keines gewählt, wird die Liste entsprechend als irrelevant bewertet. Eine weitere Abstufung bzw. Steigerung der Relevanz, zum Beispiel bei wiederholter Ergebniswahl, wird nicht getroffen. \citep{smyth05a} \todo[color=green]{HB Kap. 10.4.2 dazu?}
 %\subsubsection{Normalisierter DCG}
 %\subsubsection{A/B Testing}
