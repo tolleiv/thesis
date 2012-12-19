@@ -3,7 +3,7 @@
 
 Die in den vorangegangenen Abschnitten beschriebenen Techniken zum Aufbau von Recommender-Systemen entfalten vor allem bei einer möglichst großen Datenbasis ihren Nutzen. Der Umfang der zu diesem Zweck erhobenen Daten steigt schnell in Bereiche die nicht mehr sinnvoll von einzelnen Systemen verarbeitet werden können.  Um  diesem Problem zu begegnen, beschreibt dieser Abschnitt mögliche Lösungsstrategien zur Speicherung, Verteilung und Verarbeitung von Daten auf einer großen Zahl von Rechnern. \todo[color=green]{ggf. Langford09 Parallelisierungsstrategien dazu}
 
-\subsubsection{Skalierung der Datenhaltung}
+\subsubsection{Skalierung der Datenhaltung}\label{sec:hfs}
 
 Die Architektur eines Dateisystems, dass den Ansprüchen großer verteilter Systeme genügt, wird in \citep{ghemawat03} beschrieben. Das darin entworfene \acf{GFS} orientiert sich dabei an den Erfahrungen aus dem praktischen Anwendungen und stellt folgende Kernannahmen:
 
@@ -26,7 +26,7 @@ Die Integrität der Daten wird von den \textit{Chunkservern} sichergestellt. Inn
 
 Wie in  \citep{ghemawat03}  gezeigt wird, kann ein so aufgebautes System auf der Basis von handelsüblichen Hardware effizient betrieben werden, falls die zuvor beschriebenen Annahmen für die damit betriebenen Anwendungen zutreffen.  \citep{ghemawat03}
 
-\subsubsection{Horizontalen Fragmentierung}
+\subsubsection{Horizontalen Fragmentierung}\label{sec:sharding}
 
 Will man große Datenmengen innerhalb eines Datenspeichers halten ohne an die Grenzen einzelner Speicherknoten zu stoßen, ist die \textit{horizontale Fragmentierung} (engl. \textit{Sharding}) eine weitere mögliche Strategie. Zur Verarbeitung einer Anfrage sind hierfür zwei Knotentypen bzw. Servertypen notwendig. Die \textit{Backend-Knoten} halten jeweils einen Teil der Daten und verarbeiten alle Anfragen dafür. Die \textit{Frontend-Knoten} bilden die Schnittstelle zu den Applikationen. Sie verteilen die Anfragen an die richtigen Backend-Knoten und fassen Anfrageergebnisse verschiedener Backend-Knoten zusammen. In der Regel werden die Daten möglich gleichmäßig mit Hilfe eines, über einen Hashing-Algorithmus generierten, Schlüssels auf die Backend-Knoten verteilt. \citep{Michael07}
 \begin{figure}[H]
@@ -39,7 +39,7 @@ Will man große Datenmengen innerhalb eines Datenspeichers halten ohne an die Gr
 
 Der Nachteil einer derartigen Verteilung ist, dass Transaktionen um atomare Operationen zu gewährleisten erheblichen Zusatzaufwand nach sich ziehen. In Bereichen wo diese nicht notwendig sind, etwa bei der Verwaltung von Suchindexen, kann horizontale Fragmentierung allerdings zu signifikanten Leistungssteigerungen führen. \citep{Michael07}
 
-\subsubsection{MapReduce basierte Algorithmen}
+\subsubsection{MapReduce basierte Algorithmen}\label{sec:mapred}
 
 Liegen die Daten in einem verteilten System vor, muss auch die Verarbeitung über viele Systeme verteilt werden. Mit \textit{MapReduce} wird in \citep{mapred04} ein dafür geeignetes Programmier-Paradigma vorgestellt. 
 
@@ -47,7 +47,7 @@ Liegen die Daten in einem verteilten System vor, muss auch die Verarbeitung übe
 
 Trotz des sehr einfachen Verarbeitungsschemas ist es möglich, komplexe Algorithmen mit \textit{MapReduce} auszuführen. In \citep{mapred06} werden für zahlreiche Algorithmen des maschinellen Lernens die dafür notwendigen Umformungen beschrieben und analysiert. Grundlage der Umformungen ist das in \citep{Kearns98} beschriebene \textit{Statistical Query Model}. Dieses ermöglicht es, statistische Konzepte für Testdatensätze zu untersuchen und aus diesen darin vermutete statistische Verteilungen abzuleiten. Auf dieser Basis beschreibt \citep{mapred06} wie spezielle Algorithmen umgeformt werden können, um diese durch die Bildung von Teil-Approximationen und nachgelagerte Zusammenfassung in eine verteilbare \textit{MapReduce} Form zu überführen. Die so umgeformten Algorithmen skalieren nahezu linear mit der Anzahl der verfügbaren Rechenknoten bzw. Prozessorkernen. Dass diese Umformungen auch für die in Abschnitt \ref{sec:filtermethods}  beschriebenen Algorithmen des kollaborativen Lernens möglich sind, wird in \citep{jiang11} gezeigt. \citep{mapred06} \todo{BSP}
 
-\subsubsection{Skalierung der Filtermodelle}
+\subsubsection{Skalierung der Filtermodelle}\label{sec:scalefiltering}
 
 Die zuvor beschriebenen allgemeineren Methoden zur Verteilung und Verarbeitung großer Datenmengen sind im Zusammenhang mit Filtermodellen (vgl. Abschnitt \ref{sec:filtermethods}) vor allem im Bereich der Vorverarbeitung bzw. des Trainings relevant. 
 

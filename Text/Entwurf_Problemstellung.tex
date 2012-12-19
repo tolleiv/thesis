@@ -34,22 +34,18 @@ Aus den notwendigen Aktualisierungen durch neue Daten ergibt sich ein weiterer N
 
 In \citep{linden03} beschreibt eine mögliche Strategie die Auswirkungen des Problems zu verhindern. Da nutzerbasierte Modelle wegen der direkten Bindung an das Verhalten des einzelnen Nutzers stärkeren Schwankungen unterworfen sind, wird die Nutzung der stabileren elementbasierte Modelle vorgeschlagen. Die Stabilität begründet sich vor allem darauf, dass im beschriebenen Fall die Einstellungsänderung einer großen Nutzermenge notwendig ist um die Ähnlichkeit zwischen Elementen zu beeinflussen. Durch die Nutzung der stabileren Modelle verringert sich die Notwendigkeit Modelle mit jedem neuen Datensatz neu berechnen zu müssen. Abhängig von Anwendungsfall ergibt zudem die Möglichkeit große Teile der Vorberechnung auf zusätzlich vorgehaltener Infrastruktur \textit{offline} zu verrichten ohne die Ressourcen des Empfehlungsdienstes in Anspruch nehmen zu müssen.
 
-Auch der Verzicht auf ein explizites Filtermodell und die Anreicherung der Suchanfrage aus \citep{Boughareb11} stellt eine mögliche Alternative dar. Um dies auf die beschriebenen Anwendungsfälle zu übertragen, könnten die aus den Vorberechnungen des Empfehlungsdienstes gewonnenen Informationen zur Ähnlichkeit zwischen Elementen genutzt werden um die entsprechend dieser Elemente zu gruppieren. Die Personalisierung könnte dann abhängig von der Präferenz des Nutzers für die gefundenen Gruppen stattfinden. Die Zwischenergebnisse der Matrixfaktorisierung, vor alle die Werte der $q_i$ Vektoren, könnten in ähnlicher Weise genutzt werden (vgl Abschnitt \ref{sec:svd} und \ref{sec:myrecommend}). Die Lern-Laufzeiten sind dann bei stabilen Modellen wie in der vorangegangen Lösungsstrategie kein anwendungskritischer Faktor mehr.
+Auch der Verzicht auf ein explizites Filtermodell und die Anreicherung der Suchanfrage aus \citep{Boughareb11} stellt eine mögliche Alternative dar. Um dies auf die beschriebenen Anwendungsfälle zu übertragen, könnten die aus den Vorberechnungen des Empfehlungsdienstes gewonnenen Informationen zur Ähnlichkeit zwischen Elementen genutzt werden um die entsprechend dieser Elemente zu gruppieren. Die Personalisierung könnte dann abhängig von der Präferenz des Nutzers für die gefundenen Gruppen stattfinden. Die Zwischenergebnisse der Matrixfaktorisierung, vor alle die Werte der $q_i$ Vektoren, könnten in ähnlicher Weise genutzt werden (vgl. Abschnitt \ref{sec:svd} und \ref{sec:myrecommend}). Die Lern-Laufzeiten sind dann bei stabilen Modellen wie in der vorangegangen Lösungsstrategie kein anwendungskritischer Faktor mehr.
 
-%\subsubsection{Recommenderwahl}
-%\ref{sec:neighborhoods}
+\subsubsection{Skalierbarkeit}\label{sec:scale2}
 
-\subsubsection{Skalierbarkeit}
+Beim Aufbau eines  Gesamtsystems, welches den beschriebenen Leistungsanforderungen genügt, muss jeder Bestandteil Möglichkeiten zur Skalierung bieten. D.h. nicht nur die Komponenten der Datenhaltung und Datenverarbeitung sollten diesbzgl. betrachtet werden, sondern auch die Kommunikationswege zwischen ihnen. Wie die in Abschnitt \ref{sec:scale} zusammengefassten Grundlagen zeigen, existieren verschiedene Ansätze zur Skalierung einzelner Bestandteile. Die Ableitung einer einheitlichen Architektur ist deshalb ein weiteres zu lösendes Problem.
 
+Ein möglicher Lösungsansatz zum Aufbau eines skalierbaren Systems zur allgemeinen Datenanalyse wird in \citep{Lin2012} beschrieben. Auf Basis von einfach zu beschreibenden \textit{MapRecude}-Programmen werden in einem \acs{GFS} gehaltene Daten direkt verarbeitet und analysiert. Die Architektur eines skalierbaren und für den Nutzer möglichst unsichtbaren Logging-Systems, sowie die daran gestellten Anforderungen beschreibt \citep{netflix2012} am Beispiel der Netflix-Plattform\footnote{http://netflix.com}. In beiden Fälle geschieht die Verarbeitung der Daten asynchron. Vom Nutzer erzeugte Daten bewirken nicht sofort eine Aktualisierung des Gesamtsystems, vielmehr werden die Daten in beiden Fällen zunächst gesammelt und nachgelagert verarbeitet. Anhand der Google-News\footnote{http://news.google.com/} Architekturbeschreibung zeigt \citep{Das07}, dass dies auch in sehr kurzen Zeitintervallen für eine sehr große Nutzerzahl möglich ist. Neben der asynchronen Datenverarbeitung wird hier zudem gezeigt, wie die Methoden der horizontalen Skalierung (vgl. Abschnitt \ref{sec:sharding}) einfließen können.
 
-\citep{Das07}
-
-http://techblog.netflix.com/2012/06/scalable-logging-and-tracking.html
-
+Die Möglichkeiten der Vorberechung von Empfehlungs- oder Ähnlichkeits-Modellen werden in \citep{linden03} und \citep{Das07} beschrieben. Die Skalierbarkeit und Leistungsfähigkeit der Systeme ist vor allem dadurch möglich, dass komplexe Berechnungen ebenfalls asynchron, d.h. vor der eigentliche Anfrage des Nutzers erfolgen (vgl Abschnitt \ref{sec:scalefiltering}).
+%
+%http://techblog.netflix.com/2012/06/scalable-logging-and-tracking.html
 %LSH
-
-
-
 %K. Yu, X. Xu, J. Tao, M. Ester, and H. Kriegel Instance Selection Techniques for Memory-Based Collaborative Filtering In Proc. of the Second Siam Intl. Conf. on Data Mining, (SDM) 2002.
 % - Recommendation Algorithmen und Datengrundlage sind sehr verschieden. Wie kann man verschiedene Implementierungen nutzen/ansprechen/auswählen.
 
