@@ -19,9 +19,14 @@
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ ggf. Langford09 Parallelisierungsstrategien dazu}}{23}{section*.47}
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Ggf. MapRed. Beispiel einf\IeC {\"u}gen.}}{27}{section*.50}
 \contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ BSP}}{27}{section*.51}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ HB Kap. 10.4.2 dazu?}}{31}{section*.58}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ HB Kap. 10.4.2 dazu?}}{32}{section*.58}
 \contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ggf. Beispielbasis in der gesamten Arbeit so definieren}}{32}{section*.59}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ GA Screen erg\IeC {\"a}nzen}}{34}{section*.64}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Lidl-Usecase erg\IeC {\"a}nzen?}}{35}{section*.67}
-\contentsline {todo}{{\color@box {}{red}{\leavevmode {\color {red}o}}\ SVD Absatz erg\IeC {\"a}nzen}}{37}{section*.68}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Iterative Updates bei User/Item based Recommendation erg\IeC {\"a}nzen}}{38}{section*.69}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ GA Screen erg\IeC {\"a}nzen}}{35}{section*.64}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Lidl-Usecase erg\IeC {\"a}nzen?}}{36}{section*.67}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Iterative Updates bei User/Item based Recommendation erg\IeC {\"a}nzen}}{38}{section*.68}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ggf Zookeeper oder MQ Konzeptelink erg\IeC {\"a}nzen / Kapitel verlinken}}{42}{section*.70}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Sequenzdiag dazu}}{48}{section*.74}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Teilausschnitt Komponentendiagramm einf\IeC {\"u}gen}}{50}{section*.80}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ wenn dieDatenaufbereiten mit rein kommt dann vier}}{51}{section*.81}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ use the actual code}}{52}{section*.85}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Hinweis auf konkrete Implementierung einbauen}}{53}{section*.88}

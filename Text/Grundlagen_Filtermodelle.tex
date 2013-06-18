@@ -42,7 +42,7 @@ Um die in den Einträgen der Matrix ``verborgenen'' Merkmale zu berechnen, werde
 pred(u,i) & = \mu + b_i + b_u + q_i^T p_u \label{form:calcpredsvd}
 \end{align}
 
-Die dafür benötigten Parameter $q$, $p$ und $b$ werden in einer Trainingsphase aus den vorhandenen Bewertungen gelernt. Dies geschieht mit den Methoden der \acf{SVD} durch die Minimierung der mittleren quadratischen Abweichung zwischen existierenden und vorausberechneten Bewertungen:
+Die dafür benötigten Parameter $q$, $p$ und $b$ werden in einer Trainingsphase aus den vorhandenen Bewertungen gelernt. Dies geschieht mit den Methoden der \acf{SVD}  \citep{golub65} durch die Minimierung der mittleren quadratischen Abweichung zwischen existierenden und vorausberechneten Bewertungen:
 \begin{align}
 \min_{q*,p*,b*}{ \sum_{(u,i) \in \mathcal{K})} (r_{ui} -\mu-b_i - b_u - p_i^T q_u)^2  + \lambda ( \|q_u\|^2 + \|p_i\|^2 + b_u^2 + b_i^2) \label{form:trainsvd}   }
 \end{align}

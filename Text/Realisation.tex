@@ -1,22 +1,106 @@
-\section{Realisation}\newpage.\newpage\newpage.\newpage
-	
-	Verfeinerung des Entwurfs, Schilderung bei der Umsetzung aus dem vorangegangenen Kapitel
+\section{Realisation}
 
-% Vergleich aus http://girlincomputerscience.blogspot.de/2012/11/open-source-recommendation-systems.html
-	
+Mit der im vorangegangenen Abschnitt beschriebenen Architektur und den aufgestellten Leistungsanforderungen, wird im folgenden Abschnitt die Umsetzung der Beispielapplikation, die dafür genutzten Werkzeuge und notwendige Anpassungen beschrieben. Der Fokus liegt dabei auf den Bestandteilen die direkt bei der Personallisierung der Suche genutzt werden.
+
+Ausgangspunkt bei der Umsetzung war die bereits vorhandene \textit{Searchperience} Suchlösung welche entsprechend der Anforderungen angepasst werden sollte. 
+Da \textit{Searchperience} das Java basierte Apache Solr zum Aufbau und zur Abfrage der Suchindexe nutzt, wurden für die weiteren Bestandteile ebenfalls Java-Bibliotheken genutzt.
+
+\subsection{Apache Solr}\label{sec:solr}
+
+Apache Solr (Solr) ist ein ``Enterprise Search Server'' welcher unter der Apache 2.0 Lizenz frei zur Verfügung steht. Aufbauend auf der Apache Lucene Suchbibliothek ermöglicht Solr den Aufbau einer sehr vielfältig konfigurierbaren Volltextsuche. Zu den wichtigsten Konfigurations- und Erweiterungseigenschaften zählen facettierte Suchen, automatische Anfragevervollständigung, dynamische Relevanz-Anpassungen (Boosting), Indexreplikation und Indexsharding (vgl. Abschnitt \ref{sec:sharding}). Genutzt werden kann Apache Solr über eine ``RESTful HTTP'' Schnittstelle, welche sowohl XML als auch JSON zum Datenaustausch nutzten kann. 
+
+\paragraph{Konfiguration} Die zwei wichtigsten Quellen zur Konfiguration des Dienstes sind die \textit{solrconfig.xml} und die \textit{schema.xml}. Die \textit{solrconfig.xml} dient zur Integration aller Komponenten und integriert die Bestandteile und der Schnittstellen. Sie bestimmt zum Beispiel in welcher Reihenfolge und mit welchen Voreinstellungen die einzelnen Komponenten eine Suchanfrage bearbeiten und ermöglicht daneben auch die Integration eigener Komponenten. Mit Hilfe der  \textit{schema.xml} werden die vom Server verwalteten Dokumente bzw. Dokumentenbestandteile beschrieben und notwendige Vorverarbeitungsschritte konfiguriert. Kommentierte Beispiel- bzw. Basiskonfigurationen der beiden Konfigurationsdateien\footnote{\tiny{http://svn.apache.org/viewvc/lucene/dev/trunk/solr/example/solr/collection1/conf/solrconfig.xml?view=markup}}\textsuperscript{,}\footnote{\tiny{http://svn.apache.org/viewvc/lucene/dev/trunk/solr/example/solr/collection1/conf/schema.xml?view=markup}}, sowie die Dokumentation der Anfragesyntax\footnote{\tiny{Anfragesyntax: http://wiki.apache.org/solr/ExtendedDisMax}}\textsuperscript{,}\footnote{\tiny{Anfrage-Funktionen: http://wiki.apache.org/solr/FunctionQuery}} sind ebenfalls Bestandteil der offenen Quelltexte und werden hier zur Wahrung des Umfangs nur kurz beschrieben.
+
+\subsubsection{Datenhaltung}
+
+Da Dokumente selten aus fortlaufendem unstrukturierten Text bestehen, oftmals ergänzende Informationen zu einem Dokument im Suchindex verfügbar gemacht werden sollen und da die Datenhalten möglichst effizient geschehen soll, ist es notwendig die mögliche Struktur der Daten mit Hilfe der \textit{schema.xml} zu beschrieben. Um Redundanz innerhalb der Strukturbeschreibung zu vermeiden ist diese zweigeteilt. Zunächst werden alle Datentypen (\textit{types}) konfiguriert -- d.h. aus der Liste der möglichen Standardtypen werden die für den Anwendungsfall notwendigen ausgewählt und ggf. mit angepasster Basiskonfiguration verfügbar gemacht. Eine detailliertere Unterscheidung der Typen ist notwendig um sicherzustellen, dass die Daten möglichst effizient für den konkreten Anwendungsfall gespeichert werden. Im zweiten Schritt werden dann die eigentlichen Dokumentenbestandteile (auch Felder oder \textit{fields}) den vorher konfigurierten Typen zugeordnet. In einer auf einen einzelnen Typen und ein Feld reduzierten Form zeigt Listing \ref{lst:schema_vektor} dies beispielhaft.
+
+\subsubsection{Suchanfragen}
+
+Innerhalb von Solr können sog. \textit{RequestHandler} genutzt werden um Daten aus dem Index zu lesen, bzw. um Suchen innerhalb der Dokumentensammlung durchzuführen. Jeder \textit{RequestHandler} ist wiederum aus verschiedenen Komponenten aufgebaut welche innerhalb der \textit{solrconfig.xml} konfiguriert bzw. ergänzt werden können. 
+
+Die Komponenten innerhalb der Konfiguration spiegeln auch die Verarbeitungsreihenfolge der Suchanfragen wieder. Die Standardkomponenten des \textit{SearchHandler} sind \texttt{solr.QueryComponent} (Query), \texttt{solr.FacetComponent} (Facet), \texttt{solr.MoreLikeThisComponent} (Mlt), \texttt{solr.HighlightComponent} (Highlight) und \texttt{solr.HighlightComponent} (Stats). Innerhalb einer Suchanfrage wird in \texttt{Query} die eigentliche Ergebnisliste gebildet welche dann im folgenden gefiltert (\texttt{Facet}), ergänzt (\texttt{Mlt}) oder weiterverarbeitet (\texttt{Highlight}) wird.
+
+Die eigentliche Verarbeitung der Suchanfrage und die Bildung der Ergebnislisten geschieht gemäß einer erweitreen Tf-Idf Berechnung (vgl. Abschnitt \ref{tfidf}.). Die Anpassung dieser Berechnung wird in \citep{TFIDFSimilarity} umfassend beschrieben und hier zusammenfassend erläutert. Die Notwendigkeit zu dieser Anpassung ergibt sich aus dem Bedarf die Gewichtung einzelner Feldern und Terme anzupassen.
+\begin{align}
+\text{score}(q, d) & = \text{coord}(q,d) \ast \text{queryNorm}(q) \ast \sum_{t \in q}{\text{tf-idf}(t, d) \ast \text{boost(t)} \ast \text{norm}(t,d)} \label{lucenedocscore}
+\end{align}
+
+Die Ausgangsberechnung aus Formel (\ref{form:docscore}) wird durch die folgenden zusätzlichen Bestandteile zu Formel (\ref{lucenedocscore}) ergänzt.
+
+\begin{itemize}
+\item \textbf{coord(q,d)} - Bewertet wieviele der Terme der gesamten Suchanfrage im Dokument gefunden wurden und hebt bzw. senkt die Relevant entsprechend.
+\item \textbf{queryNorm(q)} - Normalisiert alle gefundenen Relevanzwerte einer Anfrage mit dem gleichen Faktor. Dies dient vor allem der Vergleichbarkeit von Relevanzwerten zweier Anfragen.
+\item \textbf{boost(t)} - Ermöglicht die Anpassung der Relevant einzelner Terme einer Anfrage.
+\item \textbf{norm(q)} - Normierung des Relevanzwertes auf Feldebene, ermöglicht verschiedene Gewichtung von verschiedenen Feldern und Positionsabhängige Relevanzbeeinflussung.
+\end{itemize}
+
+Basierend darauf könnte die Suche nach ``Theater Hamburg Freitag'' in einer Dokumentensammlung zum Beispiel wie in Listing \ref{lst:query_simple} aussehen. Die Gewichtung zwischen den vier genutzten Feldern würde Treffer im Feld ``Titel'' als relevanter bewerten als Treffer mit gleichen Tf-idf Wert im Feld ``Beschreibung''. \citep{TFIDFSimilarity}
+
+\lstinputlisting[caption=Einfache Solr-Anfrage mit angepassten Feld-Boosts,label={lst:query_simple},float]{Listings/solrqueries_simple.txt}
+
+\subsubsection{Relevanz-Anpassung}
+
+Die Nutzerprofil bezogene Anpassung der Relevanzwerte eines Dokumentes für eine Suchanfrage kann durch zwei Methoden innerhalb von Solr erreicht werden. Zum einen ist es möglich die vorhandenen Komponenten eines \textit{RequestHandlers} durch eigene zu ergänzen, innerhalb dieser wäre dann die Erweiterung der Suchanfrage selbst, die Umsortierung der Ergebnislisten oder die Veränderung der Relevanzberechnung möglich. Des weiteren ermöglicht die \textit{Query} Komponente auch die Integration von komplexeren Relevanzerechnungen über native Funktionen. Letzteres wird vor allem gebraucht um Berechnungen wie Geographe-Distanzbestimmungen (näher ist relevanter), Produktpreise (Aufwertung von Produkten innerhalb eines Bereiches) und Datumsberechnungen ebenfalls als Faktoren bei der Sortierung der Ergebnislisten berücksichtigen zu können.
+
+\paragraph{Komponentenintegration}  Die Nutzung einer eigenen Komponente innerhalb des \textit{RequestHandlers} wurde für die Einbindung von extern gebildeten Empfehlungen verwendet. Die Integration in die \textit{solrconfig.xml} geschieht wie in Listing \ref{lst:solrconfig} gezeigt. Alle vom Empfehlungsdienst gefundenen Dokumente werden so mit Hilfe der Komponente höher gewichtet. Des Sequenzdiagramm \todo{Sequenzdiag dazu} zeigt den Ablauf bzw. die Verarbeitung einer Suchanfrage und das Zusammenspiel der zusätzlichen Komponente. Da die Komponente nur die Anfragen eines Nutzers erweitert und in den Dokumentendaten selbst keine Veränderung vorgenommen werden muss, kann diese Komponente  leicht integriert werden. Problematisch ist, dass die Personalisierung nicht durchgeführt werden kann, wenn die Menge der empfohlenen Dokumente und die Menge der vom Suchindex gefundenen Dokumente disjunkt sind.
+
+\lstinputlisting[caption=Integration der Recommenderkomponenten in der solrconfig.xml,label={lst:solrconfig},float]{Listings/solrconfig.xml}
+
+\paragraph{Integrierte-Empfehlungsberechnung} Integriert man die mittels SVD berechneten Features in den gespeicherten Dokumente, kann man die Berechnung der kollaborativ gebildeten Empfehlungen mit den in Solr vorhandenen Berechnungsmöglichkeiten umsetzen (vgl.  Abschnitt \ref{sec:myrecommend}.) Voraussetzung dafür ist, dass die Featurevektoren typgerecht als Vektor im Index gespeichert werden. Dies kann durch eine entsprechende Konfiguration innerhalb der \textit{schema.xml} wie in Listing \ref{lst:schema_vektor} sichergestellt werden.
+
+\lstinputlisting[caption=Anpassungen der schema.xml für 4-dimensionalen Featurevektor,label={lst:schema_vektor},float]{Listings/schema.xml}
+
+Einbezogen werden die so definierten Featurevektoren über eine explizit definierte \textit{Boosting}-Funktion. Beispielhaft wird dies für die Anwendungsfälle der personalisierten Suche (Listing \ref{lst:featuredistance}) und zur Auflistung von Komplementen (Listing \ref{lst:similardocs}) gezeigt. Für die personalisierte Suche werte die \textit{Boosting}-Funktion (b) Dokumente auf, wenn deren Featurevektoren (features) einen geringeren euklidischen Abstand zum Nutzervektor (v) haben. Im gezeigten Beispiel ist der Nutzervektor (v) explizit angegeben, in realen Anwendungsfällen würde dieser innerhalb einer  ergänzenden Solr-Komponente gebildet.
+
+\lstinputlisting[caption=Solr-Anfrage um Vektor-Distanz einzubeziehen,label={lst:featuredistance},float]{Listings/solrqueries_distboost.txt}
+
+Zur Bildung von Komplementen wird ebenfalls die Distanz zwischen Featurevektoren gemessen um die Relevanz der Dokumente zu bestimmen. Hierbei wird allerdings ausschließlich die distanzbasierte Relevanz genutzt und auf die Integration von Tf-idf-basierte Werten verzichtet. Ebenfalls wird der Nutzervektor durch den Featurevektor eines oder mehrerer Dokumente --- im Beispiel das Dokument 49040 --- ersetzt, um zum entsprechenden Dokument die Komplementäre zu finden.
+
+\lstinputlisting[caption=Solr-Anfrage zur featurebasierten Dokumentenähnlichkeit ,label={lst:similardocs},float]{Listings/solrqueries_similardocs.txt}
+
+% Vergleich aus http://girlincomputerscience.blogspot.de/2012/11/open-source-recommendation-systems.html	
 \subsection{Apache Mahout}
+
+Apache Mahout (Mahout) ist eine Programmbibliothek, die vorwiegend Werkzeuge des \textit{maschinellen Lernens} bzw. der \textit{kollektiven Intelligenz} zur Verfügung stellt. Die drei Schwerpunkte der darin implementierten Algorithmen umfassen das \textit{Clustern} von Daten, die Daten-\textit{Klassifikation} und das \textit{kollaborative Filtern} (vgl. Abschnitt \ref{sec:collaborativefiltering}). Die Skalierbarkeit der entsprechenden Algorithmen steht dabei im Zentrum des Projektes, weshalb ein Großteil der Implementierungen auch in Form von Apache Hadoop kompatiblen MapReduce-Implementierungen vorliegt (vgl. Abschnitt \ref{sec:mapred}). Apache Mahout wird ebenso wie Solr frei unter der Apache 2.0 Lizenz zur Verfügung gestellt. \citep{mia}
+
+Da für die vorliegende Arbeit ausschließlich die Werkzeuge des kollaborativen Filterns genutzt wurden, werden im weiteren Abschnitt nur die dafür notwendigen Aspekte von Apache Mahout betrachtet. Umfassendere Beschreibungen aller Bestandteile und deren praktischer Anwendung werden in ``Mahout in Action'' \citep{mia} beschrieben. 
+
 \subsubsection{Bestandteile}
-\subsubsection{Datenaufbereitung}
+
+\todo{Teilausschnitt Komponentendiagramm einfügen}
+
+Mit Hilfe von Apache Mahout werden drei \todo[color=green]{wenn dieDatenaufbereiten mit rein kommt dann vier} Bestandteile der in Abbildung \ref{fig:system_rough} gezeigten bzw. in Abschnitt \ref{sec:system_rough} beschriebenen Systemarchitektur realisiert. 
+
+\paragraph{Modellberechnung} Die Basisdistribution\footnote{Bezogen auf die Version 0.7 der offiziellen Apache Mahoutdistribution} von Mahout ermöglicht es, verschiedene Modelltypen zu generieren. Diese umfassen die nutzer-bzw. elementbasierten Modelle wie sie in Abschnitt \ref{sec:neighborhoods} beschrieben werden und die merkmalbasierten Modelle aus Abschnitt \ref{sec:filtermethods}. Die Eingabedaten zur Modellbildung werden im CSV-Format abgelegt und bestehen aus Tripeln die jeweils einem Nutzer für ein Element einen Präferenzwert zuordnet. Die Verarbeitung geschieht wie in Listing \ref{lst:useritemmodelprep} und Listing \ref{lst:useritemmodelprep_cloud} beispielhaft gezeigt, mit Hilfe von lokale ausgeführten Java-Jobs oder mit Hilfe von in Apache Hadoop verteilten MapReduce Jobs.
+
+ \lstinputlisting[caption=Generierung eines elementbasierten Ähnlichkeitsmodelles mit Apache Mahout, label={lst:useritemmodelprep},language=bash]{Listings/mahout_useritemmodelprep.txt} 
+ \lstinputlisting[caption=Modellberechnung wie in \ref{lst:useritemmodelprep} innerhalb eines Apache Hadoop Systems, label={lst:useritemmodelprep_cloud},language=bash]{Listings/mahout_useritemmodelprep_cloud.txt}
+ 
+Die Ergebnisse der Berechnung werden ebenfalls im CSV-Format abgelegt. Bei den Nachbarschaftsmodellen enthalten sie jeweils Tripel bestehend aus zwei Elementen und deren Ähnlichkeit welche mit Hilfe des im Aufruf gewählten Ähnlichkeitsmaßes bestimmt wird. Die Wahl eines geeigneten Ähnlichkeitsmaßes muss, wie in Abschnitt \ref{sec:similarities} beschrieben, vorher getroffen werden bzw. durch entsprechende Tests evaluiert werden. Innerhalb von Apache Mahout stehen neben anderen auch die in Abschnitt \ref{sec:similarities} erläuterten Maße zur Verfügung.
+
+Generiert man merkmalbasierte Modelle im Vorverarbeitungsschritt, werden diese ebenfalls in textheller Form abgelegt. Hierbei wird jedoch Zeilenweise jeweils ein Element und der entsprechende Vektor gespeichert.
+
+\paragraph{Modellevaluation} Zur qualitativen Bewertung der generierten Modelle bietet Apache Mahout gut integrierte Testwerkzeuge. Als Testmaß (vgl. Abschnitt \ref{sec:measures}) für die Modelle wird vorwiegend der mittlere quadratische Fehler genutzt. Um diese bestimmen zu können, ist es notwendig, dass das Modell nur mit einem Teil der Daten trainiert wird und danach gegen den zweiten Teil evaluiert wird. Da bei großen Datenmengen selbst die zufällige Zuteilung der Daten in eine der beiden Gruppen zum Problem wird, bietet Apache Mahout auch dafür einen in MapReduce implementierten Verarbeitungsschritt (vgl. Listing \ref{lst:dataprep}).
+
+\lstinputlisting[caption=Trennung von Test- und Trainingsdaten mit Apache Mahout,float,language=bash,label={lst:dataprep}]{Listings/mahout_dataprep.txt}
+
+Wurde das Modell entsprechend trainiert, kann für die verbliebenen Testdaten der tatsächliche mit dem ``berechneten'' Wert verglichen werden um so entsprechend den mittleren quadratischen Fehler abzuleiten. Da die Implementierung bzw. Parametrisierung des eigentlichen Recommendersystems zu verschieden ist, gibt es keinen einheitlichen Weg die Modelle zu evaluieren. Innerhalb der Klassenbibliothek von Apache Mahout existieren allerdings alle Bausteine um einen entsprechenden ``Evaluation'' zuverlässig und nach den Prinzipien der verteilten Datenverarbeitung zu erstellen. Für die im Rahmen der Diplomarbeit genutzten Modelle kann die Evaluation wie in Listing \todo{use the actual code}\ref{lst:dataeval}  erfolgen. Die Ausgabe entspricht dann dem \acs{RMSE} des entsprechenden Modells. \citep{mia}
+
+ \lstinputlisting[caption=Evaluation eines trainierten Modelles,float,language=bash,label={lst:dataeval}]{Listings/mahout_dataeval.txt}
+
+%\paragraph{Datenaufbereitung} Wie wird Müll aus den Daten entfernt, Sessions zusammengefasst und eindeutige Nutzer identifiziert
+\paragraph{Empfehlungsdienste} Die Nutzung der generierten Modelle und die Berechnung von Empfehlungen für Nutzer kann innerhalb von Apache Mahout ebenfalls über entsprechende Kommandozeilenaufrufe erfolgen (vgl. Listing \ref{lst:datarecommend}). Da im gegebenen Anwendungsfall vorgerechnete Empfehlungen allerdings wenig Nutzen bieten und die dafür notwendige Vorlaufzeit nicht den Erwartungen des Nutzers entspricht, wurden die innerhalb der Klassenbibliotheken vorhandenen Konzepte kombiniert und in Form eines Webservices mit den angebundenen Systemen integriert. Die vorgerechneten und geprüften Modelle werden darin mit Hilfe der sog. \textit{GenericItemSimilarity} geladen und innerhalb eines \textit{GenericItemBasedRecommender} zur Generierung der Empfehlungen genutzt. Neben den reinen element- bzw. nutzerbasierten Empfehlungen unterstützt Apache Mahout auch die Berechnung von Empfehlungen die Abweichungen der mittleren Bewertung pro Element und Nutzer in Betracht ziehen (siehe zB.\textit{BiasedItemBasedRecommender}). Empfehlungen für anonyme Nutzer zur Minimierung des \textit{Cold-Start} Problems (vgl. Abschnitt \ref{sec:filterissues}) wird ebenfalls in den integrierten Datenmodellen unterstützt. \todo{Hinweis auf konkrete Implementierung einbauen}
+
+ \lstinputlisting[caption=Berechnung von Empfehlungen basierend auf Elementähnlichkeitsmodellen,float,language=bash,label={lst:datarecommend}]{Listings/mahout_datarecommend.txt}
+
 \subsubsection{Skalierung}
-\subsection{Apache Solr}
+\subsubsection{Erweiterterungen}
 
-\subsubsection{Indexierung}
-\subsubsection{Score-Anpassung}
-% http://lucene.apache.org/core/3_6_1/api/all/org/apache/lucene/search/Similarity.html#formula_termBoost
+%\subsection{Searchperience Integration}
 
-\lstinputlisting[caption=solrconfig.xml Anpassungen]{Listings/solrconfig.xml}
-\lstinputlisting[caption=schema.xml Anpassungen]{Listings/schema.xml}
-\lstinputlisting[caption=Solr-Anfrage um Vektor-Distanz einzubeziehen]{Listings/solrqueries.txt}
-
-
-\subsection{Searchperience Integration}
+\subsection{Integration}
+%\subsubsection{Tracking-Pixel}
+\subsubsection{Datenhaltung}
+% Siehe "Programming Pig" S 19.2
+\subsubsection{Systemaufbau}

@@ -3,6 +3,7 @@
   , "version": "0.0.1"
   , "private": true
   , "dependencies": {
-    "solr": ">= 0.0.1"
+    "solr": ">= 0.0.1",
+    "request": ">= 0.0.1"
   }
 }

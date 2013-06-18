@@ -1,0 +1,5 @@
+    bin/mahout recommenditembased \
+        --input inputFolder \
+        --output outputFolder \
+        --numRecommendations 5 \
+        --maxRating 5.0

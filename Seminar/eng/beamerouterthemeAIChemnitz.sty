@@ -1,0 +1,451 @@
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+% Copyright 24.04.2012 by Frederik Beuth (beuth@hrz.tu-chemnitz.de) - TU-Chemnitz, Dep. for CS, Professorship Artificial Intelligence
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\newdimen\beamer@sidebarwidth
+\newdimen\beamer@headheight
+\usebeamerfont{frametitle}
+\beamer@sidebarwidth=0cm
+\beamer@headheight=1.5cm
+\beamer@headheight=1.980cm
+\reset@font
+
+\def\beamer@lefttext{left}
+
+\DeclareOptionBeamer{hideothersubsections}[]{\beamer@nav@subsectionstyle{show/show/hide}}
+\DeclareOptionBeamer{hideallsubsections}[]{\beamer@nav@subsectionstyle{hide}}
+
+\DeclareOptionBeamer{width}{\beamer@sidebarwidth=#1}
+\DeclareOptionBeamer{height}{\beamer@headheight=#1}
+\DeclareOptionBeamer{left}{\def\beamer@sidebarside{left}}
+\DeclareOptionBeamer{right}{\def\beamer@sidebarside{right}}
+\ExecuteOptionsBeamer{left}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\newdimen\beamer@logoheight
+\newdimen\beamer@logowidth
+\newdimen\beamer@logoareaheight
+\newdimen\beamer@logoareawidth
+\newdimen\beamer@horishadewidth
+\newdimen\beamer@frametitlewidth
+\newdimen\beamer@AIChemnitz@frametitleleftmargin
+\beamer@titlepaperleft=\paperheight%
+\advance\beamer@titlepaperleft by-0.075cm%
+\advance\beamer@titlepaperleft by-1.75cm%
+
+%
+% calculate the size of the logo, start with headline height and decrease by margin to the slide top (0.126cm)
+% and by the margin--including the logo text below--to the top of the text area (0.474cm)
+\beamer@logoheight=\beamer@headheight%
+\advance\beamer@logoheight by-0.5cm%
+% just keep the correct ratio for the logo
+\beamer@logowidth=1.75\beamer@logoheight%
+% the size of the logo including the margins
+\beamer@logoareaheight=\beamer@headheight%
+\beamer@logoareawidth=\beamer@logowidth%
+% calculate the length of the horizontal shading line (paperwidth minus all horizontal seeks before drawing and also
+% the margin we want to have between the shaded line and the right slide border)
+\beamer@horishadewidth=\paperwidth%
+\advance\beamer@horishadewidth by-0.297cm%
+\advance\beamer@horishadewidth by-\beamer@logoareawidth%
+\advance\beamer@horishadewidth by-0.045cm%
+\advance\beamer@horishadewidth by-0.297cm%
+
+% get the space between left border of the paper and start of the frametitle
+\beamer@AIChemnitz@frametitleleftmargin=\paperwidth%
+\advance\beamer@AIChemnitz@frametitleleftmargin by-\beamer@horishadewidth%
+\advance\beamer@AIChemnitz@frametitleleftmargin by-0.297cm%
+
+% just get the width of the space that is reserved for the title
+\beamer@frametitlewidth=\paperwidth%
+\advance\beamer@frametitlewidth by-0.297cm%
+\advance\beamer@frametitlewidth by-0.297cm%
+\advance\beamer@frametitlewidth by-0.297cm%
+\advance\beamer@frametitlewidth by-\beamer@logoareawidth%
+
+% render a highlighted section name in the navigation bar
+\defbeamertemplate*{section in head/foot}{AIChemnitz theme}
+{%
+	{%
+		\usebeamercolor{section in head/foot}%
+		\usebeamercolor{section in head/foot shaded}%
+		{%
+			% the separator is always shaded
+			\color{section in head/foot shaded.fg}
+			\usebeamerfont{section in head/foot shaded}%
+			\hskip0.25em%
+			\insertsectionheadseparator%
+			\hskip0.25em%
+			\color{section in head/foot.fg}
+			\usebeamerfont{section in head/foot}%
+			\insertsectionhead%
+		}%
+	}%
+}
+
+% render a non-highlighted section name in the navigation bar
+\defbeamertemplate*{section in head/foot shaded}{AIChemnitz theme}
+{%
+	{%
+		\usebeamercolor{section in head/foot shaded}%
+		{%
+			\color{section in head/foot shaded.fg}
+			\usebeamerfont{section in head/foot shaded}%
+			\hskip0.25em%
+			\insertsectionheadseparator%
+			\hskip0.25em%
+			\insertsectionhead%
+		}%
+	}%
+}
+
+% setup the environment for the automatic sections iterator and invoke it
+\def\insertmynavigation#1{%
+	% 1: separator between the items
+	\hbox{{%
+		% use lambda calculus to define empty \slideentry
+		\def\slideentry##1##2##3##4##5##6{}%
+		% use lambda calculus to define \sectionentry
+		\def\sectionentry##1##2##3##4##5{%
+			% 1: section number to render (compare to \c@section)
+			% 2: section name
+			% 3: navigation item number
+			% 4: ??
+			% 5: part number to render (compare to \c@part)
+			% document side effect: render the navigation entry
+			%
+			% do nothing if we are not in the part the currently handled item belongs to
+			\ifnum##5=\c@part%
+				% set some variables that could be used by the beamer templates
+				\def\insertsectionhead{##2}%
+				\def\insertsectionheadnumber{##1}%
+				\def\insertpartheadnumber{##5}%
+				% create a box with the hyperlink and the caption:
+				% first, put everything into a box
+				\setbox\beamer@tempbox=\hbox{%
+					\hyperlink{Navigation##3}{%
+						% if it is not the first item then put a bullet in front of it
+						\ifnum1<##1%
+							\def\insertsectionheadseparator{#1}%
+						\else%
+							\def\insertsectionheadseparator{}%
+						\fi%
+						% if it is the current section
+						\ifnum\c@section=##1%
+							{\usebeamertemplate{section in head/foot}}%
+						\else% (it is not the current section)
+							{\usebeamertemplate{section in head/foot shaded}}%
+						\fi%
+					}%
+				}%
+				% set the height and depth of the box
+				\ht\beamer@tempbox=1.6875ex\dp\beamer@tempbox=0.75ex%
+				% render the box
+				\box\beamer@tempbox%
+			\fi%
+		}% \def\sectionentry
+		%
+		% invoke the iterator (it will call \sectionentry for every section)
+		\dohead%
+	}}%
+}%
+
+
+\ifdim\beamer@headheight>0pt
+% if head height is 0pt, use default frame title
+
+	% template for the frametitle
+	\defbeamertemplate*{frametitle}{AIChemnitz theme}%
+	{%
+	\vskip-\beamer@headheight%
+	\begin{beamercolorbox}{frametitle}
+		% the current position is at the upper left corner of
+		% the *slide content pane*!!
+		% seek to the upper paper border first
+		\hbox to 0pt{\vbox to \beamer@logoheight{%
+			\hbox{%
+				% seek to the upper left corner of the paper
+				\hskip-\beamer@leftmargin%
+				% now seek the correct x coordinate for the title
+				\hskip\beamer@AIChemnitz@frametitleleftmargin%
+				\hskip0.297cm%
+				\hskip-0.045cm%
+				% create a box as high as the logo itself
+				\vbox to\beamer@logoheight{%
+					% stretching space to make the title bottom justified
+					\vss%
+					% a minipage for the title itself in order to have
+					% automatik line breaking
+					\begin{minipage}{\beamer@frametitlewidth}%
+						% make it right justified
+						\begin{flushright}%
+							{\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}%
+									  \insertframetitle}%
+							% prevent the movement of the lower title line by creating a maximal depth for the box
+							\vphantom{Hfgjpqy}%
+						\end{flushright}%
+					\end{minipage}%
+					\vskip0.25ex%
+				}%
+			}%
+		}}%
+		\vskip0.3cm%
+		{\usebeamerfont{framesubtitle}\usebeamercolor{framesubtitle}\color{fg}%
+		\insertframesubtitle}%
+		\vskip-0.3cm%
+	\end{beamercolorbox}%
+	}%
+
+	% create the foot (two lines, the first contains information, the second the navigation symbols)
+	\defbeamertemplate*{footline}{AIChemnitz theme}%
+	{%
+		\begin{beamercolorbox}[wd=\paperwidth]{footline}
+			\usebeamercolor[fg]{beamer@aiBlue}%
+			% draw in the dark tuc color
+			{\color{beamer@aiBlue}%
+				% the first line:
+				% left margin
+				\hskip0.297cm%
+				\hbox{%
+					% the date of the occasion
+					\hbox to 2.333cm{%
+						{\usebeamerfont{occasion in head/foot}\insertoccasion\vphantom{Hfgjpqy}}\hfil%
+					}%
+					% the name of the occasion
+					\hbox to 7.54cm{%
+						\hfil{\usebeamerfont{title in head/foot}\inserttitle\vphantom{Hfgjpqy}}\hfil%
+					}%
+					% the current frame number
+					\hbox to 2.333cm{%
+						\hfil\insertframenumber%
+					}%
+				}%
+			}%
+			% seek some of the inter-line skip back
+			\vskip-0.45\baselineskip%
+			% and draw right-flushed navigation symbols
+			\hfill\usebeamercolor[fg]{navigation symbols}\hbox{%
+				\hbox{\insertslidenavigationsymbol}%
+				\hbox{\insertframenavigationsymbol}%
+				\hbox{\insertsubsectionnavigationsymbol}%
+				\hbox{\insertsectionnavigationsymbol}%
+				\hbox{\insertdocnavigationsymbol}%
+				\hbox{\insertbackfindforwardnavigationsymbol}%
+			}
+			% take a bit from the last line skip back
+			\vskip-0.15\baselineskip%
+		\end{beamercolorbox}%
+	}%
+
+	% create the headline containing the IF-Logo, chair and professor name, the title of the slide and the toc
+	\defbeamertemplate*{headline}{AIChemnitz theme}%
+	{%
+		% draw everything in a beamer color box (it in probably more convenient)
+		%   --> the box is to use up all the width of the slide
+		\begin{beamercolorbox}[wd=\paperwidth]{headline}%
+			\vbox to\beamer@headheight{%
+				% put left margin space, logo content, small margin, and shaded line+navigation boxes horizontally one after the other
+				\hbox to\paperwidth{%
+					% the left margin
+					\hskip0.297cm%
+					% the box with the logo (picture+text); pack it vertically top down
+					\hbox to\beamer@logoareawidth{\vbox to\beamer@headheight{%
+						\offinterlineskip%
+						% top margin
+						\vskip0.126cm%
+						% picture
+						\includegraphics[width=\beamer@logowidth,height=\beamer@logoheight]{theme_misc/if-logo}%
+						% a bit of space
+						\vskip0.10cm%
+						% the text
+						\begin{minipage}{\beamer@logowidth}%
+							{\color{beamer@aiBlue}\fontsize{0.0675\beamer@logoareawidth}{0pt}\selectfont Professorship \\ Artificial Intelligence\\Prof. Dr. Fred Hamker\par}%
+						\end{minipage}\par%
+					}}%
+					% leave a small gap between logo and shading
+					\hskip0.045cm%
+					% put the shading and the navigation
+					\hbox to\beamer@horishadewidth{\vbox to\beamer@headheight{%
+						\offinterlineskip%
+						% top margin
+						\vskip0.126cm\vskip\beamer@logoheight%
+						% horizontal shading line
+						\pgfuseshading{horizontalline}%
+						% a gap before putting the navigation
+						\vskip1ex%
+						\hbox to\beamer@horishadewidth{%
+							% make navigation right justified
+							\hss%
+							% put the navigation
+							\insertmynavigation{$\bullet$}%
+						}%
+					}}%
+				}%
+			}%
+		\end{beamercolorbox}%
+	}%
+	[action]
+	{%
+		\pgfdeclarehorizontalshading{horizontalline}{0.101cm}{color(0cm)=(white); color(\the\beamer@horishadewidth)=(beamer@aiBlue)}%
+	}
+\fi
+
+\ifdim\beamer@sidebarwidth>0pt
+                                % Sidebar
+  \setbeamersize{sidebar width left=\beamer@sidebarwidth}
+  \defbeamertemplate*{sidebar left}{AIChemnitz theme}
+  {
+%    \beamer@tempdim=\beamer@sidebarwidth%
+%    \advance\beamer@tempdim by -6pt%
+%    \vskip1cm% zu ersetzen mit dem Farbverlauf
+%    \insertverticalnavigation{\beamer@sidebarwidth}%
+%    \vfill
+%    \beamer@tempdim=\beamer@sidebarwidth%
+%    \advance\beamer@tempdim by -3pt%
+%    \begin{minipage}{\beamer@tempdim}{\color{white}\usebeamerfont{section in sidebar}\hfil\insertframenumber\hfil}\end{minipage}\vskip4pt%
+  }%
+                                % Margins
+  \setbeamersize{text margin left=0.5cm,text margin right=0.5cm}
+\fi
+
+  \defbeamertemplate*{sidebar right}{AIChemnitz theme}{\hskip-\beamer@leftsidebar}
+  \defbeamertemplate*{navigation symbols}{AIChemnitz theme}{}
+
+%\setbeamertemplate{sidebar canvas left}[vertical shading][top=beamer@tuclight,middle=beamer@aiBlue,bottom=beamer@aiBlue,midpoint=0.87]
+
+\newdimen\beamer@titleshadingtotal
+\beamer@titleshadingtotal=\paperwidth
+\advance\beamer@titleshadingtotal by2cm
+
+\defbeamertemplate*{title page}{AIChemnitz}[1][]
+{%
+	\hskip-\beamer@sidebarwidth%
+	% first, generate the background
+	\begin{beamercolorbox}[wd=\paperwidth,ht=\paperheight,dp=0pt]{title page}%
+		\vbox to\paperheight{%
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			% headline
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\usebeamerfont{headline}%
+			% put left margin space, logo content, small margin, and shaded line+navigation boxes horizontally one after the other
+			\hbox to\paperwidth{%
+				% the left margin
+				\hskip0.297cm%
+				% the box with the logo (picture+text); pack it vertically top down
+				\hbox to\beamer@logoareawidth{\vbox to\beamer@headheight{%
+					\offinterlineskip%
+					% top margin
+					\vskip0.126cm%
+					% picture
+					\includegraphics[width=\beamer@logowidth,height=\beamer@logoheight]{theme_misc/if-logo}%
+					% a bit of space
+					\vskip0.10cm%
+					% the text
+					\begin{minipage}{\beamer@logowidth}%
+						{\color{beamer@aiBlue}\fontsize{0.0675\beamer@logoareawidth}{0pt}\selectfont Professorship \\ Artificial Intelligence\\Prof. Dr. Fred Hamker\par}%
+					\end{minipage}\par%
+				}}%
+				% leave a small gap between logo and shading
+				\hskip0.045cm%
+				% put the shading and the navigation
+				\hbox to\beamer@horishadewidth{\vbox to\beamer@headheight{%
+					\offinterlineskip%
+					% top margin
+					\vskip0.126cm%
+					\vbox to\beamer@logoheight{\vss\hbox to\beamer@horishadewidth{%
+						\hss\includegraphics[height=0.4\beamer@headheight]{theme_misc/Balkenobenrechts}%	
+					}\vskip0.2cm}%					
+					% horizontal shading line
+					\pgfuseshading{horizontallineA}%
+				}}%
+			}%
+			\vss%
+			\hbox to\paperwidth{\hss%
+				\begin{minipage}{0.9\textwidth}%
+					\begin{center}%
+						{\usebeamerfont{title}\usebeamercolor{title}\color{fg}%
+						\inserttitle\\}%
+						{\usebeamerfont{subtitle}\usebeamercolor{subtitle}\color{fg}%
+						\insertsubtitle\\}%
+					\end{center}%
+				\end{minipage}%
+			\hss}%
+			\vss%
+			\hbox to\paperwidth{\hss%
+				\begin{minipage}{0.8\textwidth}%
+					\begin{center}%
+						{\usebeamerfont{author}\usebeamercolor{author}\color{fg}%
+						\insertauthor\\}%
+					\end{center}%
+				\end{minipage}%
+			\hss}%
+			\vss%
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			% footline
+			%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+			\usebeamerfont{headline}%
+			% put left margin space, logo content, small margin, and shaded line+navigation boxes horizontally one after the other
+			\hbox to\paperwidth{%
+				\hbox to 0cm{
+					\vbox to\beamer@headheight{\vss%
+						\offinterlineskip%
+						% picture
+						\hbox to\paperwidth{%
+							\hss%
+							\includegraphics[height=1.1\beamer@logoheight]{theme_misc/tu-logo}%
+							\hskip0.297cm%
+						}%
+						% top margin
+						\vskip0.252cm%
+					}%
+				}%
+				% the left margin
+				\hskip0.297cm%
+				% put the shading and the navigation
+				\hbox to\beamer@horishadewidth{\vbox to\beamer@headheight{\vss%
+					\offinterlineskip%
+					\hbox{%
+						{\usebeamerfont{occasion}\usebeamercolor{occasion}\color{fg}%
+							\insertoccasion%
+							\ifx\insertoccasion\@empty%
+							\else%
+								\ifx\insertdate\@empty%
+								\else%
+									{ / }%
+								\fi%
+							\fi%
+							\insertdate
+						}%
+					}%
+					% a gap
+					\vskip0.5ex%
+					% horizontal shading line
+					\pgfuseshading{horizontallineB}%
+					\vskip0.2cm%
+%					\vbox to 0.4\beamer@headheight{\hbox to\beamer@horishadewidth{%
+%						\includegraphics[height=0.4\beamer@headheight]{theme_misc/Balkenuntenlinks}\hss%	
+%					}}%
+					% bottom margin
+					\vskip0.252cm%
+				}}%
+			}%
+		}%
+	\end{beamercolorbox}%
+}
+[action]
+{
+	\pgfdeclarehorizontalshading{horizontallineA}{0.101cm}{color(0cm)=(white); color(\the\beamer@horishadewidth)=(beamer@aiBlue)}%
+	\pgfdeclarehorizontalshading{horizontallineB}{0.101cm}{color(0cm)=(beamer@aiBlue); color(\the\beamer@horishadewidth)=(white)}%
+}
+
+
+\mode
+<all>
+
+%%% Local Variables: 
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 

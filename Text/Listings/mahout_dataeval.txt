@@ -1,0 +1,5 @@
+    bin/mahout de.tolleiv.cf.eval.ItemSimilarityEvaluator \
+        --input inputFolder \
+        --model modelFolder \
+        --output outputFolder \
+        --tempDir outputFolder/tmp

@@ -1,0 +1,4 @@
+    ?q={!boost b=div(1,sqedist($features,features)) v=id:*}
+    &fq={!frange l=1 u=1}if(termfreq(id,$id),0,1)
+    &simField=features
+    &id=49040

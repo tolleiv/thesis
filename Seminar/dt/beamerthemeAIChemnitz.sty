@@ -1,0 +1,37 @@
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+% Copyright 24.4.2012 by Frederik Beuth (beuth@hrz.tu-chemnitz.de) - TU-Chemnitz, Dep. for CS, Chair Artificial Intelligence
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\DeclareOptionBeamer{hideothersubsections}{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemeAIChemnitz}}
+\DeclareOptionBeamer{hideallsubsections}{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemeAIChemnitz}}
+
+\DeclareOptionBeamer{width}{\PassOptionsToPackage{width=#1}{beamerouterthemeAIChemnitz}}
+\DeclareOptionBeamer{left}{\PassOptionsToPackage{left}{beamerouterthemeAIChemnitz}}
+\DeclareOptionBeamer{right}{\PassOptionsToPackage{right}{beamerouterthemeAIChemnitz}}
+\ProcessOptionsBeamer
+
+\mode<presentation>
+
+\newdimen\beamer@titlepaperleft
+
+\def\occasion{\@dblarg\beamer@occasion}
+\long\def\beamer@occasion[#1]#2{%
+  \def\insertoccasion{#2}%
+  \def\beamer@shortoccasion{#1}%
+  }
+\occasion{Konferenz bzw. Workshop}
+
+\useinnertheme[shadow=true]{rounded}
+\usecolortheme{AIChemnitz}
+\useoutertheme{AIChemnitz}
+\usefonttheme{AIChemnitz}
+
+\mode
+<all>
+
+%%% Local Variables: 
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 
+

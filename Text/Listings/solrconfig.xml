@@ -2,10 +2,13 @@
 	<lib dir="Search/target/dependency" regex=".*\.jar" />
 	<lib path="Search/target/Search.jar" /> 
 	<query>
-		<searchComponent
-			name="personalize"
+		<searchComponent name="boostRecommendations"
 			class="de.tolleiv.cf.search.SpringAwareSearchComponent">
 			<str name="searchDelegate">booleanBoostRecommenderComponent</str>
 		</searchComponent>
 	</query>
+
+	<requestHandler name="/select" class="solr.SearchHandler">
+		<arr name="last-components"><str>boostRecommendations</str></arr>
+	</requestHandler>
 </config>

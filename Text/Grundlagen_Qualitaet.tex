@@ -14,15 +14,15 @@ Im folgenden Abschnitt werden verschiedene Wege zur Bewertungen von Empfehlungsd
 
 \subsubsection{Mittlere Abweichung}
 
-Eine naheliegende Methode zum Vergleich von Filtermodellen ist es, deren Fehlerquote in Bezug zu vorliegenden historischen Nutzerdaten zu bestimmen bzw. zu messen wie stark die ermittelten Werte von den tatsächlichen abweichen. Hierfür wird oft der \textit{mittlere absolute Fehler} (engl. \acf{MAE}) oder die \textit{Wurzel aus dem mittleren quadratischen Fehler} (engl. \acf{RMSE}) genutzt.
+Eine naheliegende Methode zum Vergleich von Filtermodellen ist es, deren Fehlerquote in Bezug zu vorliegenden historischen Nutzerdaten zu bestimmen, bzw. zu messen wie stark die ermittelten Werte von den tatsächlichen abweichen. Hierfür wird oft der \textit{mittlere absolute Fehler} (engl. \acf{MAE}) oder die \textit{Wurzel aus dem mittleren quadratischen Fehler} (engl. \acf{RMSE}) genutzt.
 
-Auf der Basis einer Testmenge $\mathcal{T}$ wird für alle darin befindlichen Nutzer-Element Paare $(u,i)$ der berechnete Ratingwert $\hat{r}_{ui}$ mit dem tatsächlichen $r_{ui}$ vergleichen. Die beiden Fehlermaße werden dann wie folgt gebildet:
+Auf der Basis einer Testmenge $\mathcal{T}$ wird für alle darin befindlichen Nutzer-Element-Paare $(u,i)$ der berechnete Ratingwert $\hat{r}_{ui}$ mit dem tatsächlichen $r_{ui}$ vergleichen. Die beiden Fehlermaße werden dann wie folgt gebildet:
 \begin{align}
 MAE & = \sqrt{\frac{1}{|\mathcal{T}|} \sum_{(u,i) \in \mathcal{T}}{|\hat{r}_{ui}-r_{ui}|}} \label{form:mae} \\
 RMSE & = \sqrt{\frac{1}{|\mathcal{T}|} \sum_{(u,i) \in \mathcal{T}}{(\hat{r}_{ui}-r_{ui})^2}} \label{form:rmse}
 \end{align}
 
-Der Unterschied zwischen den Methoden liegt in der Bewertung großer Fehler. Wie in Tabelle \ref{tab:mae-rmse} gezeigt wird, kann dies durchaus ausschlaggebend sein. Im gezeigten Beispiel würde das Modell $\hat{r}_{(1)}$ vom \acs{MAE} bevorzugt, weil der eine Fehler durch die drei richtigen Werte stärker ausgeglichen wird. Beim Vergleich mit dem \acs{RMSE} würde Modell $\hat{r}_{(2)}$ bevorzugt weil die vier ``kleinen'' Fehler in $\hat{r}_{(2)}$ weniger ins Gewicht fallen als der größere Fehler in $\hat{r}_{(1)}$. \citep{hb_08}
+Der Unterschied zwischen den Methoden liegt in der Bewertung großer Fehler. Wie in Tabelle \ref{tab:mae-rmse} gezeigt wird, kann dies durchaus ausschlaggebend sein. Im gezeigten Beispiel würde das Modell $\hat{r}_{(1)}$ vom \acs{MAE} bevorzugt, weil ein Fehler durch die drei richtigen Werte stärker ausgeglichen wird. Beim Vergleich mit dem \acs{RMSE} würde Modell $\hat{r}_{(2)}$ bevorzugt weil die vier ``kleinen'' Fehler in $\hat{r}_{(2)}$ weniger ins Gewicht fallen als der größere Fehler in $\hat{r}_{(1)}$. \citep{hb_08}
 \begin{SCtable}
   \centering
   \begin{tabular}{ | r | p{1cm} | p{1cm} | p{1cm} | }
@@ -63,11 +63,11 @@ Ergänzend zur Messung der Approximationsgüte des erzeugten Modells muss bei ei
 
 \paragraph{Klickrate} Beschreibt die Anzahl der Klicks auf ein Element, zum Beispiel einen Werbebanner, im Verhältnis zur Häufigkeit mit der es angezeigt wurde. 
 
-\paragraph{Conversion-Rate} Mit der Conversion-Rate wird bestimmt welcher Anteil der Besucher ein bestimmtes Ziel, die sog. \textit{Conversion}, erreicht haben. Mögliche Ziele sind zum Beispiel erfolgreiche Kaufabschlüsse oder Kontaktaufnahmen der Kunden. Die Ziele werden abhängig vom Kontext so gewählt, dass diese aktiv zur Wertschöpfung beitragen. Die Berechnung der Conversion-Rate entspricht gem. Formel (\ref{form:cr}) dem Verhältnis der gemessenen Conversions $conv$ und der Anzahl der Besucher $visitors$ die im gegebenen Zeitraum eine oder mehrere Seiten aufgerufen haben. Maschinelle Seitenzugriffe, zum Beispiel durch Suchmaschinen-Spider, fließen nicht in Messung der Nutzerzahlen ein. Ebenso werden wiederholte Conversions des gleichen Besuchers nicht mehrfach gezählt. \citep{krueger2011conversion}
+\paragraph{Conversion-Rate} Mit der Conversion-Rate wird bestimmt welcher Anteil der Besucher ein bestimmtes Ziel, die sog. \textit{Conversion}, erreicht haben. Mögliche Ziele sind zum Beispiel erfolgreiche Kaufabschlüsse oder Kontaktaufnahmen der Kunden. Die Ziele werden abhängig vom Kontext so gewählt, dass diese aktiv zur Wertschöpfung beitragen. Die Berechnung der Conversion-Rate entspricht gem. Formel (\ref{form:cr}) dem Verhältnis der gemessenen Anzahl an Conversions $conv$ und der Anzahl der Besucher $visitors$ die im gegebenen Zeitraum eine oder mehrere Seiten aufgerufen haben. Maschinelle Seitenzugriffe, zum Beispiel durch Suchmaschinen-Spider, fließen nicht in Messung der Nutzerzahlen ein. Ebenso werden wiederholte Conversions des gleichen Besuchers nicht mehrfach gezählt. \citep{krueger2011conversion}
 \begin{align}
 CR & = \frac{|conv|}{|visitors| } * 100 \label{form:cr}
 \end{align}
 
-\paragraph{Successful Session}\label{sec:successfulsession} Da die Nutzeroberfläche von Suchmaschinen in der Regel kein explizites Feedback vom Nutzer zur Qualität der gefundenen Ergebnisse  zulässt, muss die Relevanz einer Ergebnisliste über implizite Verfahren gemessen werden. In \citep{smyth05a} wird die Methode der \textit{Successful Session} für diesen Zweck beschrieben. Die Ergebnisliste einer Suche wird demnach immer dann als relevant bewertet wenn der Nutzer mindestens eines der Ergebnisse ausgewählt hat. Wird keines gewählt, wird die Liste entsprechend als irrelevant bewertet. Eine weitere Abstufung bzw. Steigerung der Relevanz, zum Beispiel bei wiederholter Ergebniswahl, wird nicht getroffen. \citep{smyth05a} \todo[color=green]{HB Kap. 10.4.2 dazu?}
+\paragraph{Successful Session}\label{sec:successfulsession} Da die Nutzeroberfläche von Suchmaschinen in der Regel kein explizites Feedback vom Nutzer zur Qualität der gefundenen Ergebnisse  zulässt, muss die Relevanz einer Ergebnisliste über implizite Verfahren gemessen werden. In \citep{smyth05a} wird die Methode der \textit{Successful Session} für diesen Zweck beschrieben. Die Ergebnisliste einer Suche wird demnach immer dann als relevant bewertet, wenn der Nutzer mindestens eines der Ergebnisse ausgewählt hat. Wird keines gewählt, wird die Liste entsprechend als irrelevant bewertet. Eine weitere Abstufung bzw. Steigerung der Relevanz, zum Beispiel bei wiederholter Ergebniswahl, wird nicht getroffen. \citep{smyth05a} \todo[color=green]{HB Kap. 10.4.2 dazu?}
 %\subsubsection{Normalisierter DCG}
 %\subsubsection{A/B Testing}

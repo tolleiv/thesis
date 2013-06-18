@@ -27,7 +27,7 @@ Die in den Schritten 1. bis 3. durchgeführten Verarbeitungsschritte sind immer 
 
 Formuliert der Nutzer nun seine Anfrage, durchläuft diese ebenfalls die Schritte 2. und 3. bevor Dokumente mit Hilfe des Index gefunden werden können. Besteht die Anfrage aus mehreren Bestandteilen, wird die Liste der relevanten Dokumente aus der Schnittmenge der für die einzelnen Teile gefundenen Dokumentenmengen gebildet. Ergänzend existieren verschiedene Erweiterungen des invertierten Index, um noch effizienter in sehr großen Dokumentenbeständen suchen zu können, um die Position der Merkmale innerhalb des Dokumentes nutzbar zu machen oder um den Umfang des Index einzuschränken. Diese werden u.a. in \citep[Kap. 3,4,5]{Manning2008} beschrieben und hier zur Wahrung des Umfangs ausgelassen.
 
-\subsubsection{Relevanzberechnung}\label{sec:searchrelevance}
+\subsubsection{Relevanzberechnung}\label{sec:searchrelevance}\label{tfidf}
 Die reine Generierung einer Dokumentenliste als Ergebnis der Anfrage genügt vor allem bei großen Dokumentenbeständen nicht. Mögliche Methoden, um die Listen  entsprechend der Relevanz eines Dokumentes zu sortieren, sind zum einen das \textit{Tf-idf Maß} und bei untereinander verknüpften Dokumenten der \textit{PageRank}.
 
 \paragraph{Tf-idf Maß} Zur Bildung dieses Maßes wird die Relevanz des Terms $i$ innerhalb des Dokumentes $d$ und die Relevanz des Terms innerhalb des gesamten Dokumentenbestands ins Verhältnis gesetzt.
@@ -37,7 +37,7 @@ Die reine Generierung einer Dokumentenliste als Ergebnis der Anfrage genügt vor
 \text{tf-idf}(i, d) & = \text{tf}(i ,d) \ast \text{idf}(i) \label{form:tfidf}
 \end{align}
 
-Um die Relevanz eines Terms bezüglich eines Dokumentes abzubilden, wird die relative Häufigkeit mit der der Term innerhalb des Dokumentes vorkommt, genutzt. Die sog. \textit{Termfrequenz} bildet sich entsprechend aus dem Verhältnis der Anzahl der Vorkommen des Terms innerhalb des Dokumentes ($freq(i,j)$) zur maximalen Anzahl aller anderen Terme $Z$ im Dokument. Mit Hilfe der inversen Dokumentenfrequenz (\acs{IDF}) wird die \acf{TF} eines Terms abgewertet wenn dieser in nahezu jedem Dokument vorkommen und aufgewertet wenn er nur selten genutzt werden. Diese wird aus dem Verhältnis der Gesamtdokumentenzahl $N$ zur Anzahl der Dokumente die den Term $i$ enthalten ($n(i)$) gebildet.
+Um die Relevanz eines Terms bezüglich eines Dokumentes abzubilden, wird die relative Häufigkeit mit der der Term innerhalb des Dokumentes vorkommt, genutzt. Die sog. \textit{Termfrequenz} bildet sich entsprechend aus dem Verhältnis der Anzahl der Vorkommen des Terms innerhalb des Dokumentes ($freq(i,j)$) zur maximalen Anzahl aller anderen Terme $Z$ im Dokument. Mit Hilfe der inversen Dokumentenfrequenz (\acs{IDF}) wird die \acf{TF} eines Terms abgewertet wenn dieser in nahezu jedem Dokument vorkommt und aufgewertet wenn er nur selten genutzt wird. Die \acs{IDF} wird aus dem Verhältnis der Gesamtdokumentenzahl $N$ zur Anzahl der Dokumente die den Term $i$ enthalten ($n(i)$) gebildet.
 
 Das \textit{tf-idf Maß} bildet sich entsprechend Formel (\ref{form:tfidf}) aus dem Produkt der beiden Teilmaße und ist:
 \begin{itemize}
@@ -48,7 +48,7 @@ Das \textit{tf-idf Maß} bildet sich entsprechend Formel (\ref{form:tfidf}) aus 
 
 Die Summe der Relevanz eines Dokuments bezüglich aller Teilterme der Anfrage $q$ bildet dann die Grundlage um die erzeugte Dokumentenliste zu sortieren.\citep{Manning2008} 
 \begin{align}
-\text{score}(q,d) & = \sum_{t \in q}{\text{tf-idf}(t,d)}
+\text{score}(q,d) & = \sum_{t \in q}{\text{tf-idf}(t,d)}  \label{form:docscore}
 \end{align}
 
 \paragraph{PageRank} Sind die Dokumente untereinander verknüpft, kann man auch die Popularität eines Dokumentes zur Grundlage der Anordnung in der Ergebnisliste machen. Diese Popularität wird i.d.R. in Form des PageRank ausgedrückt. Dieser korreliert mit der Wahrscheinlichkeit, dass ein zufällig über den Verknüpfungsgraphen laufender Nutzer ein bestimmtes Dokument erreicht. Dokumente, auf die häufig verwiesen wird, besitzen demnach einen hohe PageRank und Verweise von populären Dokumenten üben einen größeren Effekt auf den PageRank der verknüpften Dokumente aus.
@@ -64,7 +64,7 @@ Die Personalisierung der Dokumentenlisten kann über verschiedene Wege erreicht 
 
 Die erste Methode wird zum Beispiel in \citep{Durao12} beschrieben. Um die Dokumentenliste zu personalisieren, wird zunächst ein schlagwortbasiertes Nutzerprofil aufgebaut, welches die bevorzugten Schlagworte $t \in T_u$ in Bezug auf verschiedene Faktoren $F$ und deren relative Frequenz $T_f \subset T_u$ beinhaltet. Die Gewichtung der Faktoren untereinander wird durch $\alpha_f$ realisiert. Zusätzlich werden auch zu jedem Dokument entsprechende Tags $T_d$ gepflegt, so dass die Ähnlichkeit von Nutzerprofil und Dokument mit Hilfe der Kosinus-Ähnlichkeitsmaßes (siehe Abschnitt \ref{sec:cossim}) berechnet werden kann. Da die initiale Dokumentenliste anhand des Tf-idf Maßes sortiert wird, ergibt sich die endgültige Bewertung für den Nutzer $u$ aus:  (vgl. \citep{Durao12})
 \begin{align}
-\text{score}(q,d,u) & = \text{score}_{\text{tf-idf}}(q,d) * \sum_{f \in |F|}{\alpha_f \frac{\overrightarrow{T_d} \overrightarrow{T_f}}{|\overrightarrow{T_d}| |\overrightarrow{T_f}|}}
+\text{score}(q,d,u) & = \text{score}_{\text{tf-idf}}(q,d) * \sum_{f \in |F|}{\alpha_f \frac{\overrightarrow{T_d} \overrightarrow{T_f}}{|\overrightarrow{T_d}| |\overrightarrow{T_f}|}} \label{form:personalresultstheorie}
 \end{align}
 
 Die Anpassung der Anfrage vor der Verarbeitung durch die Suche wird zum Beispiel in \citep{Boughareb11} genutzt. Das Nutzerprofil wird dabei aus der Liste aller vorangegangenen Suchanfragen $Q_s$ gebildet. Formuliert der Nutzer eine neue Anfrage, so wird diese um weitere relevante Schlüsselwörter aus ähnlichen Anfragen ergänzt. Zur Bestimmung der Ähnlichkeit zwischen Suchanfragen wird ebenfalls das Kosinus-Ähnlichkeitsmaß (siehe Abschnitt \ref{sec:cossim}) genutzt. Die Relevanz der Schlüsselwörter wird an deren Dokumentenfrequenz (vgl. Abschnitt \ref{sec:searchrelevance}) innerhalb des Nutzerprofils $Q_s$ bestimmt. Die Verarbeitung der Suche geschieht dann mit der erweiterten Anfrage wie in den vorangegangenen Abschnitten beschrieben.

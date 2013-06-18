@@ -1,0 +1,166 @@
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+% Copyright 24.4.2012 by Frederik Beuth (beuth@hrz.tu-chemnitz.de) - TU-Chemnitz, Dep. for CS, Chair Artificial Intelligence
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+\definecolor{beamer@blendedblue}{rgb}{0.2,0.2,0.7} % use structure theme to change
+\definecolor{beamer@aiBlue}{rgb}{0.09,0.49,0.66} 
+\definecolor{beamer@tucdark}{rgb}{0.000,0.353,0.275}
+\definecolor{beamer@tuclight}{rgb}{0.565,0.718,0.682}
+\definecolor{beamer@iforange}{rgb}{1.000,0.784,0.431}
+
+\setbeamercolor{occasion}{fg=beamer@aiBlue}
+\setbeamercolor{sidebar shaded}{bg=beamer@tuclight}
+
+\setbeamercolor{normal text}{fg=black,bg=white}
+\setbeamercolor{alerted text}{fg=beamer@iforange!75!black}
+\setbeamercolor{example text}{fg=black}
+
+\setbeamercolor{structure}{fg=beamer@aiBlue}
+
+\setbeamercolor{background canvas}{parent=normal text}
+\setbeamercolor{background}{parent=background canvas}
+
+\setbeamercolor{palette primary}{use=structure,fg=structure.fg}
+\setbeamercolor{palette secondary}{use=structure,fg=structure.fg!75!black}
+\setbeamercolor{palette tertiary}{use=structure,fg=structure.fg!50!black}
+\setbeamercolor{palette quaternary}{fg=black}
+
+\setbeamercolor{palette sidebar primary}{use=normal text,fg=white}
+\setbeamercolor{palette sidebar secondary}{use=structure,fg=white}
+\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
+\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
+
+\setbeamercolor{math text}{}
+\setbeamercolor{math text inlined}{parent=math text}
+\setbeamercolor{math text displayed}{parent=math text}
+
+\setbeamercolor{normal text in math text}{}
+
+\setbeamercolor{local structure}{parent=structure}
+
+\setbeamercolor{titlelike}{parent=structure}
+
+\setbeamercolor{title}{parent=titlelike,fg=black}
+\setbeamercolor{title in head/foot}{parent=palette quaternary}
+\setbeamercolor{title in sidebar}{parent=palette sidebar quaternary}
+
+\setbeamercolor{subtitle}{parent=title,fg=black}
+
+\setbeamercolor{author}{fg=black}
+\setbeamercolor{author in head/foot}{parent=palette primary}
+\setbeamercolor{author in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+
+\setbeamercolor{institute}{}
+\setbeamercolor{institute in head/foot}{parent=palette tertiary}
+\setbeamercolor{institute in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+
+\setbeamercolor{date}{}
+\setbeamercolor{date in head/foot}{parent=palette secondary}
+\setbeamercolor{date in sidebar}{use=palette sidebar tertiary,fg=palette sidebar tertiary.fg}
+
+\setbeamercolor{titlegraphic}{}
+
+\setbeamercolor{part name}{}
+\setbeamercolor{part title}{parent=titlelike}
+
+\setbeamercolor{section in toc}{parent=structure}
+\setbeamercolor{section in head/foot}{parent=palette tertiary,fg=beamer@aiBlue}
+\setbeamercolor{section in head/foot shaded}{parent=section in head/foot,fg=black!25!white}
+\setbeamercolor{section in sidebar}{fg=beamer@iforange}
+\setbeamercolor{section in sidebar shaded}{fg=white}
+\setbeamercolor{section number projected}{parent=item projected}
+
+\setbeamercolor{subsection in toc}{}
+\setbeamercolor{subsection in head/foot}{parent=palette secondary}
+\setbeamercolor{subsection in sidebar}{fg=beamer@iforange}
+\setbeamercolor{subsection in sidebar shaded}{fg=white}
+\setbeamercolor{subsection number projected}{parent={subitem projected}}
+
+\setbeamercolor{headline}{}
+\setbeamercolor{footline}{fg=beamer@aiBlue}
+
+\setbeamercolor{sidebar}{bg=beamer@aiBlue}
+\setbeamercolor{sidebar left}{parent=sidebar}
+\setbeamercolor{sidebar right}{parent=sidebar}
+
+\setbeamercolor{logo}{bg=beamer@aiBlue,fg=white}
+
+\setbeamercolor{frametitle}{fg=black}
+\setbeamercolor{framesubtitle}{parent=frametitle,fg=beamer@iforange!75!black}
+
+\setbeamercolor{frametitle right}{fg=black}
+
+\setbeamercolor{caption}{}
+\setbeamercolor{caption name}{parent=structure}
+
+\setbeamercolor{button}{use=local structure,bg=local structure.fg!50!bg,fg=white}
+\setbeamercolor{button border}{use=button,fg=button.bg}
+\setbeamercolor{navigation symbols}{use=structure,fg=structure.fg!10!bg}
+\setbeamercolor{navigation symbols dimmed}{use=structure,fg=structure.fg!5!bg}
+\setbeamercolor{mini frame}{parent=section in head/foot}
+
+\setbeamercolor{block body}{}
+\setbeamercolor{block body alerted}{}
+\setbeamercolor{block body example}{}
+\setbeamercolor{block title}{parent=structure}
+\setbeamercolor{block title alerted}{parent=alerted text}
+\setbeamercolor{block title example}{parent=example text}
+\setbeamercolor{frame title alerted}{parent=alerted text,fg=beamer@iforange}
+
+\setbeamercolor{item}{parent=local structure}
+\setbeamercolor{subitem}{parent=item}
+\setbeamercolor{subsubitem}{parent=subitem}
+
+\setbeamercolor{item projected}{parent=item,use=item,fg=white,bg=item.fg}
+\setbeamercolor{subitem projected}{parent=item projected}
+\setbeamercolor{subsubitem projected}{parent=subitem projected}
+
+\setbeamercolor{enumerate item}{parent=item}
+\setbeamercolor{enumerate subitem}{parent=subitem}
+\setbeamercolor{enumerate subsubitem}{parent=subsubitem}
+
+\setbeamercolor{itemize item}{parent=item}
+\setbeamercolor{itemize subitem}{parent=subitem}
+\setbeamercolor{itemize subsubitem}{parent=subsubitem}
+
+\setbeamercolor{itemize/enumerate body}{}
+\setbeamercolor{itemize/enumerate subbody}{}
+\setbeamercolor{itemize/enumerate subsubbody}{}
+
+\setbeamercolor{description item}{parent=item}
+
+\setbeamercolor{bibliography item}{parent=item}
+
+\setbeamercolor{bibliography entry author}{use=structure,fg=structure.fg}
+\setbeamercolor{bibliography entry title}{use=normal text,fg=normal text.fg}
+\setbeamercolor{bibliography entry location}{use=structure,fg=structure.fg!65!bg}
+\setbeamercolor{bibliography entry note}{use=structure,fg=structure.fg!65!bg}
+
+\setbeamercolor{separation line}{}
+
+\setbeamercolor{upper separation line head}{parent=separation line}
+\setbeamercolor{middle separation line head}{parent=separation line}
+\setbeamercolor{lower separation line head}{parent=separation line}
+
+\setbeamercolor{upper separation line foot}{parent=separation line}
+\setbeamercolor{middle separation line foot}{parent=separation line}
+\setbeamercolor{lower separation line foot}{parent=separation line}
+
+\setbeamercolor{abstract}{}
+\setbeamercolor{abstract title}{parent=structure}
+
+\setbeamercolor{verse}{}
+
+\setbeamercolor{quotation}{}
+\setbeamercolor{quote}{parent=quotation}
+
+\setbeamercolor{page number in head/foot}{fg=fg!50!bg}
+
+\setbeamercolor{qed symbol}{parent=structure}
+
+\mode
+<all>

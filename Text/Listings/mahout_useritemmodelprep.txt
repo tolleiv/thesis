@@ -1,0 +1,6 @@
+    bin/mahout itemsimilarity \
+        --input inputFolder \
+        --output outputFolder \
+        --booleanData false \
+        --similarityClassname SIMILARITY_EUCLIDEAN_DISTANCE \
+        --tempDir outputFolder/tmp
