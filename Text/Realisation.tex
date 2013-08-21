@@ -39,7 +39,7 @@ Basierend darauf könnte die Suche nach ``Theater Hamburg Freitag'' in einer Dok
 
 \lstinputlisting[caption=Einfache Solr-Anfrage mit angepassten Feld-Boosts,label={lst:query_simple},float]{Listings/solrqueries_simple.txt}
 
-\subsubsection{Relevanz-Anpassung}
+\subsubsection{Relevanz-Anpassung} \label{sec:searchrelevance}
 
 Die Nutzerprofil bezogene Anpassung der Relevanzwerte eines Dokumentes für eine Suchanfrage kann durch zwei Methoden innerhalb von Solr erreicht werden. Zum einen ist es möglich die vorhandenen Komponenten eines \textit{RequestHandlers} durch eigene zu ergänzen, innerhalb dieser wäre dann die Erweiterung der Suchanfrage selbst, die Umsortierung der Ergebnislisten oder die Veränderung der Relevanzberechnung möglich. Des weiteren ermöglicht die \textit{Query} Komponente auch die Integration von komplexeren Relevanzerechnungen über native Funktionen. Letzteres wird vor allem gebraucht um Berechnungen wie Geographe-Distanzbestimmungen (näher ist relevanter), Produktpreise (Aufwertung von Produkten innerhalb eines Bereiches) und Datumsberechnungen ebenfalls als Faktoren bei der Sortierung der Ergebnislisten berücksichtigen zu können.
 
@@ -191,7 +191,9 @@ Die Evaluation der Ergebnisse beider Vorberechnungsmethoden erfolgt über die er
 
 \subsubsection{Suche}
 
-Integration wie in Listing \ref{lst:solrconfig}
+Die Integration mit der Suche erfolgt wie in Abschnitt \ref{sec:searchrelevance} beschrieben. Die Empfehlungsdienste auf Basis des Webservices werden wie in Listing \ref{lst:solrconfig} über die \textit{booleanBoost}-Komponente eingebunden und konfiguriert. Zur Integration der featurebasierten Empfehlungen wird die \textit{similarityField} Komponente eingebunden und über die erweiterte Boost-Konfiguration wie in Listing \ref{lst:similardocs}  zur Personalisierung benutzt.
+
+Zur Erfüllung der in Abschnitt \ref{sec:userstories} beschriebenen Anwendungsfälle können beide Komponenten auch so integriert bzw. konfiguriert werden, dass Empfehlungen direkt ``ausgegeben'' werden oder dass Empfehlungen nicht für reale Nutzerprofile und stattdessen für anonyme Produktlisten generiert werden. Da beide Komponenten direkt in den Verarbeitungsablauf von \textit{Apache Solr} integriert sind, obliegt die Ausgestaltung der konkreten Anwendungsfälle der konkreten Applikation und wird zur Wahrung des Umfangs nicht näher betrachtet.
 
 %\subsubsection{Datenhaltung}
 %\subsection{Systemaufbau}

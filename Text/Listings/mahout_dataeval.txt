@@ -1,4 +1,4 @@
-    bin/mahout de.tolleiv.cf.eval.ItemSimilarityEvaluator \
+    bin/mahout com.aoe.cf.recommender.SimilarityEvaluator \
         --input inputFolder \
         --model modelFolder \
         --output outputFolder \

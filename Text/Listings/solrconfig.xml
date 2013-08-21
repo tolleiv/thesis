@@ -1,14 +1,14 @@
 <config>
 	<lib dir="Search/target/dependency" regex=".*\.jar" />
-	<lib path="Search/target/Search.jar" /> 
+	<lib path="Search/target/Search.jar" />
 	<query>
-		<searchComponent name="boostRecommendations"
-			class="de.tolleiv.cf.search.SpringAwareSearchComponent">
-			<str name="searchDelegate">booleanBoostRecommenderComponent</str>
+		<searchComponent name="booleanBoost"
+			class="com.aoe.search.SpringAwareSearchComponent">
+			<str name="searchDelegate">booleanBoostComponent</str>
 		</searchComponent>
 	</query>
 
 	<requestHandler name="/select" class="solr.SearchHandler">
-		<arr name="last-components"><str>boostRecommendations</str></arr>
+		<arr name="last-components"><str>booleanBoost</str></arr>
 	</requestHandler>
 </config>
