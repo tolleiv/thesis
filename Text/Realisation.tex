@@ -43,7 +43,7 @@ Basierend darauf könnte die Suche nach ``Theater Hamburg Freitag'' in einer Dok
 
 Die Nutzerprofil bezogene Anpassung der Relevanzwerte eines Dokumentes für eine Suchanfrage kann durch zwei Methoden innerhalb von Solr erreicht werden. Zum einen ist es möglich die vorhandenen Komponenten eines \textit{RequestHandlers} durch eigene zu ergänzen, innerhalb dieser wäre dann die Erweiterung der Suchanfrage selbst, die Umsortierung der Ergebnislisten oder die Veränderung der Relevanzberechnung möglich. Des weiteren ermöglicht die \textit{Query} Komponente auch die Integration von komplexeren Relevanzerechnungen über native Funktionen. Letzteres wird vor allem gebraucht um Berechnungen wie Geographe-Distanzbestimmungen (näher ist relevanter), Produktpreise (Aufwertung von Produkten innerhalb eines Bereiches) und Datumsberechnungen ebenfalls als Faktoren bei der Sortierung der Ergebnislisten berücksichtigen zu können.
 
-\paragraph{Komponentenintegration}  Die Nutzung einer eigenen Komponente innerhalb des \textit{RequestHandlers} wurde für die Einbindung von extern gebildeten Empfehlungen verwendet. Die Integration in die \textit{solrconfig.xml} geschieht wie in Listing \ref{lst:solrconfig} gezeigt. Alle vom Empfehlungsdienst gefundenen Dokumente werden so mit Hilfe der Komponente höher gewichtet. Des Sequenzdiagramm \todo{Sequenzdiag dazu} zeigt den Ablauf bzw. die Verarbeitung einer Suchanfrage und das Zusammenspiel der zusätzlichen Komponente. Da die Komponente nur die Anfragen eines Nutzers erweitert und in den Dokumentendaten selbst keine Veränderung vorgenommen werden muss, kann diese Komponente  leicht integriert werden. Problematisch ist, dass die Personalisierung nicht durchgeführt werden kann, wenn die Menge der empfohlenen Dokumente und die Menge der vom Suchindex gefundenen Dokumente disjunkt sind.
+\paragraph{Komponentenintegration}  Die Nutzung einer eigenen Komponente innerhalb des \textit{RequestHandlers} wurde für die Einbindung von extern gebildeten Empfehlungen verwendet. Die Integration in die \textit{solrconfig.xml} geschieht wie in Listing \ref{lst:solrconfig} gezeigt. Alle vom Empfehlungsdienst gefundenen Dokumente werden so mit Hilfe der Komponente höher gewichtet. Des Sequenzdiagramm in Abbildung \ref{fig:seq-extern-recommender} zeigt den Ablauf bzw. die Verarbeitung einer Suchanfrage und das Zusammenspiel der zusätzlichen Komponente. Da die Komponente nur die Anfragen eines Nutzers erweitert und in den Dokumentendaten selbst keine Veränderung vorgenommen werden muss, kann diese Komponente  leicht integriert werden. Problematisch ist, dass die Personalisierung nicht durchgeführt werden kann, wenn die Menge der empfohlenen Dokumente und die Menge der vom Suchindex gefundenen Dokumente disjunkt sind.
 
 \lstinputlisting[caption=Integration der Recommenderkomponenten in der solrconfig.xml,label={lst:solrconfig},float]{Listings/solrconfig.xml}
 
@@ -60,13 +60,13 @@ Zur Bildung von Komplementen wird ebenfalls die Distanz zwischen Featurevektoren
 \lstinputlisting[caption=Solr-Anfrage zur featurebasierten Dokumentenähnlichkeit ,label={lst:similardocs},float]{Listings/solrqueries_similardocs.txt}
 
 % Vergleich aus http://girlincomputerscience.blogspot.de/2012/11/open-source-recommendation-systems.html	
-\subsection{Apache Mahout}
+\subsection{Apache Mahout} \label{sec:mahout}
 
 Apache Mahout (Mahout) ist eine Programmbibliothek, die vorwiegend Werkzeuge des \textit{maschinellen Lernens} bzw. der \textit{kollektiven Intelligenz} zur Verfügung stellt. Die drei Schwerpunkte der darin implementierten Algorithmen umfassen das \textit{Clustern} von Daten, die Daten-\textit{Klassifikation} und das \textit{kollaborative Filtern} (vgl. Abschnitt \ref{sec:collaborativefiltering}). Die Skalierbarkeit der entsprechenden Algorithmen steht dabei im Zentrum des Projektes, weshalb ein Großteil der Implementierungen auch in Form von Apache Hadoop kompatiblen MapReduce-Implementierungen vorliegt (vgl. Abschnitt \ref{sec:mapred}). Apache Mahout wird ebenso wie Solr frei unter der Apache 2.0 Lizenz zur Verfügung gestellt. \citep{mia}
 
 Da für die vorliegende Arbeit ausschließlich die Werkzeuge des kollaborativen Filterns genutzt wurden, werden im weiteren Abschnitt nur die dafür notwendigen Aspekte von Apache Mahout betrachtet. Umfassendere Beschreibungen aller Bestandteile und deren praktischer Anwendung werden in ``Mahout in Action'' \citep{mia} beschrieben. 
 
-\subsubsection{Bestandteile}
+\subsubsection{Bestandteile} \label{sec:mahoutparts}
 
 \todo{Teilausschnitt Komponentendiagramm einfügen}
 
@@ -85,22 +85,117 @@ Generiert man merkmalbasierte Modelle im Vorverarbeitungsschritt, werden diese e
 
 \lstinputlisting[caption=Trennung von Test- und Trainingsdaten mit Apache Mahout,float,language=bash,label={lst:dataprep}]{Listings/mahout_dataprep.txt}
 
-Wurde das Modell entsprechend trainiert, kann für die verbliebenen Testdaten der tatsächliche mit dem ``berechneten'' Wert verglichen werden um so entsprechend den mittleren quadratischen Fehler abzuleiten. Da die Implementierung bzw. Parametrisierung des eigentlichen Recommendersystems zu verschieden ist, gibt es keinen einheitlichen Weg die Modelle zu evaluieren. Innerhalb der Klassenbibliothek von Apache Mahout existieren allerdings alle Bausteine um einen entsprechenden ``Evaluation'' zuverlässig und nach den Prinzipien der verteilten Datenverarbeitung zu erstellen. Für die im Rahmen der Diplomarbeit genutzten Modelle kann die Evaluation wie in Listing \todo{use the actual code}\ref{lst:dataeval}  erfolgen. Die Ausgabe entspricht dann dem \acs{RMSE} des entsprechenden Modells. \citep{mia}
+Wurde das Modell entsprechend trainiert, kann für die verbliebenen Testdaten der tatsächliche mit dem ``berechneten'' Wert verglichen werden um so entsprechend den mittleren quadratischen Fehler abzuleiten (vgl. Abschnitt \ref{sec:qa_rmse}). Da die Implementierung bzw. Parametrisierung des eigentlichen Recommendersystems zu verschieden ist, gibt es keinen einheitlichen Weg die Modelle zu evaluieren. Innerhalb der Klassenbibliothek von Apache Mahout existieren allerdings alle Bausteine um einen entsprechenden ``Evaluation'' zuverlässig und nach den Prinzipien der verteilten Datenverarbeitung zu erstellen. Für die im Rahmen der Diplomarbeit genutzten Modelle kann die Evaluation wie in Listing \todo{use the actual code}\ref{lst:dataeval}  erfolgen. Die Ausgabe entspricht dann dem \acs{RMSE} des entsprechenden Modells. \citep{mia}
 
  \lstinputlisting[caption=Evaluation eines trainierten Modelles,float,language=bash,label={lst:dataeval}]{Listings/mahout_dataeval.txt}
 
 %\paragraph{Datenaufbereitung} Wie wird Müll aus den Daten entfernt, Sessions zusammengefasst und eindeutige Nutzer identifiziert
-\paragraph{Empfehlungsdienste} Die Nutzung der generierten Modelle und die Berechnung von Empfehlungen für Nutzer kann innerhalb von Apache Mahout ebenfalls über entsprechende Kommandozeilenaufrufe erfolgen (vgl. Listing \ref{lst:datarecommend}). Da im gegebenen Anwendungsfall vorgerechnete Empfehlungen allerdings wenig Nutzen bieten und die dafür notwendige Vorlaufzeit nicht den Erwartungen des Nutzers entspricht, wurden die innerhalb der Klassenbibliotheken vorhandenen Konzepte kombiniert und in Form eines Webservices mit den angebundenen Systemen integriert. Die vorgerechneten und geprüften Modelle werden darin mit Hilfe der sog. \textit{GenericItemSimilarity} geladen und innerhalb eines \textit{GenericItemBasedRecommender} zur Generierung der Empfehlungen genutzt. Neben den reinen element- bzw. nutzerbasierten Empfehlungen unterstützt Apache Mahout auch die Berechnung von Empfehlungen die Abweichungen der mittleren Bewertung pro Element und Nutzer in Betracht ziehen (siehe zB.\textit{BiasedItemBasedRecommender}). Empfehlungen für anonyme Nutzer zur Minimierung des \textit{Cold-Start} Problems (vgl. Abschnitt \ref{sec:filterissues}) wird ebenfalls in den integrierten Datenmodellen unterstützt. \todo{Hinweis auf konkrete Implementierung einbauen}
+\paragraph{Empfehlungsdienste} Die Nutzung der generierten Modelle und die Berechnung von Empfehlungen für Nutzer kann innerhalb von Apache Mahout ebenfalls über entsprechende Kommandozeilenaufrufe erfolgen (vgl. Listing \ref{lst:datarecommend}). Da im gegebenen Anwendungsfall vorgerechnete Empfehlungen allerdings wenig Nutzen bieten und die dafür notwendige Vorlaufzeit nicht den Erwartungen des Nutzers entspricht, wurden die innerhalb der Klassenbibliotheken vorhandenen Konzepte kombiniert und in Form eines Webservices mit den angebundenen Systemen integriert. Die vorgerechneten und geprüften Modelle werden darin mit Hilfe der sog. \textit{GenericItemSimilarity} geladen und innerhalb eines \textit{GenericItemBasedRecommender} zur Generierung der Empfehlungen genutzt. Neben den reinen element- bzw. nutzerbasierten Empfehlungen unterstützt Apache Mahout auch die Berechnung von Empfehlungen die Abweichungen der mittleren Bewertung pro Element und Nutzer in Betracht ziehen (siehe zB. \textit{BiasedItemBasedRecommender}). Empfehlungen für anonyme Nutzer zur Minimierung des \textit{Cold-Start} Problems (vgl. Abschnitt \ref{sec:filterissues}) werden ebenfalls in den integrierten Datenmodellen unterstützt. \todo{Hinweis auf konkrete Implementierung einbauen}
 
  \lstinputlisting[caption=Berechnung von Empfehlungen basierend auf Elementähnlichkeitsmodellen,float,language=bash,label={lst:datarecommend}]{Listings/mahout_datarecommend.txt}
 
-\subsubsection{Skalierung}
-\subsubsection{Erweiterterungen}
+\paragraph{Matrixfaktorisierung} Neben den zuvor beschriebenen Berechnungswegen implementiert Mahout auch \acs{SVD}-basierte Empfehlungsdienste. Bei der Berechnung wird zwischen der inkrementiellen Berechnung basierend auf \citep{funk2006}  und mittels \textit{Alternating Least Squares} \citep{Bell:2007:SCF:1441428.1442050,zhou08} erstellten Modellen unterschieden (vgl Abschnitt \ref{sec:svd}). 
 
-%\subsection{Searchperience Integration}
+\lstinputlisting[caption=Durchführung der Matrixfaktorierung,float,language=bash,label={lst:factorgenerator}]{Listings/mahout_factorgenerator.txt}
+
+Ergänzend zu den in Mahout enthaltenen Methoden, wurde innerhalb der Arbeit die vorhandene inkrementelle Modellberechnung (siehe \textit{RatingSGDFactorizer}) so erweitert, dass diese auch ausschließlich elementspezifischen Featurevektoren verarbeitet (siehe \textit{NSVDFactorizer}, vgl. Abschnitt \ref{sec:myrecommend}). Da innerhalb der Mahout-Distribution vorwiegend binäre Austauschformate genutzt werden, wurde die Persistenzschicht der vorhandenen Modelle zudem um einen CSV-Backend erweitert um die spätere Indexierung in Apache Solr zu vereinfachen. Die Ausführung der Matrixfaktorisierung erfolg damit innerhalb einer eigenen Klasse wie in Listing \ref{lst:factorgenerator}.
+
+%\subsubsection{Skalierung}
+\subsubsection{Erweiterungen}
+
+Da Apache Mahout generell nur Basisalgorithmen implementiert, ist es notwendig gewesen diese für bestimmte Anwendungsfälle zu erweitern. Alle Erweiterungen wurden innerhalb eines Java-Paketes \todo{Pakete ``verlinken''} zusammengefasst und können gemeinsam mit der Basisdistribution von Mahout genutzt werden. Die Erweiterungen der Mahout-Komponenten sind hierbei innerhalb des \textit{Core} Moduls im \textit{com.aoe.cf.recommender} Namespace versammelt.
+
+Die Erweiterungen umfassen:
+\begin{itemize}
+\item Implementierung der Empfehlungsdienste für anonyme Nutzer (\textit{PlusAnonymousRecommender})
+\item Implementierung der NSVD-Faktorisierung zur Erzeugung von ausschließlich elementspezifischen Featurevektoren (\textit{NSVDFactorizer})
+\item Integration eines \textit{MapReduce}-Jobs zur Transformation der Ähnlichkeitsmatrix (vgl. Listing \ref{lst:useritemmodelprep}) in paarweise Ähnlichkeitswerte (\textit{PairSimilarityJob})
+\item Integration eines CSV-Persistenzbackend für die Matrixfaktorisierung (\textit{CsvPersistenceStrategy})
+\item Implementierung von Evaluationsklassen für beide Methoden (\textit{Evaluation}, \textit{FactorEvaluation})
+\end{itemize}
 
 \subsection{Integration}
+
+Zur Integration der Empfehlungsdienste in Apache Solr wurden zwei Komponenten entwickelt welche im Folgenden beschrieben werden. Beide können wie in Listing \ref{lst:solrconfig} eingebunden werden.
+
+\subsubsection{Externe Empfehlungsdienste}
+
+Zur Anbindung von des ausgelagerten Empfehlungsdienstes über eine HTTP-Schnittstelle wurde die \textit{BooleanBoost}-Komponente implementiert.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=\textwidth]{Abbildungen/search-rec1.png}
+    \caption[Flussdiagram - externe Empfehlungen]{\footnotesize Flussdiagramm: Personalisierung von Suchanfragen über einen externen Empfehlungsdienst.}
+    \label{fig:seq-extern-recommender}
+\end{figure}
+
+Wie in \ref{fig:seq-extern-recommender} dargestellt, wird die ursprüngliche Suchanfrage des Nutzers innerhalb der Komponente zunächst unterbrochen, um für das entsprechende Nutzerprofil die Empfehlungen vom externen Dienst berechnen zu lassen. Enthält die Antwort des Dienstes eine Liste von Empfehlungen, so wird diese innerhalb der Komponente in eine Solr-Anfrage, in diesem Fall einen \textit{BooleanQuery}, umgewandelt. Innerhalb des \textit{BooleanQuery} wird über \textit{TermQuery}-Elemente jeweils die Empfehlung für ein einzelnes Dokument der entsprechenden Solr-DokumentenID zugeordnet. Die so generierte Liste wird mit der ursprünglichen Anfrage verknüpft und entsprechend weiterverarbeitet. Die Kombination beider Anfragen hat dann zur Folge, dass Dokumente aus den Empfehlungen über die Faktoren des \textit{TermQuery} entsprechend ``besser'' bewertet werden wenn sie in der Ergebnisliste der ursprünglichen Suchanfrage enthalten sind. Sind die empfohlenen Dokumente nicht Teil der Ergebnisliste, kann keine Personalisierung vorgenommen werden und die Gewichtung bzw. Sortierung der Ergebnisse erfolgt rein TF-IDF-basiert.
+
+Zur Konfiguration der Komponente stehen folgende Parameter zur Verfügung:
+\begin{itemize}
+\item \textit{boostBase} - Normalisierungswert bei der Dokumentenboost-Berechnung. ( $\alpha$ aus Formel (\ref{form:myscore0}) ).
+\item \textit{boostAmount} - Menge der zu bildenden Empfehlungen
+\item \textit{boostInline} - Schaltet die Integration in die ursprüngliche Anfrage ab und zeigt nur die Empfehlungen.
+\end{itemize}
+
+Die Verarbeitung kann hierbei komplett in der Vorverarbeitungsphase von Apache Solr erfolgen, so dass die eigentlichen Suchanfragen auch von innerhalb von Solr in Zwischenspeichern gehalten werden können und wiederholte Anfragen erbeblich schneller verarbeitet werden können.
+
+\subsubsection{Integrierte Empfehlungsdienste} \label{sec:implmodelcalc}
+
+Die Implementierung von Empfehlungen mit Hilfe von Element-Featurevekoren, wurde innerhalb der \textit{SimilarityBoost}-Komponente implementiert.  Die Verarbeitung einer Suchanfrage wird in Abbildung  \ref{fig:seq-intern-recommender} dargestellt.
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.77\textwidth]{Abbildungen/search-rec2.png}
+    \caption[Flussdiagram - interne Empfehlungsbildung]{\footnotesize Flussdiagramm: Personalisierung von Suchanfragen über Featurevektoren im Suchindex.}
+    \label{fig:seq-intern-recommender}
+\end{figure}
+
+Nachdem die Komponente die Anfrage des Nutzers erhalten hat, muss zunächst über eine zusätzliche Anfrage, die Liste der Dokumente des Nutzerprofils aus dem Suchindex gelesen werden. Mit Hilfe dieser Liste kann dann, der Nutzervektor $v(u)$ wie in Formel \ref{form:anonuser} gebildet werden. Danach kann die ursprüngliche Anfrage weiterverarbeitet werden.
+
+Da die Konfiguration der Komponente (vgl. Listing \ref{lst:similardocs}) die weitere Verarbeitung von $v(u)$ (im Listing als \textit{\$features} bezeichnet) bestimmt, kann die Personalisierung bzw. Empfehlungsbildung unabhängig von der \textit{SimilarityField}-Komponente erfolgen. Das in Listing \ref{lst:similardocs} gezeigte Beispiel nutzt die Distanz zwischen den Dokumentenvektoren $w(i)$ und dem Nutzervektor $v(u)$ um für den Nutzer relevante Dokumente zu bevorzugen.
+
+Da der größte Teil der Empfehlungsbildung innerhalb der normalen Apache Solr Komponenten erfolgt, beschränkt sich die Konfiguration der \textit{SimilarityField}-Komponente auf die Benennung des Featurevektoren-Feldes über den \textit{similarityField} Parameter. Alle weiteren Verarbeitungsschritte und Parameter werden innerhalb der \textit{solrconfig.xml} direkt angegeben.
+
+\subsection{Systemaufbau}
+
+Für die in Abbildung \ref{fig:system_rough} skizzierten Systembestandteile wird im Folgenden die gewählte Technologie erläutert und mit möglichen Alternativen verglichen. 
+
+\subsubsection{Tracker} \label{sec:tracker-impl} Die Aufzeichnung der Interaktionen von Nutzer und Webseite, wurde mit Hilfe eines eigenen Java Servlets umgesetzt. Die Funktionalität des Trackers beschränkt sich auf das Erfassen von Interaktionen eines Nutzers innerhalb einer JavaScript-Bibliothek und die Weitergabe dieser innerhalb des Servlets. Da die Daten dem Anwendungsfall entsprechend gespeichert werden können, ist der Aufwand bei der weiteren Verarbeitung sehr gering. 
+
+Da ein ``Datensatz'' einer Komponente der in Tabelle \ref{tab:user-item-ratings} gezeigten Matrix entspricht, enthält dieser auch ähnliche Daten. Für den Nutzer wird jeweils eine ID für die aktuelle Session, eine sessionübergreifende ID und (falls bekannt) den Account im System aufgezeichnet. Für das Element bzw. Produkt wird die SKU-ID aufgezeichnet und ggf. eine Produktgruppen-ID. Die Information über die Art der Interaktion wird in textheller Form gespeichert. In der Summe besteht ein einzelner Datensatz so aus ca. 114-150 Byte. Die Weitergabe dieser Daten erfolg über die im Abschnitt \ref{sec:datatransp} beschriebene Transporttechniken. Der Quellcode der Komponente ist unter \todo{Reg zum Tracker-Repo} verfügbar. 
+
+Wichtigste Alternative zur Implementierung eines eigenen Dienstes wäre die Nutzung bzw. Auswertung schon vorhandener Daten aus Serverlogs und von externen Trackingdiensten (zB. Google Analytics) gewesen. Da dies allerdings mit sehr hohen Aufwand bei der Datenaufbereitung verbunden wäre und da nicht in jedem Anwendungsfall auf entsprechende Logs zurückgegriffen werden kann, wurde auf diese Art der Datengewinnung zunächst verzichtet.
+
+\subsubsection{Datenhaltung} Für die dauerhafte Speicherung der aufgezeichneten Daten wurde zunächst auf die Verwendung eines verteilten Dateisystems (vgl. Abschnitt \ref{sec:hfs}) verzichtet. Da der Betrieb eines entsprechenden Serverclusters hohe Wartungskosten erzeugt hätte, wurde die lokale Speicherung der Daten und die bedarfsgemäße Nutzung von Amazon Web Services gewählt. Dies ermöglicht die MapReduce-basierte Verarbeitung der Daten (vgl. Abschnitt \ref{sec:mapred}) ohne dedizierte Hardware vorhalten zu müssen.
+
+Der Kostenunterschied kann mit Hilfe der folgenden Rechnung veranschaulicht werden. Geht man von 50GB an aufgezeichneten Nutzdaten pro Jahr aus, erzeugt die Speicherung dieser Datenmenge zur Verarbeitung innerhalb des \textit{Amazon Simple Storage Services} (S3) Kosten von ca. \EUR{6} pro Transfer (Upload+Download). Würde man zur weiteren Verarbeitung drei \textit{Amazon Elastik Compute Cloud} \textit{m2.xlarge} Instanzen für einen Tag nutzen, entstünden Kosten von ca. \EUR{100} pro Tag \footnote{Als Vergleichswert wurde die unter http://calculator.s3.amazonaws.com/calc5.html am 01.08.2013 gezeigten Tagespreise genutzt}. Die Kosten von wöchentlichen Neuberechnungen innerhalb dieser Infrastruktur entsprechen damit ca. der Hälfte der anfallenden Kosten zur Anmietung ähnlicher Ressourcen bei normalen Hosting-Anbietern.
+
+\subsubsection{Datentransport} \label{sec:datatransp} Zum sicheren Transport der Daten zwischen Tracker und der Datenhaltung wird \textit{Apache Flume} genutzt. Es implementiert ein einfaches \textit{Message Queue} System welches sicherstellt, dass alle Daten einer Quelle (Tracker) auch auf allen Senken (Datenhaltung) geschrieben wurden bevor diese das System verlassen. Im Vergleich zur direkten Speicherung der Daten auf einer entsprechenden Festplatte, bietet Apache Flume die Möglichkeit mit mehrere Quellen oder mehrere Senken zu arbeiten und Datenströme zu verteilen bzw. zusammenzufassen. Neben dem lokalen Dateisystem unterstützt Apache Flume zudem auch HDFS-Senken und Amazon S3-Senken. Dank dieser Eigenschaften wird sowohl die horizontale Skalierung des Trackers auf mehrere Knoten vereinfacht, als auch die Anbindung anderer, dem Anwendungsfall entsprechender, Datenhaltungssysteme.
+
+Alternative Message Queue Systeme wie etwas Rabbit MQ oder Active MQ wurden nicht betrachtet. 
+
+\subsubsection{Datenaufbereitung} Die Vorverarbeitung der Daten wurde mit \textit{Apache Pig} umgesetzt. Es stellt eine dem Anwendungsfall angepasste Datenflusssprache, das sog. \textit{Pig Latin}, zur Verfügung (Beispiel siehe Listing \ref{lst:pigprofiles}). Die darin beschriebenen Operationen werden zur Verarbeitung in \textit{Apache Hadoop} kompatible \textit{MapReduce} Operationen kompiliert und sind so ohne weitere Anpassungen verteilt ausführbar.  Damit ermöglichht es, die Anwendung der in Abschnitt \ref{sec:mapred} beschriebenen Methoden um Skalierbarkeit zu gewährleisten. Die in \textit{Pig Latin} beschriebenen Datenverarbeitungsprogramme lassen sich über \textit{Amazon Elastic MapReduce} auch für Daten nutzen welche in \textit{Amazon S3} gehalten werden. \citep{Lin2012}
+
+ \lstinputlisting[caption=Apache Pig Beispielscript zur Kombination von Nutzerprofiledaten,float,language=bash,label={lst:pigprofiles}]{Listings/pig-profiles.txt}
+
+Eine umfassende Dokumentation der Möglichkeiten von \textit{Apache Pig} zur Datenverarbeitung bietet \citep{gates2011programming}. Die Integration von Aufgaben des maschinellen Lernens mit  \textit{Apache Pig} wird in  \citep{Lin2012} beschrieben.
+
+Alternative \textit{MapReduce} Implementierungen in Java oder \textit{Apache Hive} wurden nicht betrachtet.
+
+\subsubsection{Empfehlungsdienst} Wie im vorangegangen Abschnitt \ref{sec:mahout} beschrieben, wurde die Integration der Empfehlungs- und Modellberechnung mit \textit{Apache Mahout} vorgenommen. 
+
+Die Vorberechnung der Ähnlichkeitsmodelle (vgl. Abschnitt \ref{sec:scalefiltering}) wird als verteilte Berechnung wie in Listing \ref{lst:useritemmodelprep} ausgeführt. Um die darin berechneten Modelle direkt im Empfehlungsdienst nutzen zu können, wird die Ähnlichkeitsmatrix in einem Nachverarbeitungsschritt (vgl. \textit{PairSimilarityJob}) in ein textuelles Austauschformat überführt. Dieses Austauschformat wird dann über das in Mahout vorhandene \textit{FileDataModel} in den Empfehlungsdienst geladen. Dieser wird als Webservice über eine HTTP-Schnittstelle (vgl. \textit{com.aoe.cf.recommender.RemoteService}) zur Verfügung gestellt. Die Matrixfaktorisierung wird wie in Listing \ref{lst:factorgenerator} gezeigt, mit den in Abschnitt \label{sec:myrecommend} beschriebenen Methoden durchgeführt.
+
+Die Evaluation der Ergebnisse beider Vorberechnungsmethoden erfolgt über die ergänzend bereitgestellten Evaluationsprogramme. In beiden Fälle werden die Empfehlungsergebnisse für zuvor gespeicherten Testdaten (vgl. Listing \ref{lst:dataprep}) mit den tatsächlich bekannten Daten vergleichen um die in Abschnitt \ref{sec:measures} beschriebenen Metriken zu generieren.
+
+\subsubsection{Suche}
+
+Integration wie in Listing \ref{lst:solrconfig}
+
+%\subsubsection{Datenhaltung}
+%\subsection{Systemaufbau}
 %\subsubsection{Tracking-Pixel}
-\subsubsection{Datenhaltung}
+%\subsubsection{Datenhaltung}
 % Siehe "Programming Pig" S 19.2
-\subsubsection{Systemaufbau}
+%\sub

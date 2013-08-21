@@ -1,0 +1,9 @@
+logs = LOAD '$source' USING PigStorage(';') AS (u: chararray, us: chararray);
+knownusers = FILTER logs BY u IS NOT NULL;
+knownusers_d = DISTINCT knownusers;
+
+sessions = JOIN logs BY (us) left outer, knownusers BY (us);
+userlist = FOREACH sessions GENERATE (knownusers::u is null ? logs::us : knownusers::u) AS u, logs::us AS us;
+userlist_d = DISTINCT userlist;
+
+STORE userlist_d INTO '$target';

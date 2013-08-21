@@ -1,0 +1,3 @@
+$JAVA_HOME/bin/java -classpath core.jar \
+   com.aoe.cf.recommender.Evaluator \
+   -Dcf.home=inputFolder
