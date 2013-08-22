@@ -1,0 +1,8 @@
+# Server 0
+java -DzkRun -Dbootstrap_confdir=solr/conf \
+  -DnumShards=5 -DreplicationFactor=3 -DmaxShardsPerNode=3 \
+  -jar start.jar 
+
+
+# Server 1..N
+java -DzkHost=server0:9983 -jar start.jar
