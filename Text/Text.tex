@@ -56,6 +56,7 @@
 
 \usepackage{parskip}          % zw. Absätzen: eine knappe Leerzeile statt hängender Einzüge
 \usepackage{makeidx}          % Package zur Indexerstellung
+\usepackage[toc,nonumberlist]{glossaries}
 \usepackage[colorinlistoftodos,textsize=tiny]{todonotes}	% bringt den todo befehl mit - "disable" in die Optionen zum ausschalten
 
 \def\argmax{\operatorname*{arg\,max}}
@@ -93,7 +94,8 @@
 } 
 
 \sloppy                       % großzügiger Zeilenumbruch 
-\makeindex 
+\makeindex
+\makeglossaries
 
 \hyphenation{Grund-elemente}	% definierte Silbentrennung
 \hyphenation{Daten-menge}
@@ -128,6 +130,8 @@
 \input{Evaluation}
 \input{Zusammenfassung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{Glossar}
 
 \newpage
 \phantomsection
