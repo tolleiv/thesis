@@ -1,5 +1,5 @@
 % !TEX encoding = UTF-8 Unicode
-\documentclass[a4paper, german, 12pt, onecolumn, oneside,bibliography=totoc,listof=totoc]{article}
+\documentclass[a4paper, ngerman, 12pt, onecolumn, oneside,bibliography=totoc,listof=totoc]{article}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -20,6 +20,7 @@
 \usepackage{subfig}
 	% ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
 \usepackage{listings}
+\renewcommand\lstlistlistingname{Listingverzeichnis}
 
 \usepackage[pdftex,pagebackref=true]{hyperref}	% für "klickbare" Verlinkung im Dokument
 \hypersetup{
@@ -121,7 +122,9 @@
 \renewcommand{\baselinestretch}{1.50}\normalsize
 \setcounter{page}{1}					% Seitenzahl zurück	
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\input{Glossar}
 
 \input{Einleitung}\newpage
 \input{Grundlagen}
@@ -131,17 +134,21 @@
 \input{Zusammenfassung}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\input{Glossar}
+\newpage\printglossary[title=Glossar,toctitle=Glossar] 
 
-\newpage
 \phantomsection
 \addcontentsline{toc}{section}{Abkürzungsverzeichnis}
 \section*{Abkürzungsverzeichnis}
 \input{Abkuerzungen}
 
+\newpage
 \phantomsection
 \addcontentsline{toc}{section}{Abbildungsverzeichnis}
 \listoffigures
+
+\phantomsection
+\addcontentsline{toc}{section}{\lstlistlistingname}
+\lstlistoflistings
 
 \interlinepenalty=10000
 %\nocite{*}							% auch die nicht verwendeten bibtex-Einträge einblenden
