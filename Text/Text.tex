@@ -17,6 +17,7 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}					% wird with \mathbb gebraucht
 \usepackage[safe]{tipa}
+\usepackage{csvsimple}
 \usepackage{subfig}
 	% ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
 \usepackage{listings}
@@ -51,6 +52,7 @@
 %\bibpunct{(}{)}{;}{a}{,}{,}
 
 \usepackage{multicol}
+\usepackage{multirow}
 
 \usepackage[printonlyused]{acronym}
 \renewcommand{\bflabel}[1]{\normalfont{\normalsize{#1}}\hfill}
@@ -162,8 +164,9 @@
 \bibliography{Literatur}}
 
 \interlinepenalty=100
-%\appendix
-%\input{App_Anhang}
+\renewcommand{\baselinestretch}{1.0}\footnotesize
+\appendix
+\input{App_Anhang}
 
 %\clearpage
 %\addcontentsline{toc}{chapter}{Index}

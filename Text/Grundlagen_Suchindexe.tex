@@ -1,17 +1,17 @@
 \subsection{Suchindexe}
 \label{sec:search}
 
-Mit dem Begriffen ``Suche'' und ``Suchmaschinen'' werden umgangssprachlich zahlreiche Methoden des  \ac{IR} beschrieben, die durch Internet-Dienste wie Google\footnote{http://www.google.com} im Alltag vieler Menschen präsent sind. Im \acs{IR} wird eine ``Suche'' formal als die Extraktion von Informationen aus einer Menge unstrukturierter Daten definiert. Innerhalb eines \acs{IR} Systems liegen die Daten in Form von \textit{Dokumenten} (Texte, Bilder, Videos) vor. Bei der Benutzung des \acs{IR} Systems formuliert der Nutzer seinen \textit{Informationsbedarf} mit Hilfe von \textit{Anfragen}. Dokumente werden als \textit{relevant} bezeichnet wenn die darin enthaltene Information dem Bedarf des Nutzers genügt. Im weiteren Sinne umfasst \acs{IR} zudem das Filtern, Klassifizieren und Verarbeiten der gefundenen Dokumente.
+Mit dem Begriffen ``Suche'' und ``Suchmaschinen'' werden umgangssprachlich zahlreiche Methoden des  \ac{IR} beschrieben, die durch Internet-Dienste wie Google\footnote{http://www.google.com} im Alltag vieler Menschen präsent sind. Im \acs{IR} wird eine ``Suche'' formal als die Extraktion von Informationen aus einer Menge unstrukturierter Daten definiert. Innerhalb eines \acs{IR} Systems liegen die Daten in Form von \textit{Dokumenten} (Texte, Bilder, Videos) vor. Bei der Benutzung des \acs{IR} Systems formuliert der Nutzer seinen \textit{Informationsbedarf} mit Hilfe von \textit{Anfragen}. Dokumente werden als \textit{relevant} bezeichnet, wenn die darin enthaltene Information dem Bedarf des Nutzers genügt. Im weiteren Sinne umfasst \acs{IR} zudem das Filtern, Klassifizieren und Verarbeiten der gefundenen Dokumente.  \citep{Manning2008}
 
-Die durch den Nutzer formulierten Anfragen sind dabei, im Gegensatz zu Anfragen an strukturierte Datenbanken, nicht zwingend eindeutig. Sucht der Nutzer etwa nach ``Fantasy Buch'', kann ``Harry Potter'' in den Augen des Nutzers ein relevantes Dokument sein, ohne dass die Begriffe ``Fantasy'' oder ``Buch'' explizit darin vorkommen. \citep{Manning2008} %http://nlp.stanford.edu/IR-book/pdf/04const.pdf
+Die durch den Nutzer formulierten Anfragen sind dabei, im Gegensatz zu Anfragen an strukturierte Datenbanken, nicht zwingend eindeutig. Sucht der Nutzer etwa nach ``Fantasy Buch'', kann ``Harry Potter'' in den Augen des Nutzers ein relevantes Dokument sein, ohne dass die Begriffe ``Fantasy'' oder ``Buch'' explizit darin vorkommen.%http://nlp.stanford.edu/IR-book/pdf/04const.pdf
 
 \subsubsection{Indexbildung} \label{sec:indexcreation}
 
-Da es bei einer großen Anzahl von vorhandenen Dokumenten sehr ineffizient wäre, wenn bei jeder Anfrage jedes Dokument geprüft werden müsste, verwendet man einen \textit{invertierten Index} um Informationen zu Dokumenten abzubilden. Die Indexierung erfolgt dabei in vier Schritten, welche für zwei Beispieldokumente\footnote{Ausschnitte aus ``Julius Caesar'' von William Shakespeare} wie folgt verlaufen:
+Da es bei einer großen Anzahl von vorhandenen Dokumenten sehr ineffizient wäre, wenn bei jeder Anfrage jedes Dokument geprüft werden müsste, wird eine \textit{invertierten Index} verwendet um Informationen zu Dokumenten abzubilden. Die Indexierung erfolgt dabei in vier Schritten, welche für zwei Beispieldokumente\footnote{Ausschnitte aus ``Julius Caesar'' von William Shakespeare} wie folgt verlaufen:
 
 \begin{enumerate}
-\item Sammeln aller Dokumente, und Zuordnung von eindeutigen Bezeichnern (\textit{docID}) \\ { \scriptsize ..., 20:\fbox{Friends, Romans, countrymen}, 21:\fbox{So let it be with Caesar.},... }
-\item Extraktion der Dokumenten-Merkmale (z.B. Wörter) \\ { \scriptsize \fbox{Friends} \fbox{Romans} \fbox{countrymen} \fbox{Caesar} }
+\item Sammeln aller Dokumente und Zuordnung von eindeutigen Bezeichnern (\textit{docID}) \\ { \scriptsize ..., 20:\fbox{Friends, Romans, countrymen}, 21:\fbox{So let it be with Caesar.},... }
+\item Extraktion der Dokumentenmerkmale (z.B. Wörter) \\ { \scriptsize \fbox{Friends} \fbox{Romans} \fbox{countrymen} \fbox{Caesar} }
 \item Normalisierung der Merkmale (z.B. Reduzierung auf Wortstämme) \\ { \scriptsize \fbox{friend} \fbox{roman} \fbox{countryman} \fbox{caesar} }
 \item Indexbildung, Zuordnung der \textit{docID} zu den Einträgen der sortierten Merkmalsliste
 { \scriptsize \begin{tabular}[b]{lcl}
@@ -23,9 +23,9 @@ Da es bei einer großen Anzahl von vorhandenen Dokumenten sehr ineffizient wäre
 \end{tabular} }
 \end{enumerate}
 
-Die in den Schritten 1. bis 3. durchgeführten Verarbeitungsschritte sind immer abhängig vom gegebenen Kontext. Entspricht z.B. im herkömmlichen Verständnis jede Datei einem Dokument, so muss bei der Verarbeitung des MBox-Formates\footnote{siehe RFC 4155 - http://tools.ietf.org/rfc/rfc4155.txt} jede Zeile einer Datei als einzelnes Dokument gesehen werden. Auch die Wahl einer geeigneten Methode zur Wortstammbildung (auch ``Stemming'') und das Filtern von nicht relevanten Wörtern mit Hilfe sog. ``Stopwörtern'' hängt vom gegebenen Kontext ab. (vgl. \citep[Kap. 2]{Manning2008}). 
+Die in den Schritten 1 bis 3 durchgeführten Verarbeitungsschritte sind immer abhängig von dem gegebenen Kontext. Entspricht z.B. im herkömmlichen Verständnis jede Datei einem Dokument, so muss bei der Verarbeitung des MBox-Formates\footnote{siehe RFC 4155 - http://tools.ietf.org/rfc/rfc4155.txt} jede Zeile einer Datei als einzelnes Dokument gesehen werden. Auch die Wahl einer geeigneten Methode zur Wortstammbildung (auch ``Stemming'') und das Filtern von nicht relevanten Wörtern mit Hilfe sog. ``Stopwörter'' hängt vom gegebenen Kontext ab. \citep[Kap. 2]{Manning2008}. 
 
-Formuliert der Nutzer nun seine Anfrage, durchläuft diese ebenfalls die Schritte 2. und 3. bevor Dokumente mit Hilfe des Index gefunden werden können. Besteht die Anfrage aus mehreren Bestandteilen, wird die Liste der relevanten Dokumente aus der Schnittmenge der für die einzelnen Teile gefundenen Dokumentenmengen gebildet. Ergänzend existieren verschiedene Erweiterungen des invertierten Index, um noch effizienter in sehr großen Dokumentenbeständen suchen zu können, um die Position der Merkmale innerhalb des Dokumentes nutzbar zu machen oder um den Umfang des Index einzuschränken. Diese werden u.a. in \citep[Kap. 3,4,5]{Manning2008} beschrieben und hier zur Wahrung des Umfangs ausgelassen.
+Formuliert der Nutzer nun seine Anfrage, durchläuft diese ebenfalls die Schritte 2 und 3 bevor Dokumente mit Hilfe des Index gefunden werden können. Besteht die Anfrage aus mehreren Bestandteilen, wird die Liste der relevanten Dokumente aus der Schnittmenge der für die einzelnen Teile gefundenen Dokumentenmengen gebildet. Ergänzend existieren verschiedene Erweiterungen des invertierten Index. Diese ermöglichen beispielsweise noch effizienter in sehr großen Dokumentenbeständen suchen zu können, die Position der Merkmale innerhalb des Dokumentes nutzbar zu machen oder den Umfang des Index einzuschränken. Sie werden u.a. in \citep[Kap. 3,4,5]{Manning2008} beschrieben und hier zur Wahrung des Umfangs ausgelassen.
 
 \subsubsection{Relevanzberechnung}\label{sec:searchrelevance}\label{tfidf}
 Die reine Generierung einer Dokumentenliste als Ergebnis der Anfrage genügt vor allem bei großen Dokumentenbeständen nicht. Mögliche Methoden, um die Listen  entsprechend der Relevanz eines Dokumentes zu sortieren, sind zum einen das \textit{Tf-idf Maß} und bei untereinander verknüpften Dokumenten der \textit{PageRank}.
@@ -37,7 +37,7 @@ Die reine Generierung einer Dokumentenliste als Ergebnis der Anfrage genügt vor
 \text{tf-idf}(i, d) & = \text{tf}(i ,d) \ast \text{idf}(i) \label{form:tfidf}
 \end{align}
 
-Um die Relevanz eines Terms bezüglich eines Dokumentes abzubilden, wird die relative Häufigkeit mit der der Term innerhalb des Dokumentes vorkommt, genutzt. Die sog. \textit{Termfrequenz} bildet sich entsprechend aus dem Verhältnis der Anzahl der Vorkommen des Terms innerhalb des Dokumentes ($freq(i,j)$) zur maximalen Anzahl aller anderen Terme $Z$ im Dokument. Mit Hilfe der inversen Dokumentenfrequenz (\acs{IDF}) wird die \acf{TF} eines Terms abgewertet wenn dieser in nahezu jedem Dokument vorkommt und aufgewertet wenn er nur selten genutzt wird. Die \acs{IDF} wird aus dem Verhältnis der Gesamtdokumentenzahl $N$ zur Anzahl der Dokumente die den Term $i$ enthalten ($n(i)$) gebildet.
+Um die Relevanz eines Terms bezüglich eines Dokumentes abzubilden, wird die relative Häufigkeit mit der der Term innerhalb des Dokumentes vorkommt, genutzt. Die sog. \textit{Termfrequenz} bildet sich entsprechend aus dem Verhältnis der Anzahl der Vorkommen des Terms innerhalb des Dokumentes ($freq(i,j)$) zur maximalen Anzahl aller anderen Terme $Z$ im Dokument. Mit Hilfe der inversen Dokumentenfrequenz (\acs{IDF}) wird die \acf{TF} eines Terms abgewertet, wenn dieser in nahezu jedem Dokument vorkommt und aufgewertet, wenn er nur selten genutzt wird. Die \acs{IDF} wird aus dem Verhältnis der Gesamtdokumentenzahl $N$ zur Anzahl der Dokumente die den Term $i$ enthalten ($n(i)$), gebildet.
 
 Das \textit{tf-idf Maß} bildet sich entsprechend Formel (\ref{form:tfidf}) aus dem Produkt der beiden Teilmaße und ist:
 \begin{itemize}
@@ -46,7 +46,7 @@ Das \textit{tf-idf Maß} bildet sich entsprechend Formel (\ref{form:tfidf}) aus 
 \item minimal: wenn der Term in nahezu jedem Dokument vorkommt
 \end{itemize}
 
-Die Summe der Relevanz eines Dokuments bezüglich aller Teilterme der Anfrage $q$ bildet dann die Grundlage um die erzeugte Dokumentenliste zu sortieren.\citep{Manning2008} 
+Die Summe der Relevanz eines Dokuments bezüglich aller Teilterme der Anfrage $q$ bildet dann die Grundlage, um die erzeugte Dokumentenliste zu sortieren.\citep{Manning2008} 
 \begin{align}
 \text{score}(q,d) & = \sum_{t \in q}{\text{tf-idf}(t,d)}  \label{form:docscore}
 \end{align}

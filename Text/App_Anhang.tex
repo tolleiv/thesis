@@ -1,3 +1,116 @@
 \newpage
-\section{Irgendein Anhang}
-\label{app:anhang}
+\section{Ergebnistabellen zur Leistungsmessung}
+\label{app:performance}
+
+Tracker Leistungsmessung \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline]%
+{Results/aggregateTracker.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+%%%%%%%%%%%%%%%
+Leistungsmessung einer einzelnen Apache Solr Instanz ohne Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{0} \and \equal{\cores}{1}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+Leistungsmessung von zwei Apache Solr Instanzen ohne Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{0} \and \equal{\cores}{2}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+Leistungsmessung von drei Apache Solr Instanzen ohne Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{0} \and \equal{\cores}{3}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+%%%%%%%%%%%%%%% 
+\newpage
+Leistungsmessung einer einzelnen Apache Solr Instanz mit Webservice-basierter Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{1} \and \equal{\cores}{1}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+Leistungsmessung von zwei Apache Solr Instanzen mit Webservice-basierter Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{1} \and \equal{\cores}{2}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+Leistungsmessung von drei Apache Solr Instanzen mit Webservice-basierter Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{1} \and \equal{\cores}{3}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+%%%%%%%%%%%%%%% 
+Leistungsmessung einer einzelnen Apache Solr Instanz mit Faktoren-basierter Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{2} \and \equal{\cores}{1}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+Leistungsmessung von zwei Apache Solr Instanzen mit Faktoren-basierter Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{2} \and \equal{\cores}{2}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}
+
+Leistungsmessung von drei Apache Solr Instanzen mit Faktoren-basierter Personalisierung. \\
+{ \scriptsize
+\centering
+\csvreader[tabular=| r | r | r | r | r | r | r | r |,
+    table head=\hline Threads & Requests/s & Min. Response & Max Response & Median Response & 90\% Quantil & Fehlerquote & Samples \\\hline,
+    late after line=\\\hline,
+    filter=\equal{\personalized}{2} \and \equal{\cores}{3}]%
+{Results/aggregateSearch.csv}{ threads=\threads, count=\count, average=\average, median=\median, quantil=\quantil, min=\min, max=\max, err=\err, rate=\rate, personalized=\personalized, cores=\cores }%
+{ \threads & \rate & \min & \max & \median & \quantil & \err & \count }%
+}

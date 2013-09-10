@@ -42,4 +42,7 @@ Wurde für einen Nutzer noch kein Nutzervektor $p_u$ berechnet, kann dieser ausg
 v(u) & \approx (|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuser}
 \end{align}
 
-Die hierfür genutzten Featurevektoren $w_j$ sind ebenfalls dokumentenspezifisch. Sie werden gemeinsam mit dem gesamten Modell mit den Methoden des \textit{stochastischen Gradientenverfahrens} oder den \textit{Alternating Least Squares} gelernt (vgl. Abschnitt \ref{sec:svd}).  \citep{Paterek07,Koren:2009:MFT:1608565.1608614} \newpage
+Die hierfür genutzten Featurevektoren $w_j$ sind ebenfalls dokumentenspezifisch. Sie werden gemeinsam mit dem gesamten Modell mit den Methoden des \textit{stochastischen Gradientenverfahrens} oder den \textit{Alternating Least Squares} gelernt (vgl. Abschnitt \ref{sec:svd}).  \citep{Paterek07,Koren:2009:MFT:1608565.1608614}
+
+Wie in \citep{Cacheda2011} gezeigt wird, ist die erhöhte Trainingsdauer ein Nachteil der Methode. Dieser Nachteil wird durch eine sehr einfache und damit schnelle Berechnung der Empfehlungen ausgeglichen. Zudem wurde gezeigt, dass die Fehlermaße nicht von denen andere Matrixfaktorisierungsmethoden abweichen. \citep{Cacheda2011}
+ \newpage

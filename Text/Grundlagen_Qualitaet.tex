@@ -22,7 +22,7 @@ MAE & = \sqrt{\frac{1}{|\mathcal{T}|} \sum_{(u,i) \in \mathcal{T}}{|\hat{r}_{ui}
 RMSE & = \sqrt{\frac{1}{|\mathcal{T}|} \sum_{(u,i) \in \mathcal{T}}{(\hat{r}_{ui}-r_{ui})^2}} \label{form:rmse}
 \end{align}
 
-Der Unterschied zwischen den Methoden liegt in der Bewertung großer Fehler. Wie in Tabelle \ref{tab:mae-rmse} gezeigt wird, kann dies durchaus ausschlaggebend sein. Im gezeigten Beispiel würde das Modell $\hat{r}_{(1)}$ vom \acs{MAE} bevorzugt, weil ein Fehler durch die drei richtigen Werte stärker ausgeglichen wird. Beim Vergleich mit dem \acs{RMSE} würde Modell $\hat{r}_{(2)}$ bevorzugt weil die vier ``kleinen'' Fehler in $\hat{r}_{(2)}$ weniger ins Gewicht fallen als der größere Fehler in $\hat{r}_{(1)}$. \citep{hb_08}
+Der Unterschied zwischen den Methoden liegt in der Bewertung großer Fehler. Wie in Tabelle \ref{tab:mae-rmse} gezeigt wird, kann dies durchaus ausschlaggebend sein. Im gezeigten Beispiel würde das Modell $\hat{r}_{(1)}$ vom \acs{MAE} bevorzugt, weil ein Fehler durch die drei richtigen Werte stärker ausgeglichen wird. Beim Vergleich mit dem \acs{RMSE} würde Modell $\hat{r}_{(2)}$ bevorzugt weil die vier kleinen Fehler in $\hat{r}_{(2)}$ weniger ins Gewicht fallen als der größere Fehler in $\hat{r}_{(1)}$. \citep{hb_08}
 \begin{SCtable}
   \centering
   \begin{tabular}{ | r | p{1cm} | p{1cm} | p{1cm} | }
@@ -36,7 +36,7 @@ Der Unterschied zwischen den Methoden liegt in der Bewertung großer Fehler. Wie
     RMSE & & 1.5 & \textbf{1.32} \\
     \hline
   \end{tabular}
-  \caption[Beispielrechnung zum Vergleich von \acs{MAE} und \acs{RMSE}]{\footnotesize Beispielrechnung zum Vergleich von \acs{MAE} und \acs{RMSE} - gegenübergestellt sind tatsächliche Bewertungen $r$ und von zwei verschiedenen Quellen erzeugte angenommene Bewertungen $\hat{r}_{(1)}$ und $\hat{r}_{(2)}$. Abweichende Bewertungen sind unterstrichen. }
+  \caption[Beispielrechnung zum Vergleich von \acs{MAE} und \acs{RMSE}]{\footnotesize Beispielrechnung zum Vergleich von \acs{MAE} und \acs{RMSE} - gegenübergestellt sind tatsächliche Bewertungen $r$ und von zwei verschiedenen Quellen erzeugte angenommene Bewertungen $\hat{r}_{(1)}$ und $\hat{r}_{(2)}$. Abweichende Bewertungen sind unterstrichen. { \scriptsize (eigene Abbildung)}}
   \label{tab:mae-rmse}
 \end{SCtable}
 %RMS
@@ -50,7 +50,7 @@ P_u & = \frac{|hits_u|}{| recset_u | } \label{form:precision} \\
 R_u & = \frac{|hits_u|}{ | testset_u | } \label{form:recall}
 \end{align}
 
-Die Anzahl der korrekt empfohlenen Elemente $hits_u$ wird zur Anzahl aller empfohlenen Elemente $recset_u$ bzw. zur Anzahl der möglichen richtigen Empfehlungen $testset_u$ ins Verhältnis gesetzt. Die Verbesserung beider Werte steht dabei oft im Widerspruch zueinander. So kann durch die Vergrößerung der Anzahl von empfohlenen Elementen auch die Wahrscheinlichkeit von Treffern und damit die Trefferquote gesteigert werden. Allerdings hätte die insgesamt gestiegene Zahl von Empfehlungen auch einen negativen Einfluss auf die Genauigkeit. Zur Kombination beider Werte wird daher oft die $F_1$ Metrik genutzt. Sie gewichtet beide Werte mit einer Neigung zum schlechteren.
+Die Anzahl der korrekt empfohlenen Elemente $hits_u$ wird zur Anzahl aller empfohlenen Elemente $recset_u$ bzw. zur Anzahl der möglichen richtigen Empfehlungen $testset_u$ ins Verhältnis gesetzt. Die Verbesserung beider Werte steht dabei oft im Widerspruch zueinander. So kann durch die Vergrößerung der Anzahl von empfohlenen Elementen auch die Wahrscheinlichkeit von Treffern und damit die Trefferquote gesteigert werden. Allerdings hätte die insgesamt gestiegene Zahl von Empfehlungen auch einen negativen Einfluss auf die Genauigkeit. Zur Kombination beider Werte kann die $F_1$ Metrik genutzt werden. Sie gewichtet beide Werte mit einer Neigung zum schlechteren.
 \begin{align}
 F_1 & = \frac{2 * P * R}{P+R} \label{form:f1}
 \end{align}
@@ -61,9 +61,9 @@ Die ebenfalls mögliche Bestimmung der Ausfallquote (engl. Fallout), also der An
 
 Ergänzend zur Messung der Approximationsgüte des erzeugten Modells muss bei einem praktischen Einsatz auch der tatsächliche Erfolg der eingesetzten Methode gemessen werden. Dafür bieten sich die aus dem Marketing stammenden \textit{Klickraten} und \textit{Conversion-Raten} Messung an, des weiteren kann in Verbindung mit Suchindexen auch die Bestimmung der \textit{Successful Session} Quote genutzt werden.
 
-\paragraph{Klickrate} Beschreibt die Anzahl der Klicks auf ein Element, zum Beispiel einen Werbebanner, im Verhältnis zur Häufigkeit mit der es angezeigt wurde. 
+\paragraph{Klickrate} Beschreibt die Anzahl der Klicks auf ein Element, zum Beispiel einen Werbebanner, im Verhältnis zur Häufigkeit mit der es angezeigt wurde.
 
-\paragraph{Conversion-Rate} Mit der Conversion-Rate wird bestimmt welcher Anteil der Besucher ein bestimmtes Ziel, die sog. \textit{Conversion}, erreicht haben. Mögliche Ziele sind zum Beispiel erfolgreiche Kaufabschlüsse oder Kontaktaufnahmen der Kunden. Die Ziele werden abhängig vom Kontext so gewählt, dass diese aktiv zur Wertschöpfung beitragen. Die Berechnung der Conversion-Rate entspricht gem. Formel (\ref{form:cr}) dem Verhältnis der gemessenen Anzahl an Conversions $conv$ und der Anzahl der Besucher $visitors$ die im gegebenen Zeitraum eine oder mehrere Seiten aufgerufen haben. Maschinelle Seitenzugriffe, zum Beispiel durch Suchmaschinen-Spider, fließen nicht in Messung der Nutzerzahlen ein. Ebenso werden wiederholte Conversions des gleichen Besuchers nicht mehrfach gezählt. \citep{krueger2011conversion}
+\paragraph{Conversion-Rate} Mit der Conversion-Rate wird bestimmt welcher Anteil der Besucher ein bestimmtes Ziel, die sog. \textit{Conversion}, erreicht haben. Mögliche Ziele sind zum Beispiel erfolgreiche Kaufabschlüsse oder Kontaktaufnahmen der Kunden. Die Ziele werden abhängig vom Kontext so gewählt, dass diese aktiv zur Wertschöpfung beitragen. Die Berechnung der Conversion-Rate entspricht gem. Formel (\ref{form:cr}) dem Verhältnis der gemessenen Anzahl an Conversions $conv$ und der Anzahl der Besucher $visitors$ die im gegebenen Zeitraum eine oder mehrere Seiten aufgerufen haben. Maschinelle Seitenzugriffe, zum Beispiel durch Suchmaschinen-Spider, fließen nicht in die Messung der Nutzerzahlen ein. Ebenso werden wiederholte Conversions des gleichen Besuchers nicht mehrfach gezählt. \citep{krueger2011conversion}
 \begin{align}
 CR & = \frac{|conv|}{|visitors| } * 100 \label{form:cr}
 \end{align}

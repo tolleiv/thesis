@@ -4,31 +4,33 @@
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ M\IeC {\"o}gliche Erg\IeC {\"a}nzung / weitere Anregung}}{1}{section*.6}
 \contentsline {todo}{{\color@box {}{white}{\leavevmode {\color {white}o}}\ }}{1}{section*.7}
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ ggf. um Beispiel erg\IeC {\"a}nzen}}{7}{section*.12}
-\contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ MAE dazu?}}{15}{section*.19}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Quelle das ``Normalisierung'' auch bei item-item relevant ist}}{17}{section*.24}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ergebnisse der Rechnung einf\IeC {\"u}gen}}{17}{section*.25}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Quelle das ``Normalisierung'' auch bei item-item relevant ist}}{17}{section*.23}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ergebnisse der Rechnung einf\IeC {\"u}gen}}{17}{section*.24}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ ist, ist}}{19}{section*.27}
 \contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ Weiterf\IeC {\"u}hrend: Regression vs. Classification aus HB04 evt. erg\IeC {\"a}nzen}}{19}{section*.28}
 \contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ ggf. SlopeOne erg\IeC {\"a}nzen}}{19}{section*.29}
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ PureSVD erl\IeC {\"a}utern?}}{19}{section*.31}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ G\IeC {\"o}hler S. 89 unten}}{20}{section*.34}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Pseudocode aus Louppe10 ?}}{20}{section*.35}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Temporale Effekte dazu ?}}{20}{section*.36}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ G\IeC {\"o}hler S. 89 unten}}{21}{section*.34}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Pseudocode aus Louppe10 ?}}{21}{section*.35}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Temporale Effekte dazu ?}}{21}{section*.36}
 \contentsline {todo}{{\color@box {}{green!20}{\leavevmode {\color {green!20}o}}\ Iterative Methoden ggf. erg\IeC {\"a}nzen bzw. Informationen zu iterativen Updates der Modelle hinzuf\IeC {\"u}gen - siehe Entwurf->Problemstellung}}{21}{section*.38}
 \contentsline {todo}{{\color@box {}{green!40}{\leavevmode {\color {green!40}o}}\ Weitere Ans\IeC {\"a}tze erg\IeC {\"a}nzen? zB. Graphen-Modelle? Bolzmann-Dings?}}{21}{section*.39}
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Formen von Attacken oder Ma\IeC {\ss }nahmen k\IeC {\"o}nnten erg\IeC {\"a}nzt werden}}{23}{section*.46}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ ggf. Langford09 Parallelisierungsstrategien dazu}}{23}{section*.47}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ ggf. Langford09 Parallelisierungsstrategien dazu}}{24}{section*.47}
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Ggf. MapRed. Beispiel einf\IeC {\"u}gen.}}{27}{section*.50}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ BSP}}{27}{section*.51}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ BSP}}{28}{section*.51}
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ HB Kap. 10.4.2 dazu?}}{32}{section*.58}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ggf. Beispielbasis in der gesamten Arbeit so definieren}}{32}{section*.59}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ggf. Beispielbasis in der gesamten Arbeit so definieren}}{33}{section*.59}
 \contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ GA Screen erg\IeC {\"a}nzen}}{35}{section*.64}
 \contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ Lidl-Usecase erg\IeC {\"a}nzen?}}{36}{section*.67}
 \contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Iterative Updates bei User/Item based Recommendation erg\IeC {\"a}nzen}}{38}{section*.68}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ggf Zookeeper oder MQ Konzeptelink erg\IeC {\"a}nzen / Kapitel verlinken}}{42}{section*.70}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Teilausschnitt Komponentendiagramm einf\IeC {\"u}gen}}{51}{section*.80}
-\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ wenn dieDatenaufbereiten mit rein kommt dann vier}}{51}{section*.81}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ use the actual code}}{53}{section*.85}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Hinweis auf konkrete Implementierung einbauen}}{54}{section*.88}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Pakete ``verlinken''}}{55}{section*.92}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Reg zum Tracker-Repo}}{59}{section*.95}
-\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ raus}}{62}{section*.97}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Ggf Zookeeper oder MQ Konzeptelink erg\IeC {\"a}nzen / Kapitel verlinken}}{43}{section*.70}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Teilausschnitt Komponentendiagramm einf\IeC {\"u}gen}}{52}{section*.80}
+\contentsline {todo}{{\color@box {}{green}{\leavevmode {\color {green}o}}\ wenn dieDatenaufbereiten mit rein kommt dann vier}}{52}{section*.81}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ use the actual code}}{54}{section*.85}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Hinweis auf konkrete Implementierung einbauen}}{55}{section*.88}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Referenz fehlt}}{55}{section*.91}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Pakete ``verlinken''}}{56}{section*.93}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Reg zum Tracker-Repo}}{60}{section*.96}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ raus}}{63}{section*.98}
+\contentsline {todo}{{\color@box {}{orange}{\leavevmode {\color {orange}o}}\ Repo-Link}}{64}{section*.99}
