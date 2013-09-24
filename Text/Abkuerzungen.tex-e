@@ -1,0 +1,14 @@
+\begin{acronym}[XXXXXXX]
+	\setlength{\itemsep --- }{-\parsep}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+        \acro{CF} {Collaborative Filtering}
+        \acro{GFS} {Google Filesystem}
+        \acro{IDF} {Inverse Dokumentenfrequenz}
+        \acro{IR} {Information Retrieval}
+        \acro{MAE} {Mean Average Error}
+        \acro{RMSE} {Root Mean Squared Error}
+        \acro{SVD} {Singular Value Decomposition}
+        \acro{TF} {Termfrequenz}
+\end{acronym}

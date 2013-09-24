@@ -1,7 +1,7 @@
-    hadoop jar mahout-core-0.7-job.jar org.apache.mahout.driver.MahoutDriver \
-        itemsimilarity \
-        --input inputFolder \
-        --output outputFolder \
-        --booleanData false \
-        --similarityClassname SIMILARITY_EUCLIDEAN_DISTANCE \
-        --tempDir outputFolder/tmp
+hadoop jar mahout-core-0.7-job.jar org.apache.mahout.driver.MahoutDriver \
+	itemsimilarity \
+	--input inputFolder \
+	--output outputFolder \
+	--booleanData false \
+	--similarityClassname SIMILARITY_EUCLIDEAN_DISTANCE \
+	--tempDir outputFolder/tmp

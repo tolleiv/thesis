@@ -1,0 +1,104 @@
+\newpage \section{Evaluation}\label{sec:evaluation}
+
+% \textit{Wie wird gemessen, welche Ergebnisse waren zu erwarten, was wurde erreicht. Warum gibt es Abweichungen, welche Probleme enthält die Messmethode.\todo{raus}}
+
+Im folgenden Abschnitt wird die implementierte Lösung hinsichtlich der Leistungs- und Qualitätsanforderungen (vgl. Abschnitt \ref{sec:requirements}) evaluiert. Da zum Zeitpunkt der Fertigstellung der Arbeit noch kein ausreichend umfangreicher realer Datensatz zur Verfügung stand, wurde der frei verfügbare MovieLens 1M \citep{movielens1m} Datensatz genutzt. Dieser besteht aus ca. 1 Million Nutzerbewertungen von 3.900 Nutzern für 6040 Kinofilme. Er wurde gewählt, da er bereits in zahlreichen Publikationen zur Ergebnisevaluation genutzt wird (u.a in \citep{Cacheda2011} und \citep{Herlocker:2002:EAD:593967.594047}) und so gute Vergleichbarkeit bei den Ergebnissen gegeben ist. Der Solr-Index wurde auf Basis der korrespondierenden Filmdaten aus offenen Datenquellen\footnote{http://www.themoviedb.org/, http://mymovieapi.com/} gefüllt, so dass pro Film zwanzig verschiedene Textfelder u.a. mit Titel, Beschreibungen, Schauspielernamen und Stichworten zum Film gefüllt waren.
+
+\subsection{Ergebnisse}
+
+\subsubsection{Leistung}
+
+Zur Bestimmung der Leistung wurden jeweils die in Abschnitt \ref{sec:requirements} beschriebenen Anforderungen an die Anfragen pro Sekunde für die einzelnen Dienste geprüft. Als Referenzsystem wurde ein mit Ubuntu Server 12.04 betriebener Server genutzt.  Die Hardware des Servers wurde mit 16 GB RAM und einem Dual-Core Intel Xeon E31275 so gewählt, dass diese mit Amazon EC2 m1.xlarge Instanzen\footnote{Amazon EC2 Instanz-Typen: http://aws.amazon.com/de/ec2/instance-types - geprüft am 13.09.2013} vergleichbar sind. Als Webserver bzw. Servlet-Container wurde Jetty\footnote{http://www.eclipse.org/jetty/} Version 8 hinter einem Nginx \gls{Reverse Proxy} genutzt.
+
+Der Testplan wurde mit Apache Jmeter\footnote{http://jmeter.apache.org/} aufgebaut und durchgeführt. Er wird in einem eigenen Repository zur besseren Nachvollziehbarkeit zur Verfügung gestellt. \todo{Repo-Link}. Die einzelnen Messungen liefen, wenn nicht anders angegeben, jeweils 60 Sekunden mit einer vorgelagerten 30-sekündigen Ruhephase. Um den Einfluss von Netzwerklatenzen zu vermindern, wurde alle Systeme in gleichen Rechenzentrum, d.h. innerhalb der selben Netzwerkstruktur, genutzt.
+
+Die vollständige Auflistung der Messergebnisse für die einzelnen Systembestandteile und Konfigurationen befindet sich in Anhang \ref{app:performance}.
+
+%\todo{raus}\begin{itemize} 
+%\item Performance Tracker (req/s) - (concurrent con)
+%\item Performance Solr Personalisierung 1 single core (req/s) - (concurrent con)
+%\item Performance Solr Personalisierung 1 multi core / single recommender (req/s) - (concurrent con)
+%\item Performance Solr Personalisierung 1 multi core / multi recommender (req/s) - (concurrent con)
+%\item Performance Solr Personalisierung 2 single core (req/s) - (concurrent con)
+%\item Performance Solr Personalisierung 2 multi core (req/s) - (concurrent con)
+%\end{itemize}
+\newpage
+
+\paragraph{Tracker} Da die große Anzahl der zu erwartenden Anfragen auch eine sehr großen Zahl gleichzeitiger Verbindungen erfordert, wurden neben dem möglichen Durchsatz auch die maximal möglichen parallelen Verbindungen ermittelt. Um der normalen Nutzung des Dienstes zu entsprechen, wurde zufällige Trackingevents über die HTTP-Schnittstelle an den Dienst gesendet und die entsprechende Antwort geprüft.
+
+Die Erwartung, dass der Dienst ab einer bestimmten Anzahl paralleler Anfragen neue Verbindungen nichtmehr annehmen kann und diese abweisen muss, wurde erfüllt. Wie in Abbildung \ref{fig:chart_tracker} deutlich wird, ist diese Schwelle bei ca. 350 gleichzeitigen Verbindungen erreicht. Dies hat zur Folge, dass der maximale Durchsatz stark einbricht- Ab ca. 600 parallelen Anfragen kommt es zu Verbindungsabbrüchen was durch die ebenfalls abgebildeten Fehlerquote gezeigt wird..
+
+Die Anforderungen an den maximalen Durchsatz erreicht bzw. übertrifft der so betriebene Dienst. Zum Test von dauerhafter Stabilität wurden, ergänzend zu den Test der Lastspitzen, auch zwei dreißigminütiger Tests mit  50 bzw. 100 Anfragen pro Sekunde durchgeführt. In beiden Tests konnten keine Fehler oder Verbindungsabbrüche gemessen werden.
+
+\begin{figure}[htb]
+  \centering
+    \includegraphics[width=\textwidth]{Abbildungen/tracker.pdf}
+    \caption[Leistung Tracker]{Trackerleistungsdiagramm - Gegenüberstellung der Anzahl der parallel genutzten Threads, der erzielten Leistung und der Fehlerquote}
+    \label{fig:chart_tracker}
+\end{figure}
+
+\paragraph{Apache Solr} Zur Messung der Leistungsfähigkeit der verschiedenen Personalisierungsmethoden, wurden die Leistungswerte der Suche ohne Personaliserung mit denen der beiden Personalisierungsmethoden gegenübergestellt. Da bei großen Daten- bzw. Anfrageaufkommen die Suchanfragen wie in Abschnitt  \ref{sec:solrshards} beschrieben auch auf mehrere Backend-Server verteilt werden können, wurde die Evaluation mit bis zu drei Solr-Instanzen durchgeführt. Die Instanzen waren ohne Sharding, d.h. mit voller Daten-Replikation konfiguriert um eine maximale Lesegeschwindigkeit zu ermöglichen. Bei der Personalisierung über einen Webservice wurde zudem für jede Solr-Instanz ein eigener Recommendation-Service aufgesetzt.
+
+Die Anfragen wurden auf Basis von zufällig gebildeten Suchausdrücken von bis zu 5 Wörtern gestellt. Die dafür verwendeten Wörter wurden so gewählt, dass deren Dokumentenfrequenz (vgl. Abschnitt \ref{tfidf}) mindestens 10 und maximal 20 betrug. Dadurch sollte sichergestellt werden, dass alle Ergebnislisten ähnlich umfangreich und nicht leer waren. Ebenso wurden die für die Personalisierung notwendigen Nutzerprofile zufällig aus zwei bis zehn Elementen gebildet. Die Vermeidung von leeren Ergebnislisten und Profilen mit nicht vorhandenen Elementen sollte dabei vor allem der besseren Vergleichbarkeit dienen.  Um mögliche Probleme sichtbar zu machen, wurden leere Ergebnislisten ebenso wie Verbindungsabbrüche als Fehler aufgezeichnet.
+
+Abbildung \ref{fig:chart_solr} stellt die Ergebnisse der Leistungsmessung gegenüber. Wie bei der Messung der Tracker-Leistung wurden ebenfalls verschiedene Parallelitätsgrade und die damit erzielbare Leistung für die verschiedenen Konfigurationen gemessen. Die in Abschnitt \ref{sec:requirements} beschriebenen Anforderung ist als graue Linie im Diagramm kenntlich gemacht. Da diese im Vergleich zum Tracker geringer ist und damit auch die zu erwartende Anzahl paralleler Anfragen erheblich geringer ist, wurde die gewählten Parallelisierungsstufen anders verteilt. Um die Auswirkungen großer Verbindungszahlen dennoch zu zeigen, wurde ebenfalls bis in den Bereich von 900 Threads gemessen.
+
+\begin{figure}[htb]
+  \centering
+    \includegraphics[width=\textwidth]{Abbildungen/personalisierung.pdf}
+    \caption[Leistung d. personalisierten Suche]{Leistungsvergleich der Solr-Instanzen mit verschiedenen Personalisierungslösungen für verschiedene Parallelisierungs- und Skalierungsstufen}
+    \label{fig:chart_solr}
+\end{figure}
+
+Entgegen der Erwartung, dass die Leistung des unpersonalisierten Apache Solr mit jeder Instanz nahezu linear skaliert, zeigt sich die Auswirkung weiterer Instanzen erst bei der Steigerung der parallelen Anfragen.  Die geringe Leistung des nicht auf Parallelität optimierten Webservices spiegelt sich erwartungsgemäß in den erheblich niedrigeren Leistungswerten der entsprechenden Personalisierungslösung. Wie sich zudem zeigt, skaliert die Lösung mit weiteren Instanzen linear. Die auf Faktoren basierte Personalisierung zeigt erwartungsgemäß das gleiche Skaliersungsverhalten wie die Solr-Instanzen ohne Personalisierung. Da allerdings für einige Dokumente kein Featurevektor gelernt werden konnte, zeigen die Ergebnisse eine nahezu konstante Fehlerquote von 0.3\% im Zusammenhang mit den entsprechenden Dokumenten.
+
+Der zu erwartende Einbruch des Durchsatzes bei einer großen Zahl von parallelen Verbindungen zeigt sich, wie bei der Leistungsmessung des Trackers, ebenfalls. Der Schwellwert liegt bei zwischen 400 und 500  Verbindungen. Durch Verbindungsabbrüche hervorgerufene Fehler treten ab ca. 600 parallelen Verbindungen auf. Die in Abschnitt \ref{sec:requirements} beschriebenen Anforderungen werden von allen drei Personalisierungslösungen erreicht.
+
+\subsubsection{Qualität}
+
+Zur Messerung der Qualität wurden die in Abschnitt \ref{sec:qa_rmse} beschrieben Abweichungsmaße genutzt. Bestimmt wurden diese für elementbasierte Nachbarschaftmodelle mit verschiedenen Distanzmetriken und für den im Rahmen der Arbeit implementierten NSVD2 Algorithmus. Als weitere Referenzwerte wurde zudem die Qualität des in Apache Mahout vorhandenen SVD-Recommenders und die eines Zufalls-Recommendes gemessen.
+
+Das Training der evaluierten Modelle wurde mit 90\% des Datenbestandes durchgeführt. Die restlichen 10\% der Daten wurden für die Evaluation genutzt. Um zu verhindern, dass die zufällig vorgenommene Aufteilung der Daten in Trainings- und Kontrolldaten die Ergebnisse beeinflusst, wurden die Mittelwerte von 10 Evaluationen jeder Methode gebildet. Diese sind in Tabelle \ref{tab:rmse-eval} aufgelistet.
+
+ \citep{Cacheda2011} und \citep{Herlocker:2002:EAD:593967.594047}
+
+%\begin{itemize}
+%\item Qualität Personalisierung 1 - Metrik RMSE (Euclid, Pearson, Kosinus, Jaccard)
+%\item Qualität Personalisierung 1 - Nachbarschaftsgröße (20,30,40,50)
+%\item Qualität Personalisierung 2 - Metrik RMSE
+%\end{itemize}
+
+
+\begin{SCtable}
+  \centering
+  \begin{tabular}{ l | r | r  }
+  %\cline{2}
+  Alogrithmus & RMSE & MAE \\ \hline
+  Item-Item (Cosine) & 0.9730 & 0.7705 \\ 
+  Item-Item (Euclid) & 1.1131 & 0.8945\\   
+  Item-Item (Jaccard) & 0.9616 & 0.7611 \\
+  Item-Item (Pearson) & 0.9723 & 0.7553 \\ \hline
+  NSVD2 & 0.9840  & 0.8223 \\
+  SVD &	0.9062 & 0.7383 \\ \hline
+  Zufall &	1.7358 & 1.3689
+  \end{tabular}
+  \caption{\footnotesize Evaluationsergebnisse der verschiedenen vorgestellten Recommender-Algorithmen mit Apache Mahout  (vgl. Abschnitt \ref{sec:filtermethods}). { \scriptsize (eigene Abbildung)}}
+  \label{tab:rmse-eval}
+\end{SCtable}
+
+\subsection{Diskussion}
+
+Latenz
+
+Solr Cache
+
+Solr Data Größe, Harding
+
+Cremonesi10 - Abwägung RSME / Pression / Recall Messung bei Top-N Recommendern \\
+Howe08 - Abwägung der versch. Distanzmaße zwischen Datensätzen
+
+Skalierbarkeit evt. mit weiterem Datensatz ``testen'': \\
+\url{http://aws.amazon.com/datasets/6468931156960467} -> (Subset: \url{http://labrosa.ee.columbia.edu/millionsong/tasteprofile}) \\
+
+Signifikanz: \url{http://www.mitp.de/imperia/md/content/vmi/1634/1634_kapitel_20.pdf} \\
+Joachim05 -> Wilcoxon test

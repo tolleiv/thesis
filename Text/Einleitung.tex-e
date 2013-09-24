@@ -1,0 +1,21 @@
+\section{Einleitung}
+
+Aufbau der Arbeit:
+\begin{itemize}
+\item Grundlagen -> Kapitel 2
+\item Analyse+Design -> Kapitel 3
+\item Umsetzung -> Kapitel 4
+\item Auswertung -> Kapitel 5
+\end{itemize}
+
+
+%Hinweis das ``Elemente'' und ``Item'' oft als Synonym verwendet werden, ähnlich wie auch ``Rating'' und ``Bewertung'' gleichzusetzen sind.
+%Goldberg92 -> Ursprung des Ausdrucks
+%Ggf. direkt Terminologie ergänzen - gutes Beispiel Goldberg01 (Kap 3.1)
+%QVC Italia als Usecase vorstellen und einordnen
+
+\todo[color=red]{Hindernis}
+\todo[color=orange]{Wichtige Aufgabe}
+\todo[color=yellow]{Aufgabe abhängig von anderen}
+\todo[color=green]{Mögliche Ergänzung / weitere Anregung}
+\todo[color=white]{}

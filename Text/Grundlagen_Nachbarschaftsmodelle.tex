@@ -16,7 +16,7 @@ Wie \citep{Herlocker:2002:EAD:593967.594047} zeigen, muss zudem ein weiterer Unt
 User1 &    0.203 &	0.286 &	0.667 & 0.472 \\
     \hline
   \end{tabular}
-  \caption{\footnotesize Aus Tabelle \ref{tab:user-item-ratings} mit der euklidischen Distanz abgeleiteter Ähnlichkeitsvektor für User1 { \scriptsize (eigene Abbildung)}}
+  \caption{\footnotesize Aus Tabelle \ref{tab:user-item-ratings} mit der euklidischen Distanz abgeleiteter Ähnlichkeitsvektor für User1 { \scriptsize (eigene Darstellung)}}
   \label{tab:user-user-sim}
 \end{minipage}
 \end{table}
@@ -38,11 +38,13 @@ pred(u,i) & = \frac{ \sum_{j \in \mathcal{N}_u(I)} sim(i,j)*r_{u,j}}{ \sum_{j \i
 Item4 &    0.387 &	0.472 &	0.204 & 0.586 & 0.667 & 0.500 \\
     \hline
   \end{tabular}
-  \caption{\footnotesize Aus Tabelle \ref{tab:user-item-ratings} mit der euklidischen Distanz abgeleiteter Ähnlichkeitsvektor für Item4 { \scriptsize (eigene Abbildung)}}
+  \caption{\footnotesize Aus Tabelle \ref{tab:user-item-ratings} mit der euklidischen Distanz abgeleiteter Ähnlichkeitsvektor für Item4 { \scriptsize (eigene Darstellung)}}
   \label{tab:item-item-sim}
 \end{minipage}
 \end{table}
-Wie bei den nutzerbasierten Modellen sollte auch hier der Einfluss verschiedener Bewertungsmittelwerte und Varianzen ausgeglichen werden. Dies geschieht analog zu Formel (\ref{form:calcmeanpred}) und (\ref{form:calcmeanvarpred}). \todo{Quelle das ``Normalisierung'' auch bei item-item relevant ist} \todo{Ergebnisse der Rechnung einfügen}
+Wie bei den nutzerbasierten Modellen sollte auch hier der Einfluss verschiedener Bewertungsmittelwerte und Varianzen ausgeglichen werden. Dies geschieht analog zu Formel (\ref{form:calcmeanpred}) und (\ref{form:calcmeanvarpred}).
+%\todo[color=green]{Quelle das ``Normalisierung'' auch bei item-item relevant ist}
+% \todo[color=green]{Ergebnisse der Rechnung einfügen}
 
 Für die Abwägung zwischen nutzer- und elementbasierten Methoden gibt \citep{hb_04} die folgenden Kriterien an:
 
@@ -60,7 +62,7 @@ Neben festen Werten wird häufig alternativ die Wahl eines Ähnlichkeitsschwellw
 
 Die Wahl der konkreten Größe ist bei beiden Methoden zudem in jedem Fall ein Kompromiss zwischen Genauigkeit, Zufälligkeit und Effizienz.
 
-\paragraph{Vorteile von Nachbarschaftsmodellen} Dass zum Vergleich mit anderen Methoden, keine langwierige Trainingsphase notwendig ist, ist \todo{ist, ist} ebenso wie die leichte Nachvollziehbarkeit der  Methodik ein Vorteil von Nachbarschaftsmodellen. Die Möglichkeit, Empfehlungen durch eine Erklärung zu ergänzen, ist ein weiterer Vorteil, dem bei der Bildung des Nutzervertrauens besonders viel Gewicht zukommt (vgl. \citep{hb_15}). Die Stabilität der zugrunde liegenden Ähnlichkeitsmatrizen und der Effizienzgewinn durch die mögliche Vorberechnung der Nachbarschaften sind zudem bei großen Systemen von Vorteil (vgl. \citep{linden03}).\citep{hb_04} \todo[color=green!40]{Weiterführend: Regression vs. Classification aus HB04 evt. ergänzen}
+\paragraph{Vorteile von Nachbarschaftsmodellen} Dass zum Vergleich mit anderen Methoden, keine langwierige Trainingsphase notwendig ist, ist \todo{ist, ist} ebenso wie die leichte Nachvollziehbarkeit der  Methodik ein Vorteil von Nachbarschaftsmodellen. Die Möglichkeit, Empfehlungen durch eine Erklärung zu ergänzen, ist ein weiterer Vorteil, dem bei der Bildung des Nutzervertrauens besonders viel Gewicht zukommt (vgl. \citep{hb_15}). Die Stabilität der zugrunde liegenden Ähnlichkeitsmatrizen und der Effizienzgewinn durch die mögliche Vorberechnung der Nachbarschaften sind zudem bei großen Systemen von Vorteil (vgl. \citep{linden03}).\citep{hb_04} %\todo[color=green!40]{Weiterführend: Regression vs. Classification aus HB04 evt. ergänzen}
 %Sarwar01  -> Item-base zu bevorzugen \\
 %\citep{bogers09} -> User-Based zu bevorzugen \\
 %Prediction-accuracy with in \citep{Huete:2012:UPA:2206442.2206675}

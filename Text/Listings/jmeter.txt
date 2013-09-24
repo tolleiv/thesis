@@ -1,0 +1,11 @@
+for t in {25,50,100,150,200,300,400,500,600,700,800,900} ; do
+	for p in {0,1,2} ; do
+		for c in {1,2,3} ; do
+			echo "Running t${t}-p${p}-c${c}";
+			time apache-jmeter-2.9/bin/jmeter -n \\
+				-t performance-test-suite.jmx -p performance.properties -l result.jtl \\ 
+				-JThreads=$t -JPersonalize=$p -JCores=$c -JStartDelay=30 -JTestDuration=60;
+			echo "Done t${t}-p${p}-c${c}";
+		done
+	done
+done

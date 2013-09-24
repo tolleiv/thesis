@@ -18,6 +18,7 @@
 \usepackage{amsfonts}					% wird with \mathbb gebraucht
 \usepackage[safe]{tipa}
 \usepackage{csvsimple}
+\usepackage[titletoc]{appendix}
 \usepackage{subfig}
 	% ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
 \usepackage{listings}
@@ -106,7 +107,7 @@
 \hyphenation{Boost-ing}
 
 \begin{document}
-\lstset{basicstyle=\linespread{1}\scriptsize\ttfamily, basewidth=0.51em}
+\lstset{basicstyle=\linespread{1}\scriptsize\ttfamily, basewidth=0.51em,frame=L,framerule=0.2pt,framesep=10pt}
 
 \pagenumbering{roman}
 \pagestyle{empty}
@@ -160,13 +161,17 @@
 %\renewcommand\refname{I Literatur}
 
 {
-\renewcommand{\baselinestretch}{0.8}\footnotesize
+\renewcommand{\baselinestretch}{0.8}\scriptsize
 \bibliography{Literatur}}
 
 \interlinepenalty=100
-\renewcommand{\baselinestretch}{1.0}\footnotesize
-\appendix
+\renewcommand{\baselinestretch}{1.0}\small
+%\appendix
+%\phantomsection
+%\addcontentsline{toc}{section}{Anhang}
+\begin{appendices}
 \input{App_Anhang}
+\end{appendices}
 
 %\clearpage
 %\addcontentsline{toc}{chapter}{Index}

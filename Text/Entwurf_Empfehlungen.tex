@@ -1,10 +1,10 @@
 \subsection{Bildung von Empfehlungen}\label{sec:myrecommend}
 
-Da die verfügbaren Suchlösungen (vgl. Abschnitt \ref{sec:solr}) die Relevanzberechnung nicht ausschließlich \textit{TF-IDF}-basiert durchführen (vgl. Abschnitt \ref{sec:searchrelevance}) und auch andere Faktoren einbeziehen können, wird auch die direkte Integration der Berechnungen zur Personalisierung möglich. Die dafür notwendigen Anpassungen und Annahmen werden im Folgenden beschrieben und sollen bei der Umsetzung evaluiert werden.
+Da die verfügbaren Suchlösungen (vgl. Abschnitt \ref{sec:solr}) die Relevanzberechnung nicht ausschließlich \textit{TF-IDF}-basiert durchführen (vgl. Abschnitt \ref{sec:searchrelevance}) und auch andere Faktoren einbeziehen können, wird auch die direkte Integration der Berechnungen zur Personalisierung möglich. Die dafür notwendigen Anpassungen und Annahmen werden im Folgenden beschrieben und sollen bei der Umsetzung evaluiert werden. \todo[color=green]{untergliedern?}
 
-Aufbauend auf den möglichen Maßnahmen zur Personalisierung der Relevanzberechnungen aus Abschnitt  \ref{sec:personalresultstheorie} können auch kollaborative Methoden einbezogen werden. Die \textit{TF-IDF}-basierte Relevanzberechnung aus Formel (\ref{form:docscore}) wird zu diesem Zweck wie in Formel (\ref{form:personalresultstheorie}) um  ein Nutzerprofil $u$ ergänzt. Entsprechend des Profils kann dann die Berechnung der Empfehlungen einbezogen werden (Formel (\ref{form:myscore0})). Der Faktor $\alpha$ wird zur ``Normalisierung'' des Empfehlungswertes genutzt.
+Aufbauend auf den möglichen Maßnahmen zur Personalisierung der Relevanzberechnungen aus Abschnitt  \ref{sec:personalresultstheorie} können auch kollaborative Methoden einbezogen werden. Die \textit{TF-IDF}-basierte Relevanzberechnung aus Formel (\ref{form:docscore}) wird zu diesem Zweck wie in Formel (\ref{form:personalresultstheorie}) um  ein Nutzerprofil $u$ ergänzt. Entsprechend des Profils kann dann die Berechnung der Empfehlungen einbezogen werden (Formel (\ref{form:myscore0})). Der Faktor $\alpha$ wird zur Normalisierung des Empfehlungswertes genutzt.
 
-Die Zwischenergebnisse der Matrixfaktorisierung bieten sich dafür besonders an, da sie im Gegensatz zu den auf Nutzer- oder Elementähnlichkeiten basierenden Methoden Element- und Nutzerfeatures in Form von Vektoren getrennt repräsentieren. Die Featurevektoren $p_u$ repräsentieren das Nutzerprofil, welches über ein Skalarprodukt  mit den Vektoren $q_i$ der einzelnen Dokumente direkt zur Relevanzberechnung genutzt werden kann. Formel (\ref{form:myscore1}) erweitert die ursprüngliche Relevanzberechnung aus Formel (\ref{form:docscore}) um die Empfehlungsberechnung aus Formel (\ref{form:calcpredsvd}). Zur Wahrung der Lesbarkeit beschreiben $v(d)$ und $v(u)$ die dem Dokumenten bzw. Nutzer zugehörigen Featurevektoren $q_i$ bzw $p_u$.
+Die Zwischenergebnisse der Matrixfaktorisierung bieten sich dafür besonders an, da sie im Gegensatz zu den auf Nutzer- oder Elementähnlichkeiten basierenden Methoden Element- und Nutzerfeatures in Form von Vektoren getrennt repräsentieren. Die Featurevektoren $p_u$ repräsentieren das Nutzerprofil, welches über ein Skalarprodukt  mit den Vektoren $q_i$ der einzelnen Dokumente direkt zur Relevanzberechnung genutzt werden kann. Formel (\ref{form:myscore1}) erweitert die ursprüngliche Relevanzberechnung aus Formel (\ref{form:docscore}) um die Empfehlungsberechnung aus Formel (\ref{form:calcpredsvd}). Zur Wahrung der Lesbarkeit beschreiben $v(d)$ und $v(u)$ die dem Dokument bzw. Nutzer zugehörigen Featurevektoren $q_i$ bzw $p_u$.
 \begin{align}
 \text{score}(q,d,u) & = \text{score}_{\text{tf-idf}}(q,d) * \alpha * \text{pred}(d, u)\label{form:myscore0} \\
 \text{score}_{svd}(q,d,u) & = \text{score}_{\text{tf-idf}}(q,d) * \alpha * (\mu + b_d + b_u + v(d)^Tv(u)) \label{form:myscore1}
@@ -37,7 +37,7 @@ v(u) & \approx p_u  +(|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuse
 %pred_{svd}(1,4) & = q_4^T u_1 = 4.04
 \end{align}
 
-Wurde für einen Nutzer noch kein Nutzervektor $p_u$ berechnet, kann dieser ausgelassen werden, ohne die Möglichkeit zu verlieren die Relevanzberechnung zu personalisieren.
+Wurde für einen Nutzer noch kein Nutzervektor $p_u$ berechnet, kann dieser ausgelassen werden, ohne die Möglichkeit zu verlieren, die Relevanzberechnung zu personalisieren.
 \begin{align}
 v(u) & \approx (|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuser}
 \end{align}

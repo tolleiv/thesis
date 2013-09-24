@@ -1,0 +1,11 @@
+~
+\vspace{5cm}
+% siehe http://en.wikibooks.org/wiki/LaTeX/Document_Structure#Abstract
+
+\begin{abstract}
+%\begin{large}
+%\textbf{Kurzfassung} \\ \\
+%\end{large}
+tbw
+\end{abstract}
+\newpage

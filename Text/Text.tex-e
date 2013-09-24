@@ -1,0 +1,176 @@
+% !TEX encoding = UTF-8 Unicode
+\documentclass[a4paper, ngerman, 12pt, onecolumn, oneside,bibliography=totoc,listof=totoc]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{eurosym}
+\usepackage[pdftex]{graphicx} % Einbindung von Grafiken (pdf, png, jpg)
+\usepackage{float}            % bietet Option [H] für bombenfestes Verankern
+\usepackage{wrapfig}
+\usepackage{rotating}
+\newcommand{\sturz}[1]{\rotatebox{90}{\parbox{20mm}{\raggedright #1}}} 
+\usepackage[ngerman]{babel}   % Silbentrennung nach der neuen deutschen Rechtschreibung, z.B.: Sys-tem
+%\usepackage{amstext}         % für Klartext via \text{} in Formeln
+\usepackage{color}						% http://en.wikibooks.org/wiki/LaTeX/Colors
+\usepackage[small,bf]{caption} % http://radio.wihome.net/wiki/?article=LaTeX:captions
+\usepackage{sidecap}
+\usepackage{amsmath}
+\usepackage{amsfonts}					% wird with \mathbb gebraucht
+\usepackage[safe]{tipa}
+\usepackage{csvsimple}
+\usepackage{subfig}
+	% ftp://ftp.tex.ac.uk/tex-archive/macros/latex/contrib/listings/listings.pdf
+\usepackage{listings}
+\renewcommand\lstlistlistingname{Listingverzeichnis}
+
+\usepackage[pdftex,pagebackref=true]{hyperref}	% für "klickbare" Verlinkung im Dokument
+\hypersetup{
+    %bookmarks=true,        % show bookmarks bar?
+    unicode=false,          % non-Latin characters in Acrobat’s bookmarks
+    pdftoolbar=true,        % show Acrobat’s toolbar?
+    pdfmenubar=true,        % show Acrobat’s menu?
+    pdffitwindow=false,     % window fit to page when opened
+    pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={Diplomarbeit - Skalierbare Item Recommendation in Big-Data und Suchindexen},    % title
+    pdfauthor={Tolleiv Nietsch},     % author
+    pdfsubject={},   % subject of the document
+    pdfcreator={Tolleiv Nietsch},   % creator of the document
+    pdfproducer={TU Chemnitz}, % producer of the document
+    pdfkeywords={recommender,collective intelligence}, % list of keywords
+    pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links
+    citecolor=black,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black           % color of external links
+}
+
+\usepackage[square]{natbib}
+\bibliographystyle{natdin}
+%\usepackage[natbib=true,citecounter=true]{biblatex}
+%\addbibresource{Literatur.bib}
+%\bibpunct{(}{)}{;}{a}{,}{,}
+
+\usepackage{multicol}
+\usepackage{multirow}
+
+\usepackage[printonlyused]{acronym}
+\renewcommand{\bflabel}[1]{\normalfont{\normalsize{#1}}\hfill}
+
+\usepackage{parskip}          % zw. Absätzen: eine knappe Leerzeile statt hängender Einzüge
+\usepackage{makeidx}          % Package zur Indexerstellung
+\usepackage[toc,nonumberlist]{glossaries}
+\usepackage[colorinlistoftodos,textsize=tiny]{todonotes}	% bringt den todo befehl mit - "disable" in die Optionen zum ausschalten
+
+\def\argmax{\operatorname*{arg\,max}}
+\def\argmin{\operatorname*{arg\,min}}
+
+\newenvironment{packed_enumerate}{
+\begin{enumerate}
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}}{\end{enumerate}
+}
+
+\renewcommand{\figurename}{Abb.}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% Größenanpassungen
+%
+\setlength{\unitlength}{1cm}
+\setlength{\oddsidemargin}{0cm}
+\setlength{\evensidemargin}{0cm}
+\setlength{\textwidth}{16.1cm}
+\setlength{\topmargin}{-1.2cm}
+\setlength{\textheight}{23cm}
+\columnsep 0.5cm
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\addtoindex}[1]{#1\index{#1}}
+\newcommand{\nosubsubsection}[1] {{\textit{#1}}\newline}
+\newcommand{\footnoteremember}[2]{
+  \footnote{#2}
+  \newcounter{#1}
+  \setcounter{#1}{\value{footnote}}
+} \newcommand{\footnoterecall}[1]{
+  \footnotemark[\value{#1}]
+} 
+
+\sloppy                       % großzügiger Zeilenumbruch 
+\makeindex
+\makeglossaries
+
+\hyphenation{Grund-elemente}	% definierte Silbentrennung
+\hyphenation{Daten-menge}
+\hyphenation{Werbe-banner}
+\hyphenation{Boost-ing}
+
+\begin{document}
+\lstset{basicstyle=\linespread{1}\scriptsize\ttfamily, basewidth=0.51em}
+
+\pagenumbering{roman}
+\pagestyle{empty}
+\include{Titelblatt}					% und eidesstattliche Erklärung
+
+\include{Abstract}
+\setcounter{page}{1}					% Seitenzahl zurück	
+\tableofcontents					% Inhaltsverz.
+\newpage
+
+\listoftodos \newpage
+
+\pagenumbering{arabic}
+\pagestyle{plain} 
+\renewcommand{\baselinestretch}{1.50}\normalsize
+\setcounter{page}{1}					% Seitenzahl zurück	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%
+\input{Glossar}
+
+\input{Einleitung}\newpage
+\input{Grundlagen}
+\input{Entwurf}
+\input{Realisation}
+\input{Evaluation}
+\input{Zusammenfassung}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage\printglossary[title=Glossar,toctitle=Glossar] 
+
+\phantomsection
+\addcontentsline{toc}{section}{Abkürzungsverzeichnis}
+\section*{Abkürzungsverzeichnis}
+\input{Abkuerzungen}
+
+\newpage
+\phantomsection
+\addcontentsline{toc}{section}{Abbildungsverzeichnis}
+\listoffigures
+
+\phantomsection
+\addcontentsline{toc}{section}{\lstlistlistingname}
+\lstlistoflistings
+
+\interlinepenalty=10000
+%\nocite{*}							% auch die nicht verwendeten bibtex-Einträge einblenden
+\cleardoublepage						% damit die TOC auf die richtige seite verweist
+\phantomsection						% für hyperref um auf die richtige section zu verlinken
+\addcontentsline{toc}{section}{Literatur}
+%\renewcommand\refname{I Literatur}
+
+{
+\renewcommand{\baselinestretch}{0.8}\footnotesize
+\bibliography{Literatur}}
+
+\interlinepenalty=100
+\renewcommand{\baselinestretch}{1.0}\footnotesize
+\appendix
+\input{App_Anhang}
+
+%\clearpage
+%\addcontentsline{toc}{chapter}{Index}
+
+%\printindex
+
+\end{document}

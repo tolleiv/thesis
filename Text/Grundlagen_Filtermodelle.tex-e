@@ -1,0 +1,72 @@
+\subsection{Filtermodelle}
+\label{sec:filtermethods}
+
+Um die in Abschnitt \ref{sec:cf_overview} beschriebenen kollaborativen Filtermethoden zu nutzen, stellt sich das Problem, wie die Ähnlichkeit von Nutzern oder Elementen bestimmen werden kann und wie Empfehlungen für einen Nutzer erzeugt werden. Die dafür nötigen Modelle sollen in den folgenden Abschnitten näher erläutert werden.
+
+Grundlage der im Folgenden beschriebenen Methoden ist eine \textit{User-Item} Matrix $R$, welche die Bewertung aller Nutzer $U$ für die Elemente (Produkte) $P$ enthält. Die Wahl des Wertebereichs hängt dabei von der Applikation ab. Ein Beispiel für eine solche Matrix wird in Tabelle \ref{tab:user-item-ratings} gezeigt.
+\begin{table}
+  \centering
+  \begin{tabular}{ | l || c | c | c | c | c | c | c | }
+    \hline
+           & \sturz{Item1 } & \sturz{Item2}  & \sturz{Item3}  & \sturz{Item4}  & \sturz{Item5}  & \sturz{Item6}  & \sturz{Item7}  \\ \hline
+User1 &    5.0 & 3.0      & 2.5     &   ?        & & & \\				
+User2 &    2.0 & 2.5      & 5.0     &  2.0    & & & \\
+User3 & 2.5	& & &	4.0 &	 4.5	& &	5.0 \\
+User4 & 5.0	& &	3.0	& 4.5 & &	4.0 &	 \\
+User5 & 4.0	&3.0 &	2.0 &	4.0 &  3.5 & 4.0	& \\
+    \hline
+  \end{tabular}
+  \caption{\footnotesize Beispiel-Matrix für User-Item Ratings (vgl. \citep[Tabelle 2.1, S. 14]{rs})}
+  \label{tab:user-item-ratings}
+\end{table}
+
+\input{Grundlagen_Aehnlichkeit}
+\input{Grundlagen_Nachbarschaftsmodelle}
+%\todo[color=green!40]{ggf. SlopeOne ergänzen}
+
+%\subsubsection{SlopeOne}
+%
+%\citep[S 41]{rs}
+%http://lemire.me/fr/abstracts/SDM2005.html
+\subsubsection{Matrixfaktorisierung}
+\label{sec:svd}
+
+\paragraph{Merkmal-basierte Empfehlungen} Bei den Methoden der Matrixfaktorierung geht man davon aus, dass zusätzliche Merkmale der Nutzer und Elemente (\textit{Features}) aus den Einträge der \textit{User-Item} Matrix abgeleitet werden können. Die Bandbreite erstreckt sich von sehr anschaulichen Merkmalen, wie etwa dem Genre bei Büchern, Filmen oder Musik, über schwer definierbare Merkmale wie etwa Qualität bis hin zu uninterpretierbaren. Der Erfolg dieses Ansatzes wurde zum Beispiel beim 2006 ausgeschriebenen Netflix-Preis, zur Generierung von Filmempfehlungen, unter Beweis gestellt (vgl. \citep{Koren:2009:MFT:1608565.1608614}).
+%\todo[color=green]{PureSVD erläutern?}
+
+Um die in den Einträgen der Matrix verborgenen Merkmale zu berechnen, werden diese in einem $f$-dimensionalen Raum als Produkt von Nutzer- und Elementvektoren abgebildet. Die Dimension des Raumes entspricht der Anzahl der Merkmale, beim o.g. Beispiel lag diese zwischen 100 und 500. Die Einträge des Elementvektors $q_i \in \mathbb{R}^f$ drücken aus, zu welchem Grad --- positiv oder negativ --- dessen Eigenschaften dem Merkmal entsprechen. Der Nutzervektor $p_u \in \mathbb{R}^f$ korreliert entsprechend die Interessen des Nutzers mit diesen Merkmalen. Bezieht man zudem den Rating-Mittelwert $\mu$, sowie element- und nutzerspezifische Abweichungen $b_x$ ein, so ergibt die mögliche Bewertung eines Nutzer $u$ für ein Element $i$:
+\begin{align}
+pred(u,i) & = \mu + b_i + b_u + q_i^T p_u \label{form:calcpredsvd}
+\end{align}
+
+Die dafür benötigten Parameter $q$, $p$ und $b$ werden in einer Trainingsphase aus den vorhandenen Bewertungen gelernt. Dies geschieht mit den Methoden der \acf{SVD}  \citep{golub65} durch die Minimierung der mittleren quadratischen Abweichung zwischen existierenden und vorausberechneten Bewertungen:
+\begin{align}
+\min_{q*,p*,b*}{ \sum_{(u,i) \in \mathcal{K})} (r_{ui} -\mu-b_i - b_u - p_i^T q_u)^2  + \lambda ( \|q_u\|^2 + \|p_i\|^2 + b_u^2 + b_i^2) \label{form:trainsvd}   }
+\end{align}
+
+Die Menge $\mathcal{K}$ entspricht dabei allen vorliegenden Bewertungen $r_{ui}$. Die Konstante $\lambda$ wird genutzt um das sog. \textit{overfitting} zu verhindern. Sie stellt sicher, dass das abgeleitete Modell generisch bleibt.  \citep{Koren:2009:MFT:1608565.1608614, hb_05}
+
+\paragraph{Trainingsmethoden} Zur Durchführung des Trainings kann eine der beiden im Folgenden beschriebenen Methoden verwendet werden.
+
+Beim \textit{stochastischen Gradientenverfahren} \citep{funk2006} wird das Minimierungsproblem durch einen Gradientenabstieg gelöst. Die Richtung des Abstieges  ergibt sich mit Hilfe der vorliegenden Trainingsdaten aus der Abweichung $e_{ui}$ zwischen den tatsächlichen und vorausberechneten Werten (siehe Formal (\ref{form:graddec-1}) - (\ref{form:graddec-3})). Der Faktor $\gamma$ entspricht dabei der Lernrate bzw. Schrittweite. Entsprechend der Anzahl der zu ermittelnden Merkmale wird das Training $f$-mal, jeweils bis zur Konvergenz, durchgeführt. \citep{funk2006,Langford09,hb_05}
+\begin{align}
+e_{ui} & =  r_{ui} - pred(u,i) \label{form:graddec-1} \\
+q'_i & \gets q_i + \gamma (e_{ui} p_u - \lambda q_i ) \label{form:graddec-2} \\
+p'_u & \gets p_u + \gamma (e_{ui} q_i - \lambda p_u) \\
+b'_i & \gets b_i + \gamma (e_{ui} - \lambda b_i) \\
+b'_u & \gets b_u + \gamma (e_{ui} - \lambda b_u) \label{form:graddec-3}
+\end{align}
+
+Die Methode der \textit{Alternating Least Squares} \citep{Bell:2007:SCF:1441428.1442050} verfolgt einen anderen Ansatz zur Lösung des Minimierungsproblems. Da $ p_i^T q_u $ nicht konvex ist, kann das resultierende Gleichungssystem nicht vollständig gelöst werden. Wird $p_i$ oder $q_u$ als konstant angenommen, ist eine Approximation der nicht konstanten Werte durch die Methode der kleinsten Quadrate möglich \todo{Göhler S. 89 unten}. Im Trainingsverlauf werden deshalb abwechselnd die $p_i$ und $q_u$ konstant gehalten, um die jeweils anderen anzupassen. Wegen des aufwendigeren Ablaufs konvergiert das Verfahren langsamer als das zuvor beschriebene Gradientenverfahren, der Mangel wird bei großen Datenmengen aber durch eine bessere Parallelisierbarkeit ausgeglichen. \citep{Bell:2007:SCF:1441428.1442050, hb_05} % \todo[color=green]{Pseudocode aus Louppe10 ?} \todo[color=green]{Temporale Effekte dazu ?}
+
+\paragraph{Vorteile der Matrixfaktorisierung} Ein wichtiger Vorteil der durch die Matrixfaktorisierung erzeugten Modelle ist die Approximation der in der \textit{User-Item} Matrix enthaltenen Informationen in erheblich kompakterer Form. Zudem ermöglicht sie, dass über die Anzahl der zu lernenden Merkmale die Größe des resultierenden Modelle getsteuert werden kann. Die Erweiterbarkeit der Ausgangsformel (\ref{form:calcpredsvd}) ist ein zusätzlicher Vorteil. So konnten mit Erweiterungen, die zum Beispiel temporale Effekte oder nicht-lineare Zusammenhänge in den Daten ausnutzen, in verschiedenen Anwendungsfällen zusätzlich verbesserte Ergebnisse erzielt werden. \citep{hb_05,Vozalis:2007:USD:1243505.1243639}
+
+% SVD - Abbildung HB S. 46
+%\citep{Koren:2009:MFT:1608565.1608614} \citep{Vozalis:2007:USD:1243505.1243639}
+% Brand04 / __Cremonesi10 erweiterte Erklärung
+%Cacheda11 - bestätigt SVD schlägt Alternative vor
+
+%\subsubsection{Graphen Modelle}\newpage
+%\todo[color=green!20]{Iterative Methoden ggf. ergänzen bzw. Informationen zu iterativen Updates der Modelle hinzufügen - siehe Entwurf->Problemstellung}
+%\todo[color=green!40]{Weitere Ansätze ergänzen? zB. Graphen-Modelle? Bolzmann-Dings?}
+% Boltzmann: Louppe10

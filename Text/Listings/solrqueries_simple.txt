@@ -1,2 +1,2 @@
-    ?q=Theater Hamburg Freitag
-    &qf=title^10 tag^3 stadt^3 beschreibung 
+?q=Theater Hamburg Freitag
+&qf=title^10 tag^3 stadt^3 beschreibung 

@@ -1,6 +1,6 @@
-    bin/mahout splitDataset \
-        --input inputFolder \
-        --output outputFolder \
-        --trainingPercentage 0.9 \
-        --probePercentage 0.1 \
-        --tempDir outputFolder/tmp
+bin/mahout splitDataset \
+	--input inputFolder \
+	--output outputFolder \
+	--trainingPercentage 0.9 \
+	--probePercentage 0.1 \
+	--tempDir outputFolder/tmp

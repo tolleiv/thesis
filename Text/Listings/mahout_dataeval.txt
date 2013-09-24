@@ -1,5 +1,5 @@
-    bin/mahout com.aoe.cf.recommender.SimilarityEvaluator \
-        --input inputFolder \
-        --model modelFolder \
-        --output outputFolder \
-        --tempDir outputFolder/tmp
+bin/mahout com.aoe.cf.recommender.SimilarityEvaluator \
+	--input inputFolder \
+	--model modelFolder \
+	--output outputFolder \
+	--tempDir outputFolder/tmp

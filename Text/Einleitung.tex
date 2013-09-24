@@ -1,21 +1,27 @@
 \section{Einleitung}
 
-Aufbau der Arbeit:
-\begin{itemize}
-\item Grundlagen -> Kapitel 2
-\item Analyse+Design -> Kapitel 3
-\item Umsetzung -> Kapitel 4
-\item Auswertung -> Kapitel 5
-\end{itemize}
+Im reichhaltigen Angebot von Internetportalen und Online-Shops genügt es selten, im Kampf um Besucher, Informationen hübsch darzustellen und Webseiten mittels integrierter Suchmaschine durchsuchbar zu machen. Nicht zuletzt wegen der herausragenden Stellung von Unternehmen wie Amazon oder Google sind Besucher an den Komfort von persönlichen Empfehlungen gewohnt und wechseln entnervt auf andere Angebote wenn Suchergebnisse nicht ihren Vorstellungen entsprechen \citep[Kap 10]{hb,rs}. So wird die passende Personalisierung der auf Webseiten, Online-Shops oder Portalen verfügbaren Informationen zu einer zunehmenden Herausforderung für Unternehmen.
 
+Stellt man sich dieser Herausforderung steigt mit der Masse der Besucher auch der Umfang der zu verarbeitenden Daten. Mit jedem Klick eines Nutzers fallen neue Daten an, welche gefiltert und verarbeitet werden müssen. So kann ein plötzlicher Erfolg und ein unerhoffter Besucherstrom schnell zum Problem werden, wenn Suche und Personalisierung diesem nicht Stand halten\footnote{Slashdot-Effekt: http://de.wikipedia.org/wiki/Slashdot-Effekt}. Neben dem Problem möglichst gut personalisierte Inhalte zu präsentieren, muss deshalb auch die Skalierbarkeit betrachtet werden.
+
+Weil alle Methoden bekannt sind und OpenSource Werkzeuge existieren, sind die Möglichkeiten solche Lösungen zu bauen nicht nur großen Konzernen vorbehalten. Mit quelloffenen Suchlösungen, wie zum Beispiel Apache Lucene bzw. Apache Solr, lässt sich schnell eine gut in das Informations- oder Produkangebot integrierte Suchmaschine implementieren. Quellenoffene Softwarebiblitotheken des maschinellen Lernens, wie zum Beispiel Apache Mahout, ermöglichen es, personalisierte Empfehlungen (Recommendations) zu berechnen. Durch die Integration beider Technologien ergibt sich so die Möglichkeit eine Suchlösung zu implementieren, die verfügbare Information optimal aufbereitet und entsprechend der persönlichen Präferenzen sortiert. \\ \\
+
+\subsection{Zielsetzung}
+
+In dieser Arbeit sollen die Möglichkeiten der Integration von Empfehlungsdiensten und Suchtechnologien untersucht werden. Neben der Vorstellung von Ansätzen und Algorithmen zur Empfehlungsbildung, soll dafür vor allem das Suchergebnis-Boosting und die Kombination verschiedener Algorithmen zu diesem Zweck ausgearbeitet werden. Mit Hilfe der gewonnen Erkenntnisse soll eine Beispielanwendung implementiert werden, welche durch die Aufzeichnung des Nutzerverhaltens beim Gebrauch einer Webseite entsprechende Anpassungen bei der Generierung von Suchergebnissen ermöglicht.
+
+Die entwickelte Beispielanwendung und die dargelegten Konzepte soll über den Rahmen der Arbeit hinaus in die Suchlösung ``Searchperience''\footnote{http://searchperience.me/} der AOE GmbH integriert werden. Da diese auf den OpenSource Lösungen Apache Lucene und Apache Solr aufbaut, werden diese auch für die Umsetzung der Beispielanwendung vorausgesetzt. Des Weiteren sollen die Leistungsdaten der Searchperience Integration von QVC Italia\footnote{http://qvc.it} als Referenzwerte zum Leistungsvergleich genutzt werden.
+
+\subsection{Gliederung der Arbeit}
+
+Wie in Abbildung \ref{...} schematisch dargestellt, ist die Arbeit ist in die folgenden Abschnitte gegliedert. In Abschnitt \ref{sec:basics} werden zunächst die Grundlagen der genutzten Technologien erläutert und damit verbundene bekannte Schwierigkeiten aufgezeigt. Im darauf folgenden Abschnitt \ref{sec:architecture} werden Anforderungen und Struktur der Beispielanwendung erläutert. Die Beschreibung der zur Umsetzung genutzten Bestandteile erfolgt in Abschnitt \ref{sec:realization}. Die Bewertung der Technologien erfolgt in Abschnitt \ref{sec:evaluation}. Im abschließenden Abschnitt \ref{sec:results} wird die Arbeit zusammengefasst und mögliche weiterführende Themen werden aufgezeigt.
 
 %Hinweis das ``Elemente'' und ``Item'' oft als Synonym verwendet werden, ähnlich wie auch ``Rating'' und ``Bewertung'' gleichzusetzen sind.
 %Goldberg92 -> Ursprung des Ausdrucks
 %Ggf. direkt Terminologie ergänzen - gutes Beispiel Goldberg01 (Kap 3.1)
-%QVC Italia als Usecase vorstellen und einordnen
 
-\todo[color=red]{Hindernis}
-\todo[color=orange]{Wichtige Aufgabe}
-\todo[color=yellow]{Aufgabe abhängig von anderen}
-\todo[color=green]{Mögliche Ergänzung / weitere Anregung}
-\todo[color=white]{}
+%\todo[color=red]{Hindernis}
+%\todo[color=orange]{Wichtige Aufgabe}
+%\todo[color=yellow]{Aufgabe abhängig von anderen}
+%\todo[color=green]{Mögliche Ergänzung / weitere Anregung}
+%\todo[color=white]{}
