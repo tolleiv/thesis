@@ -4,8 +4,9 @@
 Um die in Abschnitt \ref{sec:cf_overview} beschriebenen kollaborativen Filtermethoden zu nutzen, stellt sich das Problem, wie die Ähnlichkeit von Nutzern oder Elementen bestimmen werden kann und wie Empfehlungen für einen Nutzer erzeugt werden. Die dafür nötigen Modelle sollen in den folgenden Abschnitten näher erläutert werden.
 
 Grundlage der im Folgenden beschriebenen Methoden ist eine \textit{User-Item} Matrix $R$, welche die Bewertung aller Nutzer $U$ für die Elemente (Produkte) $P$ enthält. Die Wahl des Wertebereichs hängt dabei von der Applikation ab. Ein Beispiel für eine solche Matrix wird in Tabelle \ref{tab:user-item-ratings} gezeigt.
-\begin{table}
+\begin{table}[H]
   \centering
+  \small
   \begin{tabular}{ | l || c | c | c | c | c | c | c | }
     \hline
            & \sturz{Item1 } & \sturz{Item2}  & \sturz{Item3}  & \sturz{Item4}  & \sturz{Item5}  & \sturz{Item6}  & \sturz{Item7}  \\ \hline
@@ -22,12 +23,6 @@ User5 & 4.0	&3.0 &	2.0 &	4.0 &  3.5 & 4.0	& \\
 
 \input{Grundlagen_Aehnlichkeit}
 \input{Grundlagen_Nachbarschaftsmodelle}
-%\todo[color=green!40]{ggf. SlopeOne ergänzen}
-
-%\subsubsection{SlopeOne}
-%
-%\citep[S 41]{rs}
-%http://lemire.me/fr/abstracts/SDM2005.html
 \subsubsection{Matrixfaktorisierung}
 \label{sec:svd}
 

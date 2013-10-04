@@ -24,7 +24,7 @@ MAE & = \frac{1}{|\mathcal{T}|} \sum_{(u,i) \in \mathcal{T}}{|\hat{r}_{ui}-r_{ui
 RMSE & = \sqrt{\frac{1}{|\mathcal{T}|} \sum_{(u,i) \in \mathcal{T}}{(\hat{r}_{ui}-r_{ui})^2}} \label{form:rmse}
 \end{align}
 
-Der Unterschied zwischen den Methoden liegt in der Bewertung großer Fehler. Wie in Tabelle \ref{tab:mae-rmse} gezeigt wird, kann dies durchaus ausschlaggebend sein. Im Beispiel werden zwei Modelle $\hat{r}_{(i)}$ miteinander verglichen. Das Modell $\hat{r}_{(1)}$ wird vom \acs{MAE} bevorzugt, weil der einzige Fehler durch die drei richtigen Werte stärker ausgeglichen wird. Beim Vergleich mit dem \acs{RMSE} wird Modell $\hat{r}_{(2)}$ bevorzugt, weil die vier kleinen Fehler in $\hat{r}_{(2)}$ weniger ins Gewicht fallen als der größere Fehler in $\hat{r}_{(1)}$. \citep{hb_08} \\ \\
+Der Unterschied zwischen den Methoden liegt in der Bewertung großer Fehler. Wie in Tabelle \ref{tab:mae-rmse} gezeigt wird, kann dies durchaus ausschlaggebend sein. Im Beispiel werden zwei Modelle $\hat{r}_{(i)}$ miteinander verglichen. Das Modell $\hat{r}_{(1)}$ wird vom \acs{MAE} bevorzugt, da der einzige Fehler durch die drei richtigen Werte stärker ausgeglichen wird. Beim Vergleich mit dem \acs{RMSE} wird Modell $\hat{r}_{(2)}$ bevorzugt, da die vier kleinen Fehler in $\hat{r}_{(2)}$ weniger ins Gewicht fallen als der größere Fehler in $\hat{r}_{(1)}$. \citep{hb_08} \\ \\
 \begin{SCtable}[][h]
   \centering
   \begin{tabular}{ | r | p{1cm} | p{1cm} | p{1cm} | }

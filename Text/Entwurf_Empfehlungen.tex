@@ -1,6 +1,6 @@
 \subsection{Bildung von Empfehlungen}\label{sec:myrecommend}
 
-Da die verfügbaren Suchlösungen (vgl. Abschnitt \ref{sec:solr}) die Relevanzberechnung nicht ausschließlich \textit{TF-IDF}-basiert durchführen (vgl. Abschnitt \ref{sec:searchrelevance}) und auch andere Faktoren einbeziehen können, wird auch die direkte Integration der Berechnungen zur Personalisierung möglich. Die dafür notwendigen Anpassungen und Annahmen werden im Folgenden beschrieben und sollen bei der Umsetzung evaluiert werden. \todo[color=green]{untergliedern?}
+Da die verfügbaren Suchlösungen (vgl. Abschnitt \ref{sec:solr}) die Relevanzberechnung nicht ausschließlich \textit{TF-IDF}-basiert durchführen (vgl. Abschnitt \ref{sec:solrsearchrelevance}) und auch andere Faktoren einbeziehen können, wird auch die direkte Integration der Berechnungen zur Personalisierung möglich. Die dafür notwendigen Anpassungen und Annahmen werden im Folgenden beschrieben und sollen bei der Umsetzung evaluiert werden. % \todo[color=green]{untergliedern?}
 
 Aufbauend auf den möglichen Maßnahmen zur Personalisierung der Relevanzberechnungen aus Abschnitt  \ref{sec:personalresultstheorie} können auch kollaborative Methoden einbezogen werden. Die \textit{TF-IDF}-basierte Relevanzberechnung aus Formel (\ref{form:docscore}) wird zu diesem Zweck wie in Formel (\ref{form:personalresultstheorie}) um  ein Nutzerprofil $u$ ergänzt. Entsprechend des Profils kann dann die Berechnung der Empfehlungen einbezogen werden (Formel (\ref{form:myscore0})). Der Faktor $\alpha$ wird zur Normalisierung des Empfehlungswertes genutzt.
 
@@ -14,7 +14,7 @@ Das mit Hilfe der Matrixfaktorisierung gefundene Modell wird dadurch auf verschi
 
 Um zudem die in Abschnitt \ref{sec:filterissues} beschriebenen \textit{Cold-Start} Probleme zu vermeiden und neu gewonnene Daten direkt einbeziehen zu können, wird die Berechnung wie in \citep{Paterek07} und \citep{Koren:2009:MFT:1608565.1608614} um weitere Informationsquellen ergänzt. Das Nutzerprofil kann dadurch um weitere Bewertungen $J_u$ ergänzt werden, ohne dass diese vollständig in das Modell einbezogen wurden:
 \begin{align}
-v(u) & \approx p_u  +(|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuser} \\
+v(u) & \approx p_u  +(|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuser_nsvd}
 %\\
 %pred(u,i) & = q_i^T p_u \\
 %\\
@@ -39,7 +39,7 @@ v(u) & \approx p_u  +(|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuse
 
 Wurde für einen Nutzer noch kein Nutzervektor $p_u$ berechnet, kann dieser ausgelassen werden, ohne die Möglichkeit zu verlieren, die Relevanzberechnung zu personalisieren.
 \begin{align}
-v(u) & \approx (|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuser}
+v(u) & \approx (|J_u|+1)^{-0.5}*\sum_{j \in J_u} w_{j} \label{form:anonuser_nsvd2}
 \end{align}
 
 Die hierfür genutzten Featurevektoren $w_j$ sind ebenfalls dokumentenspezifisch. Sie werden gemeinsam mit dem gesamten Modell mit den Methoden des \textit{stochastischen Gradientenverfahrens} oder den \textit{Alternating Least Squares} gelernt (vgl. Abschnitt \ref{sec:svd}).  \citep{Paterek07,Koren:2009:MFT:1608565.1608614}

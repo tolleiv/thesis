@@ -10,7 +10,7 @@ sim(a,b) & = \frac{1}{1+dist(a,b)} \label{form:disttosim}
 
 Hierbei ist $n$ die Anzahl der Dimensionen und $a_i$ bzw. $b_i$ beziehen sich auf das  $i$-te Attribut der Objekte, resp. die Ratings der Nutzer. Um den Distanzwert zu einem Maß der Ähnlichkeit mit einem Wertebereich von $1$ (starke Korrelation) bis $0$ (keine Korrelation) umzuformen, kann Formel (\ref{form:disttosim}) genutzt werden.
 
-Aus der Verallgemeinerung dieser Berechnung, der sog. \textit{Lr-Norm} bzw. dem \textit{Minkowski Abstand}, ergeben sich weitere Abstandsmaße. Die sog. \textit{L1-Norm} (auch \textit{City-Block-} oder \textit{Manhattan-Distanz}) entspricht $r=1$, $r=2$ entspricht dem o.g. euklidische Abstand und $ r=\infty $ entspricht dem \textit{Tschebyscheff-Abstand}. \citep{hb_02}
+Aus der Verallgemeinerung dieser Berechnung, der sog. \textit{Lr-Norm} bzw. dem \textit{Minkowski Abstand}, ergeben sich weitere Abstandsmaße. Die sog. \textit{L1-Norm} (auch \textit{City-Block-} oder \textit{Manhattan-Distanz}) entspricht $r=1$, $r=2$ entspricht dem o.g. euklidischen Abstand und $ r=\infty $ entspricht dem \textit{Tschebyscheff-Abstand}. \citep{hb_02}
 \begin{align}
 \label{form:minkowskisim}
 dist(a,b) & = \sum_{i=1}^{n} (\left| a_i - b_i \right|^r)^\frac{1}{r}

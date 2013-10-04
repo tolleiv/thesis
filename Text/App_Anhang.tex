@@ -127,8 +127,18 @@ Leistungsmessung von drei Apache Solr Instanzen mit Faktoren-basierter Personali
 }
 
 \newpage
-\section{Solr Evaluationskonfiguration}
-\label{app:solrconfig}
+\section{Referenzierte Repositories}
+\label{app:repos}
 
-Scripte einbinden...
+Übersicht der Repositories für die im Rahmen dieser Arbeit erstellten Softwaremodule und Konfigurationsartefakte.
+
+\begin{itemize}
+\item \textbf{``Recommend''} - Hauptrepository mit allen Integrationskomponenten für beide Personalisierungslösungen und allen in Abschnitt \ref{sec:mahoutext} beschriebenen Ergänzungen für Apache Mahout. \\ https://gitorious.org/recommend/recommend
+\item \textbf{``Tracker''} -  Umsetzung des in Abschnitt \ref{sec:tracker-impl} beschriebenen Protokollierungsdienstes. \\ https://gitorious.org/recommend/tracker
+\item \textbf{``IMDB Index App``} - Beispielanwendung welche, basierend of NodeJS, beide Möglichkeiten der Personalisierung gegenüberstellt. \\ https://gitorious.org/recommend/imdb-index
+\item \textbf{``Datenaufbereitung''}  - Scripte zur Datenaufbereitung für die Modellberechnung (vgl. Abschnitt \ref{sec:dataprep_real}). \\ https://gitorious.org/recommend/pig-preparation
+\item \textbf{``Performance Tests''} - Apache Jmeter Konfigurationsdateien für die in Abschnitt \ref{sec:performance} durchgeführten Leistungsevaluationen. \\ https://gitorious.org/recommend/performance-tests
+%\item recommend/pig-udfs
+\item \textbf{``Apache Solr Konfiguration''} - Beispielkonfigurationen für die im Rahmen der Arbeit genutzten Apache Solr Instanzen. \\ https://gitorious.org/recommend/solr-config
+\end{itemize}
 
