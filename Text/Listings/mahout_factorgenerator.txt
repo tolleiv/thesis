@@ -1,3 +1,4 @@
-$JAVA_HOME/bin/java -classpath core.jar \
-	com.aoe.cf.recommender.Evaluator \
-	-Dcf.home=inputFolder
+bin/mahout com.aoe.ml.cf.recommender.svd.FactorizeJob \
+    --input inputFolder \
+    --output outputFolder \
+    --tempDir working/factorsTemp 

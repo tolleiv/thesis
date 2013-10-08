@@ -7,7 +7,7 @@ Die durch den Nutzer formulierten Anfragen sind dabei, im Gegensatz zu Anfragen 
 
 \subsubsection{Indexbildung} \label{sec:indexcreation}
 
-Da es bei einer großen Anzahl von vorhandenen Dokumenten sehr ineffizient wäre, wenn bei jeder Anfrage jedes Dokument geprüft werden müsste, wird eine \textit{invertierten Index} verwendet um Informationen zu Dokumenten abzubilden. Die Indexierung erfolgt dabei in vier Schritten, welche für zwei Beispieldokumente\footnote{Ausschnitte aus ``Julius Caesar'' von William Shakespeare} wie folgt verlaufen:
+Da es bei einer großen Anzahl von vorhandenen Dokumenten sehr ineffizient wäre, wenn bei jeder Anfrage jedes Dokument geprüft werden müsste, wird ein \textit{invertierter Index} verwendet um Informationen zu Dokumenten abzubilden. Die Indexierung erfolgt dabei in vier Schritten, welche für zwei Beispieldokumente\footnote{Ausschnitte aus ``Julius Caesar'' von William Shakespeare} wie folgt verlaufen:
 
 \begin{enumerate}
 \item Sammeln aller Dokumente und Zuordnung von eindeutigen Bezeichnern (\textit{docID}) \\ { \scriptsize ..., 20:\fbox{Friends, Romans, countrymen}, 21:\fbox{So let it be with Caesar.},... }
@@ -51,16 +51,16 @@ Die Summe der Relevanz eines Dokuments bezüglich aller Teilterme der Anfrage $q
 \text{score}(q,d) & = \sum_{t \in q}{\text{tf-idf}(t,d)}  \label{form:docscore}
 \end{align}
 
-\paragraph{PageRank} Sind die Dokumente untereinander verknüpft, kann man auch die Popularität eines Dokumentes zur Grundlage der Anordnung in der Ergebnisliste machen. Diese Popularität wird i.d.R. in Form des PageRank ausgedrückt. Dieser korreliert mit der Wahrscheinlichkeit, dass ein zufällig über den Verknüpfungsgraphen laufender Nutzer ein bestimmtes Dokument erreicht. Dokumente, auf die häufig verwiesen wird, besitzen demnach einen hohe PageRank und Verweise von populären Dokumenten üben einen größeren Effekt auf den PageRank der verknüpften Dokumente aus.
+\paragraph{PageRank} Sind die Dokumente untereinander verknüpft, kann man auch die Popularität eines Dokumentes zur Grundlage der Anordnung in der Ergebnisliste machen. Diese Popularität wird i.d.R. in Form des PageRank ausgedrückt. Dieser korreliert mit der Wahrscheinlichkeit, dass ein zufällig über den Verknüpfungsgraphen laufender Nutzer ein bestimmtes Dokument erreicht. Dokumente, auf die häufig verwiesen wird, besitzen demnach einen hohen PageRank und Verweise von populären Dokumenten üben einen großen Effekt auf den PageRank der verknüpften Dokumente aus.
 \begin{align}
 R(d) & = c \sum_{v \in B_d}{\frac{R(v)}{N_v}} + cE(d) \label{form:pagerank}
 \end{align}
 
-Berechnet wird der PageRank $R$ einer Seite $u$ mit Hilfe der Formel (\ref{form:pagerank}). Der Faktor $c < 1$ dient dabei zur Abstraktion des Verlustes durch Seiten ohne ausgehende Verweise. Der Vektor $E$ bildet die Wahrscheinlichkeit ab, dass der Nutzer seinen Pfad unterbricht und zufällig bei Dokument $d$ fortsetzt.\citep{pagerank,Manning2008}
+Berechnet wird der PageRank $R$ eines Dokumentes $d$ mit Hilfe der Formel (\ref{form:pagerank}). Der Faktor $c < 1$ dient dabei zur Abstraktion des Verlustes durch Seiten ohne ausgehende Verweise. Der Vektor $E$ bildet die Wahrscheinlichkeit ab, dass der Nutzer seinen Pfad unterbricht und zufällig bei Dokument $d$ fortsetzt.\citep{pagerank,Manning2008}
 
 \subsubsection{Personalisierung}\label{sec:personalresultstheorie}
 
-Die Personalisierung der Dokumentenlisten kann über verschiedene Wege erreicht werden. Der offensichtliche ist, die der Anfrage entsprechende Dokumentenliste anhand der Präferenzen eines Nutzerprofils umzusortieren. Eine weitere Möglichkeit ist, die durch den Nutzer formulierte Anfrage vor der eigentlichen Verarbeitung mit Informationen des Nutzerprofils zu erweitern.
+Die Personalisierung der Dokumentenlisten kann über verschiedene Wege erreicht werden. Der Offensichtliche ist, die der Anfrage entsprechende Dokumentenliste anhand der Präferenzen eines Nutzerprofils umzusortieren. Eine weitere Möglichkeit ist, die durch den Nutzer formulierte Anfrage vor der eigentlichen Verarbeitung mit Informationen des Nutzerprofils zu erweitern.
 
 Die erste Methode wird zum Beispiel in \citep{Durao12} beschrieben. Um die Dokumentenliste zu personalisieren, wird zunächst ein schlagwortbasiertes Nutzerprofil aufgebaut, welches die bevorzugten Schlagworte $t \in T_u$ in Bezug auf verschiedene Faktoren $F$ und deren relative Frequenz $T_f \subset T_u$ beinhaltet. Die Gewichtung der Faktoren untereinander wird durch $\alpha_f$ realisiert. Zusätzlich werden auch zu jedem Dokument entsprechende Tags $T_d$ gepflegt, so dass die Ähnlichkeit von Nutzerprofil und Dokument mit Hilfe der Kosinus-Ähnlichkeitsmaßes (siehe Abschnitt \ref{sec:cossim}) berechnet werden kann. Da die initiale Dokumentenliste anhand des TF-IDF Maßes sortiert wird, ergibt sich die endgültige Bewertung für den Nutzer $u$ aus:  (vgl. \citep{Durao12})
 \begin{align}
@@ -71,7 +71,7 @@ Die Anpassung der Anfrage vor der Verarbeitung durch die Suche wird zum Beispiel
 
 In \citep{smyth05a} wird gezeigt, dass die Erweiterung der Anfrage auch ohne explizites Nutzerprofil zur Verbesserung der Relevanz der gefundenen Ergebnisse beitragen kann. Realisiert wird dies auf der Grundlage von kollaborativen- bzw. gruppenbasierten Methoden (vgl. Abschnitt \ref{sec:cf_overview} u. \ref{sec:cbf_overview}). Die zur Erweiterung genutzten ähnlichen Anfragen werden dabei aus der für die gesamte Suchmaschine genutzten Datenbasis gewonnen. Dies hat zudem den Vorteil, dass auch Nutzer ohne umfangreiches Nutzerprofil von den erweiterten Bewertungskriterien profitieren, allerdings ist der Grad der Personalisierung durch den Verzicht auf ein Nutzerprofil eingeschränkt. Auch die notwendige Homogenität der Nutzergruppe einer Plattform kann nicht beliebig auf andere übertragen werden. \citep{smyth05a}
 
-Auch der PageRank ermöglicht die personalisierte Sortierung der Dokumentenlisten. Wählt man für den Vektor $E$ in Formel (\ref{form:pagerank}) nutzerspezifische ``Absprungwahrscheinlichkeiten'' so wird, wie in \citep{pagerank} beschrieben, der resultierende PageRank den Präferenzen des Nutzers entsprechen. Da eine vollständige Berechnung des PageRank pro Nutzer innerhalb großer Dokumentenbestände sehr unpraktisch ist, wurden zudem verschiedene Erweiterungen untersucht. In \citep{ilprints596} werden mögliche Ansätze beschrieben. Im Kern aller Ansätze werden mehrere verschiedene ``featurebasierte'' PageRank-Werte pro Dokument berechnet. Während der Anfrage werden diese vorberechneten Werte entsprechend des Nutzerprofils gewichtet. \citep{ilprints596} %\todo[color=green]{ggf. um Beispiel ergänzen}
+Auch der PageRank ermöglicht die personalisierte Sortierung der Dokumentenlisten. Wählt man für den Vektor $E$ in Formel (\ref{form:pagerank}) nutzerspezifische Absprungwahrscheinlichkeiten so wird, wie in \citep{pagerank} beschrieben, der resultierende PageRank den Präferenzen des Nutzers entsprechen. Da eine vollständige Berechnung des PageRank pro Nutzer innerhalb großer Dokumentenbestände sehr unpraktisch ist, wurden zudem verschiedene Erweiterungen untersucht. In \citep{ilprints596} werden mögliche Ansätze beschrieben. Im Kern aller Ansätze werden mehrere verschiedene ``featurebasierte'' PageRank-Werte pro Dokument berechnet. Während der Anfrage werden diese vorberechneten Werte entsprechend des Nutzerprofils gewichtet. \citep{ilprints596} %\todo[color=green]{ggf. um Beispiel ergänzen}
 
 %Radlinski11 - für Qualitätsmaße d. Suchen \\
 %Durao11 - Personalisierung v. Suchen

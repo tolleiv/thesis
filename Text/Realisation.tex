@@ -1,6 +1,6 @@
 \section{Realisation}\label{sec:realization}
 
-Mit der im vorangegangenen Abschnitt beschriebenen Architektur und den aufgestellten Leistungsanforderungen, wird im folgenden Abschnitt die Umsetzung der Beispielapplikation, die dafür genutzten Werkzeuge und notwendige Anpassungen beschrieben. Der Fokus liegt dabei auf den Bestandteilen, die direkt bei der Personallisierung der Suche genutzt werden.
+Mit der im vorangegangenen Abschnitt beschriebenen Architektur und den aufgestellten Leistungsanforderungen, werden im folgenden Abschnitt die Umsetzung der Beispielapplikation, die dafür genutzten Werkzeuge und notwendige Anpassungen beschrieben. Der Fokus liegt dabei auf den Bestandteilen, die direkt bei der Personallisierung der Suche genutzt werden.
 
 Ausgangspunkt bei der Umsetzung war die bereits vorhandene \textit{Searchperience} Suchlösung, welche entsprechend der Anforderungen angepasst werden sollte.
 Da \textit{Searchperience} das Java basierte Apache Solr zum Aufbau und zur Abfrage der Suchindexe nutzt, wurden für die weiteren Bestandteile ebenfalls Java-Bibliotheken genutzt.
@@ -13,11 +13,11 @@ Apache Solr (Solr) ist ein ``Enterprise Search Server'' welcher unter der Apache
 
 \subsubsection{Datenhaltung}\label{sec:solrshards}
 
-Da Dokumente selten aus fortlaufendem, unstrukturiertem Text bestehen, oftmals ergänzende Informationen zu einem Dokument im Suchindex verfügbar gemacht werden sollen und die Datenhalten möglichst effizient geschehen soll, ist es notwendig, die mögliche Struktur der Daten mit Hilfe der \textit{schema.xml} zu beschrieben. Um Redundanz innerhalb der Strukturbeschreibung zu vermeiden, ist diese zweigeteilt. Zunächst werden alle Datentypen (\textit{types}) konfiguriert -- d.h. aus der Liste der möglichen Standardtypen werden die für den Anwendungsfall notwendigen ausgewählt und ggf. mit angepasster Basiskonfiguration verfügbar gemacht. Eine detailliertere Unterscheidung der Typen ist notwendig um sicherzustellen, dass die Daten möglichst effizient für den konkreten Anwendungsfall gespeichert werden. Im zweiten Schritt werden dann die eigentlichen Dokumentenbestandteile (auch Felder oder \textit{fields}) den vorher konfigurierten Typen zugeordnet. In einer auf einen einzelnen Typen und ein Feld reduzierten Form zeigt Listing \ref{lst:schema_vektor} dies beispielhaft. Anhand der Konfiguration werden die vorgehaltenen Dokumente mit Hilfe der geeigneten invertierten Indexe (vgl. Abschnitt \ref{sec:indexcreation}) organisiert.
+Da Dokumente selten aus fortlaufendem, unstrukturiertem Text bestehen, oftmals ergänzende Informationen zu einem Dokument im Suchindex verfügbar gemacht werden sollen und die Datenhalten möglichst effizient geschehen soll, ist es notwendig, die mögliche Struktur der Daten mit Hilfe der \textit{schema.xml} zu beschrieben. Um Redundanz innerhalb der Strukturbeschreibung zu vermeiden, ist diese zweigeteilt. Zunächst werden alle Datentypen (\textit{types}) konfiguriert -- d.h. aus der Liste der möglichen Standardtypen werden die für den Anwendungsfall notwendigen ausgewählt und ggf. mit angepasster Basiskonfiguration verfügbar gemacht. Eine detailliertere Unterscheidung der Typen ist notwendig um sicherzustellen, dass die Daten möglichst effizient für den konkreten Anwendungsfall gespeichert werden. Im zweiten Schritt werden dann die eigentlichen Dokumentenbestandteile (auch Felder oder \textit{fields}) den vorher konfigurierten Typen zugeordnet. In einer auf einen einzelnen Typen und ein Feld reduzierten Form zeigt Listing \ref{lst:schema_vektor} dies beispielhaft. Anhand der Konfiguration werden die vorgehaltenen Dokumente mit Hilfe der geeigneten invertierten Indexe (vgl. Abschnitt \ref{sec:indexcreation}) organisiert. \\
 
 \lstinputlisting[caption=Instanzierung von Apache Solr zur horizontalen Skalierung,label={lst:solrsharding},float]{Listings/solr_sharding.txt}
 
-Die horizontale Skalierung (vgl. Abschnitt \ref{sec:sharding}) der in Solr vorgehaltenen Daten kann über beliebig viele \textit{Backend-Knoten} erfolgen. Dabei werden, wie in Listing \ref{lst:solrsharding}, die einzelnen Solr-Instanzen mit einer Referenz auf eine zentrale Konfigurationsinstanz gestartet (im Beispiel über Apache Zookeeper). Die Wahl der Server-Rollen (Frontend- o. Backend) erfolgt je nach Verfügbarkeit und wird automatisch erneutert wenn Knoten ausfallen oder ergänzt werden. Mögliche Redundanz in der Datenhaltung, und damit die Steigerung der Leistungsfähigkeit von Leseoperationen, kann durch du die Konfiguration der insgesamt genutzten Datenblöcke (auch \textit{Shards}), den Replikations-Faktor und die Datenblöcke pro Knoten erzielt werden.
+Die horizontale Skalierung (vgl. Abschnitt \ref{sec:sharding}) der in Solr vorgehaltenen Daten kann über beliebig viele \textit{Backend-Knoten} erfolgen. Dabei werden, wie in Listing \ref{lst:solrsharding}, die einzelnen Solr-Instanzen mit einer Referenz auf eine zentrale Konfigurationsinstanz gestartet (im Beispiel über Apache Zookeeper\footnote{siehe: http://zookeeper.apache.org}). Die Wahl der Server-Rollen (Frontend- o. Backend) erfolgt je nach Verfügbarkeit und wird automatisch erneuert wenn Knoten ausfallen oder ergänzt werden. Mögliche Redundanz in der Datenhaltung, und damit die Steigerung der Leistungsfähigkeit von Leseoperationen, kann durch die Konfiguration der insgesamt genutzten Datenblöcke (auch \textit{Shards}), den Replikations-Faktor und die Datenblöcke pro Knoten erzielt werden.
 
 \subsubsection{Suchanfragen}
 
@@ -25,7 +25,8 @@ Innerhalb von Solr können sog. \textit{RequestHandler} genutzt werden, um Daten
 
 Die Komponenten innerhalb der Konfiguration spiegeln auch die Verarbeitungsreihenfolge der Suchanfragen wieder. Die Standardkomponenten des \textit{SearchHandler} sind \texttt{solr.QueryComponent} (Query), \texttt{solr.FacetComponent} (Facet), \texttt{solr.MoreLikeThisComponent} (Mlt), \texttt{solr.HighlightComponent} (Highlight) und \texttt{solr.HighlightComponent} (Stats). Innerhalb einer Suchanfrage wird in Query die eigentliche Ergebnisliste gebildet, welche dann im folgenden gefiltert (Facet), ergänzt (Mlt) oder weiterverarbeitet (Highlight) wird.
 
-Die eigentliche Verarbeitung der Suchanfrage und die Bildung der Ergebnislisten geschieht gemäß einer erweitreen \acs{TF-IDF} Berechnung (vgl. Abschnitt \ref{tfidf}.). Die Anpassung dieser Berechnung wird in \citep{TFIDFSimilarity} umfassend beschrieben und hier zusammenfassend erläutert. Die Notwendigkeit zu dieser Anpassung ergibt sich aus dem Bedarf die Gewichtung einzelner Felder und Terme anzupassen.
+Die eigentliche Verarbeitung der Suchanfrage und die Bildung der Ergebnislisten geschieht gemäß einer erweiterten \acs{TF-IDF} Berechnung (vgl. Abschnitt \ref{tfidf}.). Die Anpassung dieser Berechnung wird in \citep{TFIDFSimilarity} umfassend beschrieben und hier zusammenfassend erläutert. Die Notwendigkeit zu dieser Anpassung ergibt sich aus dem Bedarf die Gewichtung einzelner Felder und Terme anzupassen. \vfill
+
 \begin{align}
 \text{score}(q, d) & = \text{coord}(q,d) \ast \text{queryNorm}(q) \ast \sum_{t \in q}{\text{tf-idf}(t, d) \ast \text{boost(t)} \ast \text{norm}(t,d)} \label{lucenedocscore}
 \end{align}
@@ -36,12 +37,12 @@ Die Ausgangsberechnung aus Formel (\ref{form:docscore}) wird durch die folgenden
 \item \textbf{coord(q,d)} - Bewertet, wieviele der Terme der gesamten Suchanfrage im Dokument gefunden wurden und hebt bzw. senkt die Relevanz entsprechend.
 \item \textbf{queryNorm(q)} - Normalisiert alle gefundenen Relevanzwerte einer Anfrage mit dem gleichen Faktor. Dies dient vor allem der Vergleichbarkeit von Relevanzwerten zweier Anfragen.
 \item \textbf{boost(t)} - Ermöglicht die Anpassung der Relevanz einzelner Terme einer Anfrage.
-\item \textbf{norm(q)} - Normierung des Relevanzwertes auf Feldebene, ermöglicht verschiedene Gewichtung von verschiedenen Feldern und positionsabhängige Relevanzbeeinflussung.
+\item \textbf{norm(q)} - Normierung des Relevanzwertes auf Feldebene, ermöglicht unterschiedliche Gewichtungen von verschiedenen Feldern und positionsabhängige Relevanzbeeinflussungen.
 \end{itemize}
 
 Basierend darauf, könnte die Suche nach ``Theater Hamburg Freitag'' in einer Dokumentensammlung zum Beispiel wie in Listing \ref{lst:query_simple} aussehen. Die Gewichtung zwischen den vier genutzten Feldern würde Treffer im Feld ``Titel'' als relevanter bewerten, als Treffer mit gleichem \acs{TF-IDF} Wert im Feld ``Beschreibung''. \citep{TFIDFSimilarity}
 
-\lstinputlisting[caption=Einfache Solr-Anfrage mit angepassten Feld-Boosts,label={lst:query_simple},float]{Listings/solrqueries_simple.txt}
+\lstinputlisting[caption=Einfache Solr-Anfrage mit angepassten Feld-Boosts,label={lst:query_simple}]{Listings/solrqueries_simple.txt}
 
 \subsubsection{Relevanz-Anpassung} \label{sec:solrsearchrelevance}
 
@@ -57,16 +58,16 @@ Die Nutzerprofil-bezogene Anpassung der Relevanzwerte eines Dokumentes für eine
 
 Einbezogen werden die so definierten Featurevektoren über eine explizit definierte \textit{Boosting}-Funktion. Beispielhaft wird dies für die Anwendungsfälle der personalisierten Suche (Listing \ref{lst:featuredistance}) und zur Auflistung von Komplementen (Listing \ref{lst:similardocs}) gezeigt. Für die personalisierte Suche wertet die \textit{Boosting}-Funktion (b) Dokumente auf, wenn deren Featurevektoren (features) einen geringeren euklidischen Abstand zum Nutzervektor (v) haben. Im gezeigten Beispiel ist der Nutzervektor (v) explizit angegeben, in realen Anwendungsfällen würde dieser innerhalb einer  ergänzenden Solr-Komponente gebildet.
 
-\lstinputlisting[caption=Solr-Anfrage um Vektor-Distanz einzubeziehen,label={lst:featuredistance},float]{Listings/solrqueries_distboost.txt}
+\lstinputlisting[caption=Solr-Anfrage um Vektor-Distanz einzubeziehen,label={lst:featuredistance}]{Listings/solrqueries_distboost.txt}
+
+\lstinputlisting[caption=Solr-Anfrage zur featurebasierten Dokumentenähnlichkeit ,label={lst:similardocs}]{Listings/solrqueries_similardocs.txt}
 
 Zur Bildung von Komplementen wird ebenfalls die Distanz zwischen Featurevektoren gemessen, um die Relevanz der Dokumente zu bestimmen. Hierbei wird allerdings ausschließlich die distanzbasierte Relevanz genutzt und auf die Integration von \acs{TF-IDF}-basierten Werten verzichtet. Ebenfalls wird der Nutzervektor durch den Featurevektor eines oder mehrerer Dokumente --- im Beispiel das Dokument 49040 --- ersetzt, um zum entsprechenden Dokument die Komplementäre zu finden.
-
-\lstinputlisting[caption=Solr-Anfrage zur featurebasierten Dokumentenähnlichkeit ,label={lst:similardocs},float]{Listings/solrqueries_similardocs.txt}
 
 % Vergleich aus http://girlincomputerscience.blogspot.de/2012/11/open-source-recommendation-systems.html
 \subsection{Apache Mahout} \label{sec:mahout}
 
-Apache Mahout (Mahout) ist eine Programmbibliothek, die vorwiegend Werkzeuge des \textit{maschinellen Lernens} bzw. der \textit{kollektiven Intelligenz} zur Verfügung stellt. Die drei Schwerpunkte der darin implementierten Algorithmen umfassen das \textit{Clustern} von Daten, die Daten-\textit{Klassifikation} und das \textit{kollaborative Filtern} (vgl. Abschnitt \ref{sec:collaborativefiltering}). Die Skalierbarkeit der entsprechenden Algorithmen steht dabei im Zentrum des Projektes, weshalb ein Großteil der Implementierungen auch in Form von Apache Hadoop kompatiblen MapReduce-Implementierungen vorliegt (vgl. Abschnitt \ref{sec:mapred}). Apache Mahout wird, ebenso wie Solr, frei unter der Apache 2.0 Lizenz zur Verfügung gestellt. \citep{mia}
+Apache Mahout\footnote{siehe: http://mahout.apache.org} (Mahout) ist eine Programmbibliothek, die vorwiegend Werkzeuge des \textit{maschinellen Lernens} bzw. der \textit{kollektiven Intelligenz} zur Verfügung stellt. Die drei Schwerpunkte der darin implementierten Algorithmen umfassen das \textit{Clustern} von Daten, die Daten-\textit{Klassifikation} und das \textit{kollaborative Filtern} (vgl. Abschnitt \ref{sec:collaborativefiltering}). Die Skalierbarkeit der entsprechenden Algorithmen steht dabei im Zentrum des Projektes, weshalb ein Großteil der Implementierungen auch in Form von Apache Hadoop\footnote{siehe: http://hadoop.apache.org} kompatiblen MapReduce-Implementierungen vorliegt (vgl. Abschnitt \ref{sec:mapred}). Apache Mahout wird, ebenso wie Solr, frei unter der Apache 2.0 Lizenz zur Verfügung gestellt. \citep{mia}
 
 Da für die vorliegende Arbeit ausschließlich die Werkzeuge des kollaborativen Filterns genutzt wurden, werden im weiteren Abschnitt nur die dafür notwendigen Aspekte von Apache Mahout betrachtet. Umfassendere Beschreibungen aller Bestandteile und deren Anwendung werden in ``Mahout in Action'' \citep{mia} beschrieben.
 
@@ -74,7 +75,7 @@ Da für die vorliegende Arbeit ausschließlich die Werkzeuge des kollaborativen 
 %
 %\todo{Teilausschnitt Komponentendiagramm einfügen}
 
-Mit Hilfe von Apache Mahout werden drei Bestandteile der im Systementwurf (Abbildung \ref{fig:system_rough}) gezeigten bzw. in Abschnitt \ref{sec:system_rough} beschriebenen Systemarchitektur realisiert.
+Mit Hilfe von Apache Mahout werden drei Bestandteile der im Systementwurf (Abbildung \ref{fig:system_rough}) gezeigten bzw. in Abschnitt \ref{sec:system_rough} beschriebenen Systemarchitektur realisiert. \vfill
 
 \paragraph{Modellberechnung} Die Basisdistribution\footnote{Bezogen auf die Version 0.7 der offiziellen Apache Mahoutdistribution} von Mahout ermöglicht es, verschiedene Modelltypen zu generieren. Diese umfassen die nutzer-bzw. elementbasierten Modelle, wie sie in Abschnitt \ref{sec:neighborhoods} beschrieben werden, und die merkmalbasierten Modelle aus Abschnitt \ref{sec:filtermethods}. Die Eingabedaten zur Modellbildung werden im CSV-Format abgelegt und bestehen aus Tripeln, die jeweils einem Nutzer für ein Element einen Präferenzwert zuordnen. Die Verarbeitung geschieht, wie in Listing \ref{lst:useritemmodelprep} und Listing \ref{lst:useritemmodelprep_cloud} beispielhaft gezeigt, mit Hilfe von lokal ausgeführten Java-Jobs oder mit Hilfe von in Apache Hadoop verteilten MapReduce Jobs.
 
@@ -85,7 +86,7 @@ Die Ergebnisse der Berechnung werden ebenfalls im CSV-Format abgelegt. Bei den N
 
 Bei der Generierung der merkmalbasierten Modelle im Vorverarbeitungsschritt, werden diese ebenfalls in textueller Form abgelegt. Hierbei wird jedoch zeilenweise jeweils ein Element und der entsprechende Vektor gespeichert.
 
-\paragraph{Modellevaluation} Zur qualitativen Bewertung der generierten Modelle bietet Apache Mahout gut integrierte Testwerkzeuge. Als Testmaß (vgl. Abschnitt \ref{sec:measures}) für die Modelle wird vorwiegend der mittlere quadratische Fehler genutzt. Um diese bestimmen zu können, ist es notwendig, dass das Modell nur mit einem Teil der Daten trainiert wird und danach gegen den zweiten Teil evaluiert wird. Da bei großen Datenmengen selbst die zufällige Zuteilung der Daten in eine der beiden Gruppen zum Problem wird, bietet Apache Mahout auch dafür einen in MapReduce implementierten Verarbeitungsschritt (vgl. Listing \ref{lst:dataprep}).
+\paragraph{Modellevaluation} Zur qualitativen Bewertung der generierten Modelle bietet Apache Mahout gut integrierte Testwerkzeuge. Als Testmaß (vgl. Abschnitt \ref{sec:measures}) für die Modelle wird vorwiegend der mittlere quadratische Fehler genutzt. Um diesen bestimmen zu können, ist es notwendig, dass das Modell nur mit einem Teil der Daten trainiert wird und danach gegen den zweiten Teil evaluiert wird. Da bei großen Datenmengen selbst die zufällige Zuteilung der Daten in eine der beiden Gruppen zum Problem wird, bietet Apache Mahout auch dafür einen in MapReduce implementierten Verarbeitungsschritt (vgl. Listing \ref{lst:dataprep}).
 
 \lstinputlisting[caption=Trennung von Test- und Trainingsdaten mit Apache Mahout,language=bash,label={lst:dataprep}]{Listings/mahout_dataprep.txt}
 
@@ -100,23 +101,26 @@ Wurde das Modell entsprechend trainiert, kann für die verbliebenen Testdaten de
 
 \paragraph{Matrixfaktorisierung} Neben den zuvor beschriebenen Berechnungswegen implementiert Mahout auch \acs{SVD}-basierte Empfehlungsdienste. Bei der Berechnung wird zwischen der inkrementiellen Berechnung, basierend auf \citep{funk2006}, und mittels \textit{Alternating Least Squares} \citep{Bell:2007:SCF:1441428.1442050,zhou08} erstellten Modellen unterschieden (vgl Abschnitt \ref{sec:svd}).
 
-Ergänzend zu den in Mahout enthaltenen Methoden, wurde innerhalb dieser Arbeit die vorhandene inkrementelle Modellberechnung (siehe \textit{RatingSGDFactorizer}) so erweitert, dass diese auch ausschließlich elementspezifischen Featurevektoren verarbeitet (siehe \textit{NSVDFactorizer}, vgl. Abschnitt \ref{sec:myrecommend}). Da innerhalb der Mahout-Distribution vorwiegend binäre Austauschformate genutzt werden, wurde die Persistenzschicht der vorhandenen Modelle zudem um einen \textit{CSV-Backend} erweitert, um die spätere Indexierung in Apache Solr zu vereinfachen. Die Ausführung der Matrixfaktorisierung erfolg damit innerhalb einer eigenen Klasse wie in Listing \ref{lst:factorgenerator}.
+Ergänzend zu den in Mahout enthaltenen Methoden, wurde innerhalb dieser Arbeit die vorhandene inkrementelle Modellberechnung (siehe \textit{RatingSGDFactorizer}) so erweitert, dass diese auch ausschließlich elementspezifischen Featurevektoren verarbeitet (siehe \textit{NSVD2Factorizer}, vgl. Abschnitt \ref{sec:myrecommend}). Da innerhalb der Mahout-Distribution vorwiegend binäre Austauschformate genutzt werden, wurde die Persistenzschicht der vorhandenen Modelle zudem um einen \textit{CSV-Backend} erweitert, um die spätere Indexierung in Apache Solr zu vereinfachen. Die Ausführung der Matrixfaktorisierung erfolg damit innerhalb einer eigenen Klasse wie in Listing \ref{lst:factorgenerator}.
 
 \lstinputlisting[caption=Durchführung der Matrixfaktorierung,language=bash,label={lst:factorgenerator}]{Listings/mahout_factorgenerator.txt}
 
 %\subsubsection{Skalierung}
 \subsubsection{Erweiterungen}\label{sec:mahoutext}
 
-Da Apache Mahout generell nur Basisalgorithmen implementiert, ist es notwendig gewesen, diese für bestimmte Anwendungsfälle zu erweitern. Alle Erweiterungen wurden innerhalb eines Java-Paketes\footnote{Git Repository: https://gitorious.org/recommend/recommend } zusammengefasst und können gemeinsam mit der Basisdistribution von Mahout genutzt werden. Die Erweiterungen der Mahout-Komponenten sind hierbei innerhalb des \textit{Core} Moduls im \textit{com.aoe.cf.recommender} Namespace versammelt.
+Da Apache Mahout generell nur Basisalgorithmen implementiert, ist es notwendig gewesen, diese für bestimmte Anwendungsfälle zu erweitern. Alle Erweiterungen wurden innerhalb eines Java-Paketes\footnote{Git Repository: https://gitorious.org/recommend/recommend } zusammengefasst und können gemeinsam mit der Basisdistribution von Mahout genutzt werden. Die Erweiterungen der Mahout-Komponenten sind hierbei innerhalb des \textit{Core} Moduls im \textit{com.aoe.cf.recommender} Namespace versammelt. 
 
 Die Erweiterungen umfassen:
 \begin{itemize}
 \item Implementierung der Empfehlungsdienste für anonyme Nutzer (\textit{PlusAnonymousRecommender})
-\item Implementierung der NSVD-Faktorisierung zur Erzeugung von ausschließlich elementspezifischen Featurevektoren (\textit{NSVDFactorizer})
+\item Implementierung der NSVD2-Faktorisierung aus \citep{Paterek07} zur Erzeugung von ausschließlich elementspezifischen Featurevektoren (\textit{NSVD2Factorizer})
+\item Implementierung eines NSVD2-Recommenders und Erstellung von Funktionaltests zur Qualitätssicherung der Faktorisierungsergebnisse (\textit{NSVD2FactorizerTest})
 \item Integration eines \textit{MapReduce}-Jobs zur Transformation der Ähnlichkeitsmatrix (vgl. Listing \ref{lst:useritemmodelprep}) in paarweise Ähnlichkeitswerte (\textit{PairSimilarityJob})
 \item Integration eines CSV-Persistenzbackend für die Matrixfaktorisierung (\textit{CsvPersistenceStrategy})
 \item Implementierung von Evaluationsklassen für beide Methoden (\textit{Evaluation}, \textit{FactorEvaluation})
 \end{itemize}
+
+\vfill
 
 \subsection{Integration}
 
@@ -128,7 +132,7 @@ Zur Anbindung des ausgelagerten Empfehlungsdienstes über eine HTTP-Schnittstell
 \begin{figure}[H]
   \centering
 %\begin{minipage}[b]{6in}
-    \includegraphics[width=\textwidth]{Abbildungen/search-rec1.png}
+    \includegraphics[width=\textwidth]{Abbildungen/search-rec1.pdf}
     \caption[Flussdiagram - externe Empfehlungen]{\footnotesize Flussdiagramm: Personalisierung von Suchanfragen über einen externen Empfehlungsdienst. { \scriptsize (eigene Darstellung) }}
 %\end{minipage}
     \label{fig:seq-extern-recommender}
@@ -143,26 +147,30 @@ Zur Konfiguration der Komponente stehen folgende Parameter zur Verfügung:
 \item \textit{boostInline} - Schaltet die Integration in die ursprüngliche Anfrage ab und zeigt nur die Empfehlungen.
 \end{itemize}
 
-Die Verarbeitung kann hierbei komplett in der Vorverarbeitungsphase von Apache Solr erfolgen, so dass die eigentlichen Suchanfragen auch innerhalb von Solr in Zwischenspeichern gehalten und wiederholte Anfragen erbeblich schneller verarbeitet werden können.
+Die Verarbeitung kann hierbei komplett in der Vorverarbeitungsphase von Apache Solr erfolgen, so dass die eigentlichen Suchanfragen auch innerhalb von Solr in einem  Zwischenspeicher gehalten und wiederholte Anfragen erbeblich schneller verarbeitet werden können.
 
 \subsubsection{Integrierte Empfehlungsdienste} \label{sec:implmodelcalc}
 
 Die Implementierung von Empfehlungen mit Hilfe von Element-Featurevekoren, wurde innerhalb der \textit{SimilarityBoost}-Komponente umgesetzt. Die Verarbeitung einer Suchanfrage wird in Abbildung  \ref{fig:seq-intern-recommender} dargestellt.
 
+Nachdem die Komponente die Anfrage des Nutzers erhalten hat, muss zunächst über eine zusätzliche Anfrage die Liste der Dokumente des Nutzerprofils aus dem Suchindex gelesen werden. Mit Hilfe dieser Liste kann dann der Nutzervektor $v(u)$ wie in Formel \ref{form:anonuser_nsvd2} gebildet werden. Danach kann die ursprüngliche Anfrage weiterverarbeitet werden.
+
+
 \begin{figure}[H]
   \centering
   \begin{minipage}[b]{5in}
-    \includegraphics[width=\textwidth]{Abbildungen/search-rec2.png}
+    \includegraphics[width=\textwidth]{Abbildungen/search-rec2.pdf}
+    %\includesvg{./Abbildungen/search-rec2}
     \caption[Flussdiagram - interne Empfehlungsbildung]{\footnotesize Flussdiagramm: Personalisierung von Suchanfragen über Featurevektoren im Suchindex. {\scriptsize (eigene Darstellung)}}
     \label{fig:seq-intern-recommender}
 \end{minipage}
 \end{figure}
 
-Nachdem die Komponente die Anfrage des Nutzers erhalten hat, muss zunächst über eine zusätzliche Anfrage die Liste der Dokumente des Nutzerprofils aus dem Suchindex gelesen werden. Mit Hilfe dieser Liste kann dann der Nutzervektor $v(u)$ wie in Formel \ref{form:anonuser_nsvd2} gebildet werden. Danach kann die ursprüngliche Anfrage weiterverarbeitet werden.
 
 Da die Konfiguration der Komponente (vgl. Listing \ref{lst:similardocs}) die weitere Verarbeitung von $v(u)$ (im Listing als \textit{\$features} bezeichnet) bestimmt, kann die Personalisierung bzw. Empfehlungsbildung unabhängig von der \textit{SimilarityField}-Komponente erfolgen. Das in Listing \ref{lst:similardocs} gezeigte Beispiel nutzt die Distanz zwischen den Dokumentenvektoren $w(i)$ und dem Nutzervektor $v(u)$ um für den Nutzer relevante Dokumente zu bevorzugen.
 
 Da der größte Teil der Empfehlungsbildung innerhalb der normalen Apache Solr Komponenten erfolgt, beschränkt sich die Konfiguration der \textit{SimilarityField}-Komponente auf die Benennung des Featurevektoren-Feldes über den \textit{similarityField} Parameter. Alle weiteren Verarbeitungsschritte und Parameter werden innerhalb der \textit{solrconfig.xml} direkt angegeben.
+\newpage
 
 \subsection{Systemaufbau}
 
@@ -170,27 +178,27 @@ Für die im Systementwurf (Abbildung \ref{fig:system_rough}) skizzierten Bestand
 
 \subsubsection{Tracker} \label{sec:tracker-impl} Die Aufzeichnung der Interaktionen von Nutzer und Webseite, wurde mit Hilfe eines eigenen Java \glslink{Servlet}{Servlets} umgesetzt. Die Funktionalität des Trackers beschränkt sich auf das Erfassen von Interaktionen eines Nutzers innerhalb einer JavaScript-Bibliothek und die Weitergabe dieser innerhalb des Servlets. Da die Daten dem Anwendungsfall entsprechend gespeichert werden können, ist der Aufwand bei der weiteren Verarbeitung sehr gering.
 
-Da ein Datensatz einer Komponente der in Tabelle \ref{tab:user-item-ratings} (Abschnitt \ref{sec:filtermethods}) gezeigten Matrix entspricht, enthält dieser auch ähnliche Daten. Für den Nutzer wird jeweils eine ID für die aktuelle Session, eine sessionübergreifende ID und (falls bekannt) der Account im System aufgezeichnet. Für das Element bzw. Produkt wird die \gls{SKU-ID} aufgezeichnet und ggf. eine Produktgruppen-\gls{ID}. Die Information über die Art der Interaktion wird in textheller Form gespeichert. In der Summe besteht ein einzelner Datensatz so aus ca. 114-150 Byte. Die Weitergabe dieser Daten erfolgt über die in Abschnitt \ref{sec:datatransp} beschriebenen Transporttechniken. Der Quellcode der Komponente ist zur besseren Nachvollziehbarkeit in einem eigenen \gls{Repository} verfügbar\footnote{Git Repository: https://gitorious.org/recommend/tracker}.
+Da ein Datensatz einer Komponente der in Tabelle \ref{tab:user-item-ratings} (Abschnitt \ref{sec:filtermethods}) gezeigten Matrix entspricht, enthält dieser auch ähnliche Daten. Für den Nutzer wird jeweils eine ID für die aktuelle Session, eine sessionübergreifende ID und (falls bekannt) der Account im System aufgezeichnet. Für das Element bzw. Produkt wird die \gls{SKU-ID} aufgezeichnet und ggf. eine Produktgruppen-\gls{ID}. Die Information über die Art der Interaktion wird in textueller Form gespeichert. In der Summe besteht ein einzelner Datensatz so aus ca. 114-150 Byte. Die Weitergabe dieser Daten erfolgt über die in Abschnitt \ref{sec:datatransp} beschriebenen Transporttechniken. Der Quellcode der Komponente ist zur besseren Nachvollziehbarkeit in einem eigenen \gls{Repository} verfügbar\footnote{Git Repository: https://gitorious.org/recommend/tracker}.
 
-Eine weitere Alternative zur Implementierung eines eigenen Dienstes ist die Nutzung bzw. Auswertung schon vorhandener Daten aus Serverlogs und von externen Trackingdiensten (zB. Google Analytics). Da dies allerdings mit sehr hohen Aufwand bei der Datenaufbereitung verbunden wäre und da nicht in jedem Anwendungsfall auf entsprechende Logs zurückgegriffen werden kann, wurde auf diese Art der Datengewinnung verzichtet.
+Eine weitere Alternative zur Implementierung eines eigenen Dienstes ist die Nutzung bzw. Auswertung schon vorhandener Daten aus Serverlogs und von externen Trackingdiensten (zB. Google Analytics). Da dies allerdings mit sehr hohen Aufwand bei der Datenaufbereitung verbunden wäre und da nicht in jedem Anwendungsfall auf entsprechende Logs zurückgegriffen werden kann, wurde auf diese Art der Datengewinnung verzichtet. \vfill
 
 \subsubsection{Datenhaltung} Für die dauerhafte Speicherung der aufgezeichneten Daten wurde auf die Verwendung eines verteilten Dateisystems (vgl. Abschnitt \ref{sec:hfs}) verzichtet. Da der Betrieb eines entsprechenden Serverclusters hohe Wartungskosten erzeugt hätte, wurde die lokale Speicherung der Daten und die bedarfsgemäße Nutzung von Amazon Web Services gewählt. Dies ermöglicht die MapReduce-basierte Verarbeitung der Daten (vgl. Abschnitt \ref{sec:mapred}) ohne dedizierte Hardware vorhalten zu müssen.
 
 Der Kostenunterschied kann mit Hilfe der folgenden Rechnung veranschaulicht werden. Geht man von 50GB an aufgezeichneten Nutzdaten pro Jahr aus, erzeugt die Speicherung dieser Datenmenge zur Verarbeitung innerhalb des \textit{Amazon Simple Storage Services} (S3) Kosten von ca. \EUR{6} pro Transfer (Upload+Download). Würden zur weiteren Verarbeitung drei \textit{Amazon Elastik Compute Cloud} \textit{m2.xlarge} Instanzen für einen Tag genutzt, entstünden Kosten von ca. \EUR{100} pro Tag \footnote{Als Vergleichswert wurde die unter http://calculator.s3.amazonaws.com/calc5.html am 01.08.2013 gezeigten Tagespreise genutzt.}. Die Kosten von wöchentlichen Neuberechnungen innerhalb dieser Infrastruktur entsprechen damit ca. der Hälfte der anfallenden Kosten zur Anmietung ähnlicher Ressourcen bei herkömmlichen Hosting-Anbietern.
 
-\subsubsection{Datentransport} \label{sec:datatransp} Zum sicheren Transport der Daten zwischen Tracker und der Datenhaltung wird \textit{Apache Flume} genutzt. Es implementiert ein einfaches \textit{Message Queue} System, welches sicherstellt, dass alle Daten einer Quelle (Tracker) auch auf allen Senken (Datenhaltung) geschrieben wurden, bevor diese das System verlassen. Im Vergleich zur direkten Speicherung der Daten auf einer entsprechenden Festplatte, bietet Apache Flume die Möglichkeit, mit mehreren Quellen oder mehreren Senken zu arbeiten und Datenströme zu verteilen bzw. zusammenzufassen.
+\subsubsection{Datentransport} \label{sec:datatransp} Zum sicheren Transport der Daten zwischen Tracker und der Datenhaltung wird \textit{Apache Flume\footnote{siehe: http://flume.apache.org}} genutzt. Es implementiert ein einfaches \textit{Message Queue} System, welches sicherstellt, dass alle Daten einer Quelle (Tracker) auch auf allen Senken (Datenhaltung) geschrieben wurden, bevor diese das System verlassen. Im Vergleich zur direkten Speicherung der Daten auf einer entsprechenden Festplatte, bietet Apache Flume die Möglichkeit, mit mehreren Quellen oder mehreren Senken zu arbeiten und Datenströme zu verteilen bzw. zusammenzufassen. \\ \\
 
 Neben dem lokalen Dateisystem unterstützt Apache Flume zudem auch HDFS-Senken und Amazon S3-Senken. Dank dieser Eigenschaften wird sowohl die horizontale Skalierung des Trackers auf mehrere Knoten vereinfacht, als auch die Anbindung anderer, dem Anwendungsfall entsprechender Datenhaltungssysteme.
 
-Alternative Message Queue Systeme wie etwa Rabbit MQ oder Active MQ wurden nicht betrachtet.
+Alternative Message Queue Systeme (Rabbit MQ o. Active MQ) wurden nicht betrachtet.
 
-\subsubsection{Datenaufbereitung}\label{sec:dataprep_real} Die Vorverarbeitung der Daten wurde mit \textit{Apache Pig} umgesetzt. Es stellt eine dem Anwendungsfall angepasste Datenflusssprache, das sog. \textit{Pig Latin}, zur Verfügung (Beispiel siehe Listing \ref{lst:pigprofiles}). Die darin beschriebenen Operationen werden zur Verarbeitung in \textit{Apache Hadoop} kompatible \textit{MapReduce} Operationen kompiliert und sind so ohne weitere Anpassungen verteilt ausführbar.  Damit ermöglicht es, die Anwendung der in Abschnitt \ref{sec:mapred} beschriebenen Methoden Skalierbarkeit zu gewährleisten. Die in \textit{Pig Latin} beschriebenen Datenverarbeitungsprogramme lassen sich über \textit{Amazon Elastic MapReduce} auch für Daten nutzen, welche in \textit{Amazon S3} gehalten werden \citep{Lin2012}.
+\subsubsection{Datenaufbereitung}\label{sec:dataprep_real} Die Vorverarbeitung der Daten wurde mit \textit{Apache Pig\footnote{siehe: http://pig.apache.org}} umgesetzt. Es stellt eine dem Anwendungsfall angepasste Datenflusssprache, das sog. \textit{Pig Latin}, zur Verfügung (Beispiel siehe Listing \ref{lst:pigprofiles}). Die darin beschriebenen Operationen werden zur Verarbeitung in \textit{Apache Hadoop} kompatible \textit{MapReduce} Operationen kompiliert und sind so ohne weitere Anpassungen verteilt ausführbar.  Damit ermöglicht es, die Anwendung der in Abschnitt \ref{sec:mapred} beschriebenen Methoden Skalierbarkeit zu gewährleisten. Die in \textit{Pig Latin} beschriebenen Datenverarbeitungsprogramme lassen sich über \textit{Amazon Elastic MapReduce} auch für Daten nutzen, welche in \textit{Amazon S3} gehalten werden \citep{Lin2012}.
 
  \lstinputlisting[caption=Apache Pig Beispielscript zur Kombination von Nutzerprofiledaten,language=bash,label={lst:pigprofiles}]{Listings/pig-profiles.txt}
 
 Eine umfassende Dokumentation der Möglichkeiten von \textit{Apache Pig} zur Datenverarbeitung bietet \citep{gates2011programming}. Die Integration von Aufgaben des maschinellen Lernens mit  \textit{Apache Pig} wird in  \citep{Lin2012} beschrieben.
 
-Alternative \textit{MapReduce} Implementierungen in Java oder \textit{Apache Hive} wurden nicht betrachtet.
+Alternative \textit{MapReduce} Implementierungen in Java oder \textit{Apache Hive} wurden nicht betrachtet. \vfill
 
 \subsubsection{Empfehlungsdienst} Wie im vorangegangen Abschnitt \ref{sec:mahout} beschrieben, wurde die Integration der Empfehlungs- und Modellberechnung mit \textit{Apache Mahout} vorgenommen.
 

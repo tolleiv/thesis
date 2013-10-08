@@ -1,0 +1,36 @@
+\documentclass{article}
+
+\usepackage{tikz}
+%\usepackage{pgf-umlsd}
+%\usepgflibrary{arrows} % for pgf-umlsd
+
+\usetikzlibrary{arrows,shadows} % for pgf-umlsd
+\usepackage[underline=true,rounded corners=false]{pgf-umlsd}
+\begin{document}
+
+\begin{figure}
+  \centering
+
+  \begin{sequencediagram}
+    \newthread[white]{user}{Nutzer}
+    \newinst[3]{solr}{SimilarityBoostComponent}
+    \newinst[2]{index}{SolrIndex}
+
+    \begin{call}{user}{Suche}{solr}{Ergebnisliste}
+        \begin{call}[3]{solr}{\pgftext[y=-4pt]{\begin{minipage}{3cm} \centering Dokumente \\ aus Nutzerprofil\end{minipage}} }{index}{\pgftext[y=-3pt]{\begin{minipage}{3cm} \centering Featurevektoren \\ der Dokumente\end{minipage}}}
+        \end{call}
+        
+        \begin{callself}[1]{solr}{\pgftext[y=-12pt,x=2cm]{\begin{minipage}{3cm} \centering Berechnung \\ Nutzervektor $v(u)$\end{minipage}} }{}
+        \end{callself}
+
+        \begin{call}[2]{{solr}}{\pgftext[y=-4pt]{\begin{minipage}{3cm} \centering Suche \\ (mit Nutzervektor)\end{minipage}} }{{index}}{}
+        \end{call}
+        
+    \end{call}
+  \end{sequencediagram}
+
+  \caption{UML sequence diagram demo.}
+\end{figure}
+
+\end{document}
+ 

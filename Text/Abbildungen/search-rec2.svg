@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="509"
+   height="366"
+   id="svg3219"
+   version="1.1"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="search-rec2.svg">
+  <metadata
+     id="metadata3413">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3411" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1230"
+     inkscape:window-height="756"
+     id="namedview3409"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:zoom="4.1576333"
+     inkscape:cx="272.09795"
+     inkscape:cy="200.50587"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3219" />
+  <rect
+     stroke="#000000"
+     stroke-width="0"
+     fill="#ffffff"
+     x="0"
+     y="0"
+     width="508"
+     height="365"
+     id="rect3221" />
+  <g
+     transform="translate(188.0,26.5) rotate(0.0 75.0 152.5)"
+     id="g3223">
+    <g
+       transform="translate(0.0,0.0)"
+       id="g3225">
+      <rect
+         x="0.0"
+         y="0.0"
+         width="149.402390438247"
+         height="32.0"
+         stroke="#000000"
+         stroke-width="1.0"
+         fill="#ffffff"
+         id="rect3227" />
+    </g>
+    <g
+       transform="translate(0.0,32.0)"
+       id="g3229">
+      <line
+         x1="74.7011952191235"
+         y1="0.0"
+         x2="74.7011952191235"
+         y2="273.0"
+         style="stroke-dasharray: 5, 2"
+         stroke="#000000"
+         stroke-width="1.0"
+         fill="#ffffff"
+         id="line3231" />
+    </g>
+    <g
+       transform="translate(0.0,17.0)"
+       id="g3233">
+      <text
+         x="75.0"
+         style="text-anchor: middle"
+         y="-2.0"
+         id="text3235">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           text-decoration="underline"
+           id="tspan3237">Solr</tspan>      </text>
+      <text
+         x="75"
+         style="font-size:10px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr;text-anchor:middle;font-family:Arial;-inkscape-font-specification:Arial Italic"
+         y="12.8"
+         id="text3239"
+         sodipodi:linespacing="125%">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           id="tspan3241"
+           style="font-size:10px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr;text-anchor:middle;fill:#000000;font-family:Arial;-inkscape-font-specification:Arial Italic">SimilarityBoostComponent</tspan>      </text>
+      <text
+         x="75"
+         style="text-anchor:middle"
+         y="27.6"
+         id="text3243">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           id="tspan3245"
+           style="font-size:12px;fill:#000000;font-family:Arial" />      </text>
+      <text
+         x="75.0"
+         style="text-anchor: middle"
+         y="41.0"
+         id="text3247">
+        <tspan
+           id="tspan3249" />
+      </text>
+    </g>
+    <g
+       id="g3251" />
+  </g>
+  <g
+     transform="translate(28.0,26.5) rotate(0.0 60.0 159.5)"
+     id="g3253">
+    <g
+       transform="translate(0.0,0.0)"
+       id="g3255">
+      <rect
+         x="0.0"
+         y="0.0"
+         width="119.52191235059759"
+         height="18.0"
+         stroke="#000000"
+         stroke-width="1.0"
+         fill="#ffffff"
+         id="rect3257" />
+    </g>
+    <g
+       transform="translate(0.0,18.0)"
+       id="g3259">
+      <line
+         x1="59.760956175298794"
+         y1="0.0"
+         x2="59.760956175298794"
+         y2="301.0"
+         style="stroke-dasharray: 5, 2"
+         stroke="#000000"
+         stroke-width="1.0"
+         fill="#ffffff"
+         id="line3261" />
+    </g>
+    <g
+       transform="translate(0.0,17.0)"
+       id="g3263">
+      <text
+         x="60.0"
+         style="text-anchor: middle"
+         y="-2.0"
+         id="text3265">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           text-decoration="underline"
+           id="tspan3267">Nutzer</tspan>      </text>
+    </g>
+    <g
+       id="g3269" />
+  </g>
+  <g
+     transform="translate(368.0,26.5) rotate(0.0 60.0 159.5)"
+     id="g3271">
+    <g
+       transform="translate(0.0,0.0)"
+       id="g3273">
+      <rect
+         x="0.0"
+         y="0.0"
+         width="119.52191235059759"
+         height="32.0"
+         stroke="#000000"
+         stroke-width="1.0"
+         fill="#ffffff"
+         id="rect3275" />
+    </g>
+    <g
+       transform="translate(0.0,32.0)"
+       id="g3277">
+      <line
+         x1="59.760956175298794"
+         y1="0.0"
+         x2="59.760956175298794"
+         y2="287.0"
+         style="stroke-dasharray: 5, 2"
+         stroke="#000000"
+         stroke-width="1.0"
+         fill="#ffffff"
+         id="line3279" />
+    </g>
+    <g
+       transform="translate(0.0,17.0)"
+       id="g3281">
+      <text
+         x="60.0"
+         style="text-anchor: middle"
+         y="-2.0"
+         id="text3283">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           text-decoration="underline"
+           id="tspan3285">Solr</tspan>      </text>
+      <text
+         x="60.0"
+         style="text-anchor:middle;-inkscape-font-specification:Arial Italic;font-family:Arial;font-weight:normal;font-style:italic;font-stretch:normal;font-variant:normal;font-size:10px;text-align:center;writing-mode:lr;line-height:125%"
+         y="12.8"
+         id="text3287"
+         sodipodi:linespacing="125%">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           font-family="Arial"
+           fill="#000000"
+           font-style="italic"
+           id="tspan3289"
+           style="-inkscape-font-specification:Arial Italic;font-family:Arial;font-weight:normal;font-style:italic;font-stretch:normal;font-variant:normal;font-size:10px;text-anchor:middle;text-align:center;writing-mode:lr;line-height:125%">Suchindex</tspan>      </text>
+    </g>
+    <g
+       id="g3291" />
+  </g>
+  <g
+     transform="translate(88.0,96.5)"
+     id="g3293">
+    <path
+       d="M0.0,0.0 L169.0,0.0 "
+       stroke-dasharray="23, 0"
+       fill="none"
+       stroke="#000000"
+       stroke-width="1"
+       id="path3295" />
+    <g
+       transform="translate(170.0,0.0) rotate(180.0)"
+       id="g3297">
+      <polygon
+         points="2.0,0 8.0,-3.0 8.0,3.0"
+         fill="#000000"
+         stroke="#000000"
+         stroke-width="1.0"
+         id="polygon3299" />
+    </g>
+    <g
+       transform="translate(85.0,0.0)"
+       id="g3301">
+      <rect
+         fill="#ffffff"
+         x="-22.0"
+         y="-9.0"
+         width="44.0"
+         height="14"
+         id="rect3303" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="2.0"
+         id="text3305">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3307">Suche</tspan>
+      </text>
+    </g>
+  </g>
+  <g
+     transform="translate(264.0,109.5)"
+     id="g3309">
+    <path
+       d="M0.0,0.0 L152.0,0.0 "
+       stroke-dasharray="23, 0"
+       fill="none"
+       stroke="#000000"
+       stroke-width="1"
+       id="path3311" />
+    <g
+       transform="translate(153.0,0.0) rotate(180.0)"
+       id="g3313">
+      <polygon
+         points="2.0,0 8.0,-3.0 8.0,3.0"
+         fill="#000000"
+         stroke="#000000"
+         stroke-width="1.0"
+         id="polygon3315" />
+    </g>
+    <g
+       transform="translate(76.5,0.0)"
+       id="g3317">
+      <rect
+         fill="#ffffff"
+         x="-49.5"
+         y="-16.0"
+         width="99.0"
+         height="14"
+         id="rect3319" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="-5.0"
+         id="text3321">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3323">Dokumente</tspan>
+      </text>
+      <rect
+         fill="#ffffff"
+         x="-49.5"
+         y="0.8000000000000007"
+         width="99.0"
+         height="14"
+         id="rect3325" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="11.8"
+         id="text3327">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3329">aus Nutzerprofil</tspan>
+      </text>
+    </g>
+  </g>
+  <g
+     transform="translate(262.0,143.5)"
+     id="g3331">
+    <path
+       d="M5.0,0.0 L162.0,0.0 "
+       stroke-dasharray="23, 0"
+       fill="none"
+       stroke="#000000"
+       stroke-width="1"
+       id="path3333" />
+    <g
+       transform="translate(4.0,0.0) rotate(0.0)"
+       id="g3335">
+      <polygon
+         points="2.0,0 8.0,-3.0 8.0,3.0"
+         fill="#000000"
+         stroke="#000000"
+         stroke-width="1.0"
+         id="polygon3337" />
+    </g>
+    <g
+       transform="translate(79.0,0.0)"
+       id="g3339">
+      <rect
+         fill="#ffffff"
+         x="-51.5"
+         y="-16.0"
+         width="103.0"
+         height="14"
+         id="rect3341" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="-5.0"
+         id="text3343">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3345">Featurevektoren</tspan>
+      </text>
+      <rect
+         fill="#ffffff"
+         x="-51.5"
+         y="0.8000000000000007"
+         width="103.0"
+         height="14"
+         id="rect3347" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="11.8"
+         id="text3349">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3351">der Dokumente</tspan>
+      </text>
+    </g>
+  </g>
+  <g
+     transform="translate(264.0,262.5)"
+     id="g3353">
+    <path
+       d="M0.0,0.0 L154.0,0.0 "
+       stroke-dasharray="23, 0"
+       fill="none"
+       stroke="#000000"
+       stroke-width="1"
+       id="path3355" />
+    <g
+       transform="translate(155.0,0.0) rotate(180.0)"
+       id="g3357">
+      <polygon
+         points="2.0,0 8.0,-3.0 8.0,3.0"
+         fill="#000000"
+         stroke="#000000"
+         stroke-width="1.0"
+         id="polygon3359" />
+    </g>
+    <g
+       transform="translate(77.5,0.0)"
+       id="g3361">
+      <rect
+         fill="#ffffff"
+         x="-56.0"
+         y="-16.0"
+         width="112.0"
+         height="14"
+         id="rect3363" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="-5.0"
+         id="text3365">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3367">Suche</tspan>
+      </text>
+      <rect
+         fill="#ffffff"
+         x="-56.0"
+         y="0.8000000000000007"
+         width="112.0"
+         height="14"
+         id="rect3369" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="11.8"
+         id="text3371">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3373">(mit Nutzervektor)</tspan>
+      </text>
+    </g>
+  </g>
+  <g
+     transform="translate(93.0,302.5)"
+     id="g3375">
+    <path
+       d="M5.0,0.0 L331.0,0.0 "
+       stroke-dasharray="23, 0"
+       fill="none"
+       stroke="#000000"
+       stroke-width="1"
+       id="path3377" />
+    <g
+       transform="translate(4.0,0.0) rotate(0.0)"
+       id="g3379">
+      <polygon
+         points="2.0,0 8.0,-3.0 8.0,3.0"
+         fill="#000000"
+         stroke="#000000"
+         stroke-width="1.0"
+         id="polygon3381" />
+    </g>
+    <g
+       transform="translate(163.5,0.0)"
+       id="g3383">
+      <rect
+         fill="#ffffff"
+         x="-41.5"
+         y="-9.0"
+         width="83.0"
+         height="14"
+         id="rect3385" />
+      <text
+         x="0.0"
+         style="text-anchor: middle"
+         y="2.0"
+         id="text3387">
+        <tspan
+           font-size="12px"
+           font-family="Arial"
+           fill="#000000"
+           font-weight="bold"
+           id="tspan3389">Ergebnisliste</tspan>
+      </text>
+    </g>
+  </g>
+  <g
+     transform="translate(262.63941,179.13941)"
+     id="g3391">
+    <polygon
+       points="6.2749004,29.310345 6.2749004,39.655172 0,34.482759 "
+       id="polygon3393"
+       style="fill:#000000;stroke:#000000;stroke-width:1" />
+    <path
+       d="m 0,0 q 35.856574,0 35.856574,17.241379 0,17.24138 -35.856574,17.24138 35.856574,0 35.856574,-17.24138 Q 35.856574,0 0,0 m 0,0"
+       id="path3395"
+       inkscape:connector-curvature="0"
+       style="fill:#000000;stroke:#000000;stroke-width:1" />
+    <polygon
+       points="6.2749004,29.310345 6.2749004,39.655172 0,34.482759 "
+       id="polygon3397"
+       style="fill:#000000;stroke:#000000;stroke-width:1" />
+    <g
+       transform="translate(65.5,16)"
+       id="g3399">
+      <text
+         x="22.5"
+         style="text-anchor:middle"
+         y="-2"
+         id="text3401">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           font-weight="bold"
+           id="tspan3403"
+           style="font-size:12px;font-weight:bold;fill:#000000;font-family:Arial">Berechnung</tspan>      </text>
+      <text
+         x="22.5"
+         style="text-anchor:middle"
+         y="12.8"
+         id="text3405">
+        <tspan
+           xml:space="preserve"
+           font-size="12"
+           font-weight="bold"
+           id="tspan3407"
+           style="font-size:12px;font-weight:bold;fill:#000000;font-family:Arial">Nutzervektor v(u)</tspan>      </text>
+    </g>
+  </g>
+</svg>

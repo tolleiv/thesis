@@ -10,7 +10,7 @@ sim(a,b) & = \frac{1}{1+dist(a,b)} \label{form:disttosim}
 
 Hierbei ist $n$ die Anzahl der Dimensionen und $a_i$ bzw. $b_i$ beziehen sich auf das  $i$-te Attribut der Objekte, resp. die Ratings der Nutzer. Um den Distanzwert zu einem Maß der Ähnlichkeit mit einem Wertebereich von $1$ (starke Korrelation) bis $0$ (keine Korrelation) umzuformen, kann Formel (\ref{form:disttosim}) genutzt werden.
 
-Aus der Verallgemeinerung dieser Berechnung, der sog. \textit{Lr-Norm} bzw. dem \textit{Minkowski Abstand}, ergeben sich weitere Abstandsmaße. Die sog. \textit{L1-Norm} (auch \textit{City-Block-} oder \textit{Manhattan-Distanz}) entspricht $r=1$, $r=2$ entspricht dem o.g. euklidischen Abstand und $ r=\infty $ entspricht dem \textit{Tschebyscheff-Abstand}. \citep{hb_02}
+Aus der Verallgemeinerung dieser Berechnung (vgl. Formel (\ref{form:minkowskisim})), der sog. \textit{Lr-Norm} bzw. dem \textit{Minkowski Abstand}, ergeben sich weitere Abstandsmaße. Die sog. \textit{L1-Norm} (auch \textit{City-Block-} oder \textit{Manhattan-Distanz}) entspricht $r=1$, $r=2$ entspricht dem o.g. euklidischen Abstand und $ r=\infty $ entspricht dem \textit{Tschebyscheff-Abstand}. \citep{hb_02}
 \begin{align}
 \label{form:minkowskisim}
 dist(a,b) & = \sum_{i=1}^{n} (\left| a_i - b_i \right|^r)^\frac{1}{r}
@@ -19,7 +19,6 @@ dist(a,b) & = \sum_{i=1}^{n} (\left| a_i - b_i \right|^r)^\frac{1}{r}
 % Anwendung finden die verschiedenen Abstandsmaße zum Beispiel in XXXXXX \todo{Anwendungsbeispiele raussuchen}
 
 \paragraph{\addtoindex{Pearson-Korrelation}} Ein Problem bei der Berechnung mit der euklidischen Distanz ist, dass die Mittelwerte und Varianzen der Bewertungen einzelner Nutzer voneinander abweichen können, obwohl diese vergleichbare Interessen haben (vgl. \citep[Kap. 2]{pci}). Dieser Mangel wird mit Hilfe der \textit{Pearson-Korrelation} (\ref{form:pearsonsim}) beseitigt.  Ihr Wertebereich reicht von $1$ (starke Korrelation) bis $-1$ (starke negative Korrelation). Vor Allem bei der Bestimmung von nutzerbasierten Ähnlichkeiten konnten mit ihr in vielen Fällen sehr gute Ergebnisse erzielt werden. Zudem existieren zahlreiche Erweiterungen, um zum Beispiel die Gewichtung von Übereinstimmungen bei der Bewertung von kontroversen Elementen stärker hervorzuheben. \citep[Kap. 2.1]{rs} \citep{hb_02}
-
 \begin{align}
 \label{form:pearsonsim}
 sim(a,b) & = \frac{\sum_{p \in P} (r_{a,p}-\bar{r_a})(r_{b,p}-\bar{r_b})}{\sqrt{\sum_{p \in P} (r_{a,p}-\bar{r_a})^2 }\sqrt{\sum_{p \in P} (r_{b,p}-\bar{r_b})^2 }}

@@ -1,0 +1,34 @@
+\documentclass{article}
+
+\usepackage{tikz}
+%\usepackage{pgf-umlsd}
+%\usepgflibrary{arrows} % for pgf-umlsd
+
+\usetikzlibrary{arrows,shadows} % for pgf-umlsd
+\usepackage[underline=true,rounded corners=false]{pgf-umlsd}
+\begin{document}
+
+\begin{figure}
+  \centering
+
+  \begin{sequencediagram}
+    \newthread[white]{user}{Nutzer}
+    \newinst[2]{solr}{BooleanBoostComponent}
+    \newinst[2]{index}{SolrIndex}
+    \newinst[2]{remote}{RemoteService}
+
+    \begin{call}{user}{Suche}{solr}{Ergebnisliste}
+        \begin{call}[3]{solr}{\pgftext[y=-4pt]{\begin{minipage}{3cm} \centering Empfehlungen \\ f. Nutzerprofil\end{minipage}} }{remote}{Empfohlene Dokumente}
+        \end{call}
+
+        \begin{call}[2]{{solr}}{\pgftext[y=-4pt]{\begin{minipage}{4cm} \centering Suche \\ (mit Boost-Anpassung)\end{minipage}} }{{index}}{}
+        \end{call}
+        
+    \end{call}
+  \end{sequencediagram}
+
+  \caption{UML sequence diagram demo.}
+\end{figure}
+
+\end{document}
+ 
